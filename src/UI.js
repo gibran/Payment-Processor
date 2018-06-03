@@ -1,12 +1,16 @@
-var fs = require("fs");
+var cmc, fs;
 var path = require("path");
 
 var express = require("express");
 
 var emitter, orders, succeeded, failed;
 
-module.exports = async (emitterArg) => {
-    emitter = emitterArg;
+module.exports = async (config) => {
+    cmc = config.cmc;
+    fs = config.fs;
+
+    emitter = config.emitter;
+
     orders = {};
     succeeded = [];
     failed = [];

@@ -1,12 +1,13 @@
 var path = require("path");
-var settingsPath = path.join(__dirname, "data", "settings.json");
 var ordersPath = path.join(__dirname, "data", "orders");
+var settingsPath = path.join(__dirname, "data", "settings.json");
 
 var cmc = require("./lib/cmc.js");
-var fs = require("./lib/fs.js")(
-    __dirname,
-    path.join(ordersPath, "current"),
-    path.join(ordersPath, "archived")
+var fs = require("./lib/fs.js")({
+        dirPath: __dirname,
+        currentPath: path.join(ordersPath, "current"),
+        archivedPath: path.join(ordersPath, "archived")
+    }
 );
 
 var events = require("events");
@@ -45,7 +46,11 @@ async function main() {
         await orders.cancel(address);
     });
 
-    var UI = require("./src/UI.js")(uiEmitter);
+    var UI = require("./src/UI.js")({
+        emitter: uiEmitter,
+        cmc: cmc,
+        fs: fs
+    });
 }
 
 (async () => {
