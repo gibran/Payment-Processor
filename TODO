@@ -1,0 +1,6 @@
+UI
+Load data/orders/current on boot
+Look into nonces over random IDs
+Add getters so the UI can provide more data
+UI should REQUIRE you to be logged in
+Install script
