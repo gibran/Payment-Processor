@@ -1,0 +1,16 @@
+{
+  "name": "payment-processor",
+  "version": "1.0.0",
+  "description": "Payment processor for IOP.",
+  "main": "main.js",
+  "author": "Luke Parker",
+  "license": "MIT",
+  "dependencies": {
+    "bitcoin-core": "^2.0.0",
+    "express": "^4.16.3",
+    "nocache": "^2.0.0",
+    "randomstring": "^1.1.5",
+    "request": "^2.87.0",
+    "request-promise": "^4.2.2"
+  }
+}
