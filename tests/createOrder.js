@@ -9,15 +9,5 @@ var request = require("request-promise");
         },
         json: true
     });
-    console.log(await request({
-        uri: "http://localhost:8080/getOrders"
-    }));
-    console.log(await request({
-        method: "POST",
-        uri: "http://localhost:8080/cancel",
-        body: {
-            address: address
-        },
-        json: true
-    }));
+    console.log("Created a new order. It's address is " + address + " and it expects 0.3 IOP.");
 })();

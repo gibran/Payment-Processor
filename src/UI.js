@@ -51,15 +51,17 @@ module.exports = async (emitterArg) => {
         if (typeof(req.body.amount) !== "number") {
             res.end("false");
         }
-        if (req.body.amount <= 0) {
+        var amount = parseFloat(req.body.amount.toPrecision(4));
+
+        if (amount <= 0) {
             res.end("false");
         }
+
         if (typeof(req.body.note) !== "string") {
             res.end("false");
         }
 
-        console.log("UI recieved order for " + req.body.amount);
-        emitter.emit("new", req.body.amount, req.body.note, async (address) => {
+        emitter.emit("new", amount, req.body.note, async (address) => {
             res.end(address);
         });
     });
