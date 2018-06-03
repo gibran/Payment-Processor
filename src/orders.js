@@ -27,7 +27,6 @@ async function updateZeroConf() {
             uri: "https://api.coinmarketcap.com/v2/ticker/1464/",
             json: true
         })).data.quotes.USD.price;
-    console.log("Zero Conf Amount in IOP is: " + zeroConf);
 }
 setInterval(updateZeroConf, 60*60*1000)
 
@@ -47,18 +46,21 @@ module.exports = async (emitterArg, coinArg, ordersPath, zeroConfUSDArg) => {
 
             orders[address] = {
                 amount: amount,
-                time: (new Date()).getTime(),
-                note: note
+                note: note,
+                time: (new Date()).getTime()
             }
             saveOrder(address);
 
-            return address;
+            return {
+                address: address,
+                order: orders[address]
+            };
         }
     };
 }
 
 setInterval(async () => {
-    var hoursAgo  = (new Date()).getTime() - (24*60*60*1000);
+    var hoursAgo = (new Date()).getTime() - (24*60*60*1000);
     for (var address in orders) {
         if (orders[address].time <= hoursAgo) {
             archiveOrder(address, false);

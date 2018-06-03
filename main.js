@@ -23,7 +23,8 @@ var settings = require(settingsPath);
     });
     uiEmitter.on("new", async (amount, note, cb) => {
         console.log("Creating order for " + amount + " with note of " + note);
-        uiEmitter.emit("created", await orders.new(amount, note), amount, note, cb);
+        var order = await orders.new(amount, note);
+        uiEmitter.emit("created", order.address, order.order, cb);
     });
 
     var UI = require("./src/UI.js")(uiEmitter);
