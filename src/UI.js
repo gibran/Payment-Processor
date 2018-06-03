@@ -11,21 +11,21 @@ module.exports = async (emitterArg) => {
     succeeded = [];
     failed = [];
 
-    emitter.on("created", async (coinData, amount, note) => {
-        orders[coinData.id] = {
-            address: coinData.address,
+    emitter.on("created", async (address, amount, note, cb) => {
+        orders[address] = {
             amount: amount,
             note: note
         }
-        console.log("Order " + coinData.id + " has address of " + coinData.address);
+        console.log("Order has address of " + address);
+        cb(address);
     });
-    emitter.on("success", async (id) => {
-        succeeded.push(id);
-        delete orders[id];
+    emitter.on("success", async (address) => {
+        succeeded.push(address);
+        delete orders[address];
     });
-    emitter.on("failure", async (id) => {
-        failed.push(id);
-        delete order[id];
+    emitter.on("failure", async (address) => {
+        failed.push(address);
+        delete order[address];
     });
 
     express =
@@ -38,10 +38,15 @@ module.exports = async (emitterArg) => {
         res.sendFile(path.join(__dirname, "public", "index.html"));
     });
 
+    express.get("/getOrders", async (req, res) => {
+        res.end(JSON.stringify(orders));
+    });
+
     express.post("/new", async (req, res) => {
         console.log("UI recieved order for " + req.body.amount);
-        emitter.emit("new", req.body.amount, req.body.note);
-        res.end("true");
+        emitter.emit("new", req.body.amount, req.body.note, async (address) => {
+            res.end(address);
+        });
     });
 
     express.listen(8080, "0.0.0.0");

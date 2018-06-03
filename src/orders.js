@@ -1,28 +1,23 @@
 var request = require("request-promise");
-var randstring = require("randomstring").generate;
 
 var fs = require("fs");
 var path = require("path");
 
-var emitter, coin, addressesPath, addresses, currentPath, archivedPath, zeroConfUSD;
+var emitter, coin, currentPath, archivedPath, zeroConfUSD;
 var orders, zeroConf;
 
-async function saveAddresses() {
-    fs.writeFile(addressesPath, JSON.stringify(addresses, null, 4), async()=>{});
+async function saveOrder(address) {
+    fs.writeFile(path.join(currentPath, address + ".json"), JSON.stringify(orders[address], null, 4), async()=>{});
 }
 
-async function saveOrder(id) {
-    fs.writeFile(path.join(currentPath, id + ".json"), JSON.stringify(orders[id], null, 4), async()=>{});
-}
+async function archiveOrder(address, success) {
+    await coin.untrackAddress(address);
 
-async function archiveOrder(id, success) {
-    await coin.untrackAddress(orders[id].address);
+    orders[address].success = success;
+    await saveOrder(address);
+    delete orders[address];
 
-    orders[id].success = success;
-    await saveOrder(id);
-    delete orders[id];
-
-    fs.rename(path.join(currentPath, id + ".json"), path.join(archivedPath, id + ".json"), async()=>{});
+    fs.rename(path.join(currentPath, address + ".json"), path.join(archivedPath, address + ".json"), async()=>{});
 }
 
 async function updateZeroConf() {
@@ -36,11 +31,9 @@ async function updateZeroConf() {
 }
 setInterval(updateZeroConf, 60*60*1000)
 
-module.exports = async (emitterArg, coinArg, addressesPathArg, ordersPath, zeroConfUSDArg) => {
+module.exports = async (emitterArg, coinArg, ordersPath, zeroConfUSDArg) => {
     emitter = emitterArg;
     coin = coinArg;
-    addressesPath = addressesPathArg;
-    addresses = require(addressesPath);
     currentPath = path.join(ordersPath, "current");
     archivedPath = path.join(ordersPath, "archived");
     zeroConfUSD = zeroConfUSDArg;
@@ -50,50 +43,40 @@ module.exports = async (emitterArg, coinArg, addressesPathArg, ordersPath, zeroC
 
     return {
         new: async (amount, note) => {
-            var id;
-            do {
-                id = randstring();
-            } while (addresses[id] === "string");
+            var address = await coin.getNewAddress();
 
-            addresses[id] = await coin.getNewAddress();
-            saveAddresses();
-
-            orders[id] = {
-                address: addresses[id],
+            orders[address] = {
                 amount: amount,
                 time: (new Date()).getTime(),
                 note: note
             }
-            saveOrder(id);
+            saveOrder(address);
 
-            return {
-                id: id,
-                address: addresses[id]
-            };
+            return address;
         }
     };
 }
 
 setInterval(async () => {
     var hoursAgo  = (new Date()).getTime() - (24*60*60*1000);
-    for (var id in orders) {
-        if (orders[id].time <= hoursAgo) {
-            archiveOrder(id, false);
-            emitter.emit("failure", id);
+    for (var address in orders) {
+        if (orders[address].time <= hoursAgo) {
+            archiveOrder(address, false);
+            emitter.emit("failure", address);
         }
 
-        if (orders[id].amount <= zeroConf) {
+        if (orders[address].amount <= zeroConf) {
             console.log("Checking unconfirmed balance.");
-            if (await coin.getUnconfirmedBalance(orders[id].address) >= orders[id].amount) {
-                archiveOrder(id, true);
-                emitter.emit("success", id);
+            if (await coin.getUnconfirmedBalance(address) >= orders[address].amount) {
+                archiveOrder(address, true);
+                emitter.emit("success", address);
             }
             return;
         }
 
-        if (await coin.getConfirmedBalance(orders[id].address) >= orders[id].amount) {
-            archiveOrder(id, true);
-            emitter.emit("success", id);
+        if (await coin.getConfirmedBalance(address) >= orders[address].amount) {
+            archiveOrder(address, true);
+            emitter.emit("success", address);
         }
     }
 }, 20*1000);
