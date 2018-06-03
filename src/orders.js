@@ -1,46 +1,38 @@
-var request = require("request-promise");
+var coin;
+var cmc;
+var fs;
 
-var fs = require("fs");
 var path = require("path");
 
-var emitter, coin, currentPath, archivedPath, zeroConfUSD;
-var orders, zeroConf;
+var emitter, zeroConfUSD;
+var zeroConf, orders;
 
-async function saveOrder(address) {
-    fs.writeFile(path.join(currentPath, address + ".json"), JSON.stringify(orders[address], null, 4), async()=>{});
+async function updateZeroConf() {
+    zeroConf = parseFloat(
+        (zeroConfUSD / (await cmc.getIOPPrice()))
+        .toPrecision(4)
+    );
 }
+setInterval(updateZeroConf, 60*60*1000);
 
 async function archiveOrder(address, success) {
     await coin.untrackAddress(address);
-
-    orders[address].success = success;
-    await saveOrder(address);
+    fs.archiveOrder(address, orders[address], success);
     delete orders[address];
-
-    fs.rename(path.join(currentPath, address + ".json"), path.join(archivedPath, address + ".json"), async()=>{});
-
     emitter.emit((success ? "success" : "failure"), address);
 }
 
-async function updateZeroConf() {
-    zeroConf =
-        zeroConfUSD /
-        (await request({
-            uri: "https://api.coinmarketcap.com/v2/ticker/1464/",
-            json: true
-        })).data.quotes.USD.price;
-}
-setInterval(updateZeroConf, 60*60*1000)
+module.exports = async (config) => {
+    coin = config.coin;
+    cmc = config.cmc;
+    fs = config.fs;
 
-module.exports = async (emitterArg, coinArg, ordersPath, zeroConfUSDArg) => {
-    emitter = emitterArg;
-    coin = coinArg;
-    currentPath = path.join(ordersPath, "current");
-    archivedPath = path.join(ordersPath, "archived");
-    zeroConfUSD = zeroConfUSDArg;
+    emitter = config.emitter;
+
+    zeroConfUSD = config.zeroConfUSD;
+    await updateZeroConf();
 
     orders = {};
-    await updateZeroConf();
 
     return {
         new: async (amount, note) => {
@@ -48,10 +40,11 @@ module.exports = async (emitterArg, coinArg, ordersPath, zeroConfUSDArg) => {
 
             orders[address] = {
                 amount: amount,
+                usd: parseFloat((await cmc.iopToUsd(amount)).toPrecision(2)),
                 note: note,
                 time: (new Date()).getTime()
             }
-            saveOrder(address);
+            fs.saveOrder(address, orders[address]);
 
             return {
                 address: address,

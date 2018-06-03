@@ -2,15 +2,28 @@ var path = require("path");
 var settingsPath = path.join(__dirname, "data", "settings.json");
 var ordersPath = path.join(__dirname, "data", "orders");
 
+var cmc = require("./lib/cmc.js");
+var fs = require("./lib/fs.js")(
+    __dirname,
+    path.join(ordersPath, "current"),
+    path.join(ordersPath, "archived")
+);
+
 var events = require("events");
 
 var settings = require(settingsPath);
 
-(async () => {
+async function main() {
     var coin = await require("./src/coin.js")(settingsPath);
 
     var orderEmitter = new events();
-    var orders = await require("./src/orders.js")(orderEmitter, coin, ordersPath, settings.zeroConfUSD);
+    var orders = await (require("./src/orders.js"))({
+        coin: coin,
+        cmc: cmc,
+        fs: fs,
+        emitter: orderEmitter,
+        zeroConfUSD: settings.zeroConfUSD
+    });
 
     var uiEmitter = new events();
     orderEmitter.on("success", async (address) => {
@@ -33,4 +46,12 @@ var settings = require(settingsPath);
     });
 
     var UI = require("./src/UI.js")(uiEmitter);
+}
+
+(async () => {
+    try {
+        await main();
+    } catch(e) {
+        console.log(e);
+    }
 })();
