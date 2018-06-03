@@ -1,0 +1,7 @@
+{
+    "rpcport": 8337,
+    "rpcuser": "username",
+    "rpcpass": "password",
+    "confirms": 1,
+    "zeroConfUSD": 10
+}
