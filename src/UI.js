@@ -22,7 +22,7 @@ module.exports = async (emitterArg) => {
     });
     emitter.on("failure", async (address) => {
         failed.push(address);
-        delete order[address];
+        delete orders[address];
     });
 
     express =
@@ -48,6 +48,16 @@ module.exports = async (emitterArg) => {
     });
 
     express.post("/new", async (req, res) => {
+        if (typeof(req.body.amount) !== "number") {
+            res.end("false");
+        }
+        if (req.body.amount <= 0) {
+            res.end("false");
+        }
+        if (typeof(req.body.note) !== "string") {
+            res.end("false");
+        }
+
         console.log("UI recieved order for " + req.body.amount);
         emitter.emit("new", req.body.amount, req.body.note, async (address) => {
             res.end(address);
@@ -55,6 +65,15 @@ module.exports = async (emitterArg) => {
     });
 
     express.post("/cancel", async (req, res) => {
+        if (typeof(req.body.address) !== "string") {
+            res.end("false");
+        }
+        if (typeof(orders[req.body.address]) !== "object") {
+            res.end("false");
+        }
+
+        emitter.emit("cancel", req.body.address);
+        res.end("true");
     });
 
     express.post("/updateSettings", async (req, res) => {

@@ -18,6 +18,8 @@ async function archiveOrder(address, success) {
     delete orders[address];
 
     fs.rename(path.join(currentPath, address + ".json"), path.join(archivedPath, address + ".json"), async()=>{});
+
+    emitter.emit((success ? "success" : "failure"), address);
 }
 
 async function updateZeroConf() {
@@ -55,6 +57,12 @@ module.exports = async (emitterArg, coinArg, ordersPath, zeroConfUSDArg) => {
                 address: address,
                 order: orders[address]
             };
+        },
+
+        cancel: async (address) => {
+            if (typeof(orders[address]) === "object") {
+                archiveOrder(address, false);
+            }
         }
     };
 }
@@ -64,21 +72,18 @@ setInterval(async () => {
     for (var address in orders) {
         if (orders[address].time <= hoursAgo) {
             archiveOrder(address, false);
-            emitter.emit("failure", address);
         }
 
         if (orders[address].amount <= zeroConf) {
             console.log("Checking unconfirmed balance.");
             if (await coin.getUnconfirmedBalance(address) >= orders[address].amount) {
                 archiveOrder(address, true);
-                emitter.emit("success", address);
             }
             return;
         }
 
         if (await coin.getConfirmedBalance(address) >= orders[address].amount) {
             archiveOrder(address, true);
-            emitter.emit("success", address);
         }
     }
 }, 20*1000);

@@ -21,10 +21,15 @@ var settings = require(settingsPath);
         console.log("Order " + address + " failed.");
         uiEmitter.emit("failure", address);
     });
+
     uiEmitter.on("new", async (amount, note, cb) => {
         console.log("Creating order for " + amount + " with note of " + note);
         var order = await orders.new(amount, note);
         uiEmitter.emit("created", order.address, order.order, cb);
+    });
+    uiEmitter.on("cancel", async (address) => {
+        console.log("Cancelling order " + address);
+        await orders.cancel(address);
     });
 
     var UI = require("./src/UI.js")(uiEmitter);
