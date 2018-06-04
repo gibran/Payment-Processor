@@ -2,8 +2,6 @@ var coin;
 var cmc;
 var fs;
 
-var path = require("path");
-
 var emitter, zeroConfUSD;
 var zeroConf, orders;
 

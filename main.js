@@ -1,21 +1,25 @@
 var path = require("path");
-var ordersPath = path.join(__dirname, "data", "orders");
-var settingsPath = path.join(__dirname, "data", "settings.json");
+var paths = {
+    data: path.join(__dirname, "data"),
+    users: path.join(__dirname, "data", "users"),
+    orders: {
+        root: path.join(__dirname, "data", "orders"),
+        current: path.join(__dirname, "data", "orders", "current"),
+        archived: path.join(__dirname, "data", "orders", "archived")
+    },
+    settings: path.join(__dirname, "data", "settings.json"),
+    public: path.join(__dirname, "public")
+};
 
 var cmc = require("./lib/cmc.js");
-var fs = require("./lib/fs.js")({
-        dirPath: __dirname,
-        currentPath: path.join(ordersPath, "current"),
-        archivedPath: path.join(ordersPath, "archived")
-    }
-);
+var fs = require("./lib/fs.js")(paths);
 
 var events = require("events");
 
-var settings = require(settingsPath);
+var settings = require(paths.settings);
 
 async function main() {
-    var coin = await require("./src/coin.js")(settingsPath);
+    var coin = await require("./src/coin.js")(settings);
 
     var orderEmitter = new events();
     var orders = await (require("./src/orders.js"))({
@@ -48,7 +52,7 @@ async function main() {
 
     var UI = require("./src/UI.js")({
         emitter: uiEmitter,
-        publicPath: path.join(__dirname, "public"),
+        publicPath: paths.public,
         cmc: cmc,
         fs: fs
     });

@@ -14,8 +14,6 @@ async function updateBalances(neededConfs, balances) {
 }
 
 module.exports = async (settings) => {
-    settings = require(settings);
-
     //Create the BTC client.
     client = new (require("bitcoin-core"))({
         host: "localhost",
