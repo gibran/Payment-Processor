@@ -1,0 +1,27 @@
+#page {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    background-color: #FFFAFA;
+}
+
+#textDiv {
+    height: 50%;
+    width: 100%;
+    position: static;
+
+    display: flex;
+    justify-content: center;
+}
+
+#text {
+    display: inline-block;
+    align-self: flex-end;
+}
+
+#formDiv {
+    height: 50%;
+    width: 100%;
+    position: static;
+    text-align: center;
+}

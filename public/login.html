@@ -1,0 +1,56 @@
+<html>
+    <head>
+        <title>POS</title>
+        <link rel="stylesheet" type="text/css" href="/login.css">
+    </head>
+
+    <div id="page">
+        <div id="textDiv">
+            <h1 id="text">Login</h1>
+        </div>
+        <div id="formDiv">
+            <form>
+                Username: <input type="text" id="username">
+                Password: <input type="password" id="password">
+            </form>
+            <button onclick="submitForm()" id="submitButton">Submit</button>
+        </div>
+    </div>
+
+    <script>
+        function submitForm() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/login", true);
+            xhr.setRequestHeader("Content-type", "application/json");
+
+            xhr.onreadystatechange = (() => {
+                if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                    if (xhr.responseText === "true") {
+                        window.location.href = "/";
+                        return;
+                    }
+                    document.write("Invalid login.");
+                }
+            });
+            xhr.send(JSON.stringify({
+                username: document.getElementById("username").value,
+                password: document.getElementById("password").value
+            }));
+        }
+
+        function handleEnter(event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                submitForm();
+            }
+        }
+        function addListeners(domObj) {
+            domObj.addEventListener("keydown", handleEnter);
+            domObj.addEventListener("keyup", handleEnter);
+            domObj.addEventListener("keypress", handleEnter);
+            domObj.addEventListener("input", handleEnter);
+        }
+        addListeners(document.getElementById("username"));
+        addListeners(document.getElementById("password"));
+    </script>
+</html>

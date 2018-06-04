@@ -48,6 +48,7 @@ async function main() {
 
     var UI = require("./src/UI.js")({
         emitter: uiEmitter,
+        publicPath: path.join(__dirname, "public"),
         cmc: cmc,
         fs: fs
     });

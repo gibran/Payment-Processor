@@ -3,13 +3,14 @@ var path = require("path");
 
 var express = require("express");
 
-var emitter, orders, succeeded, failed;
+var emitter, publicPath, orders, succeeded, failed;
 
 module.exports = async (config) => {
     cmc = config.cmc;
     fs = config.fs;
 
     emitter = config.emitter;
+    publicPath = config.publicPath;
 
     orders = {};
     succeeded = [];
@@ -33,10 +34,10 @@ module.exports = async (config) => {
         express()
         .use(express.json())
         .use(require("nocache")())
-        .use("/", express.static(path.join(__dirname, "public")));
+        .use("/", express.static(publicPath));
 
     express.get("/", async (req, res) => {
-        res.sendFile(path.join(__dirname, "public", "index.html"));
+        res.sendFile(path.join(publicPath, "index.html"));
     });
 
     express.get("/getOrders", async (req, res) => {
@@ -49,6 +50,14 @@ module.exports = async (config) => {
 
     express.get("/getFailed", async (req, res) => {
         res.end(JSON.stringify(failed));
+    });
+
+    express.post("/login", async (req, res) => {
+        if ((req.body.username !== "admin") || (req.body.password !== "password")) {
+            res.end("false");
+            return;
+        }
+        res.end("true");
     });
 
     express.post("/new", async (req, res) => {
