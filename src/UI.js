@@ -22,6 +22,7 @@ module.exports = async (config) => {
         cb(address);
     });
     emitter.on("success", async (address) => {
+        console.log("Order " + address + " succeeded.")
         succeeded.push(address);
         delete orders[address];
     });
