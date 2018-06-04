@@ -1,5 +1,8 @@
+//Global variables for the IOP client, confirms needed, confirmed address->balance, and unconfirmed address->balance.
 var client, confirms, confirmed, unconfirmed;
 
+//Updates the balances of all tracked addresses.
+//Takes in the confs needed and a var to store them in.
 async function updateBalances(neededConfs, balances) {
     //Get every address with any balance, according to the needed confirmations.
     var list = await client.listReceivedByAddress(neededConfs);
@@ -22,12 +25,15 @@ module.exports = async (settings) => {
         port: settings.rpcport,
         headers: false
     });
+
+    //Set the confirms.
     confirms = settings.confirms;
 
+    //Init the RAM caches.
     confirmed = {};
     unconfirmed = {};
 
-    //Get the balances and update them every 20 seconds.
+    //Get the balances, confirmed and unconfirmed, and update them every 20 seconds.
     await updateBalances(confirms, confirmed);
     await updateBalances(0, unconfirmed);
     setInterval(updateBalances, 20*1000, confirms, confirmed);
@@ -36,7 +42,9 @@ module.exports = async (settings) => {
     //Return the getNewAddress, get*Balance, and manual track/untrack functions.
     return {
         getNewAddress: async () => {
+            //Get a new address from the node.
             var address = await client.getNewAddress();
+            //Init their place in the RAM cache.
             confirmed[address] = 0;
             unconfirmed[address] = 0;
             return address;
@@ -50,6 +58,7 @@ module.exports = async (settings) => {
             return unconfirmed[address];
         },
 
+        //This is for loading orders from the previous boot that were never archived.
         trackAddress: async (address) => {
             if (Object.keys(confirmed).indexOf(address) === -1) {
                 confirmed[address] = 0;
@@ -57,6 +66,7 @@ module.exports = async (settings) => {
             }
         },
 
+        //This is for untracking an address when the order is archived.
         untrackAddress: async (address) => {
             delete confirmed[address];
             delete unconfirmed[address];
