@@ -10,14 +10,14 @@ var emitter, zeroConfUSD;
 //zeroConf in IOP and the order book.
 var zeroConf, orders;
 
-//Updates the zeroConf amount in IOP. Runs every hour.
+//Updates the zeroConf amount in IOP. Runs every half hour.
 async function updateZeroConf() {
     zeroConf = parseFloat(
         (await cmc.usdToIOP(zeroConfUSD))
         .toPrecision(4)
     );
 }
-setInterval(updateZeroConf, 60*60*1000);
+setInterval(updateZeroConf, 30*60*1000);
 
 //Function to archive an order. Takes in an order ID (ID = address), and if it succedded or failed.
 async function archiveOrder(address, success) {

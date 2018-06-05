@@ -29,16 +29,33 @@ module.exports = async (config) => {
 
     //Handle events.
     emitter.on("created", async (address, order, cb) => {
-        orders[address] = order;
         console.log("Order has address of " + address);
+
+        //Store the order in the RAM cache.
+        orders[address] = order;
+
+        //Delete this order in 24 hours, AKA when it's force archived.
+        //This also stops the UI from showing a year's of orders.
+        setTimeout(async () => {
+            delete orders[address];
+            delete succeeded[address];
+            delete failed[address];
+        }, 24*60*60*1000);
+
+        //Call the callback that handles the response to the original request.
         cb(address);
     });
     emitter.on("success", async (address) => {
-        console.log("Order " + address + " succeeded.")
+        console.log("Order " + address + " succeeded.");
+
+        //When an order succeeds, move it over to the succeeded array.
         succeeded.push(address);
         delete orders[address];
     });
     emitter.on("failure", async (address) => {
+        console.log("Order " + address + "failed.");
+
+        //When an order fails, move it over to the failed array.
         failed.push(address);
         delete orders[address];
     });
@@ -169,24 +186,3 @@ module.exports = async (config) => {
 
     express.listen(8080, "0.0.0.0");
 }
-
-//Interval that deletes all orders that are 24 hours old, AKA force archived.
-//This runs every day. It also serves to prepare the processor for a new day of orders.
-setInterval(async () => {
-    var hoursAgo = (new Date()).getTime() - (24*60*60*1000);
-    for (var address in orders) {
-        if (orders[address].time <= hoursAgo) {
-            delete orders[address];
-        }
-    }
-    for (var address in succeeded) {
-        if (succeeded[address].time <= hoursAgo) {
-            delete succeeded[address];
-        }
-    }
-    for (var address in failed) {
-        if (failed[address].time <= hoursAgo) {
-            delete failed[address];
-        }
-    }
-}, 24*60*60*1000);
