@@ -1,9 +1,8 @@
 var request = require("request-promise");
 
-var user = "admin";
-var pass = "pass";
+var login = require("./login.js");
 
-(async () => {
+module.exports = async (token, user, pass) => {
     var changePassword = await request({
         method: "POST",
         url: "http://localhost:8080/users/changePassword",
@@ -12,8 +11,14 @@ var pass = "pass";
             pass: pass
         },
         json: true,
-        headers: {Cookie: "token=admin"}
+        headers: {Cookie: "token=" + token}
     });
 
     console.log("Changed the password of \"" + user + "\" to \"" + pass + "\". Server responded with the following: " + changePassword);
+};
+
+(async () => {
+    if (require.main === module) {
+        module.exports(await login("admin", "pass"), "admin", "pass");
+    }
 })();

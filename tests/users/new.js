@@ -1,6 +1,6 @@
 var request = require("request-promise");
 
-var user = "adminTwo";
+var user = "admin";
 var pass = "pass";
 
 (async () => {
