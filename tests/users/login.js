@@ -12,13 +12,11 @@ module.exports = async (user, pass) => {
         resolveWithFullResponse: true
     });
 
-    console.log("Logged in with \"" + user + "\" and \"" + pass + "\". Server responded with the following: " +
-    ((login.body === false) ? login.body : JSON.stringify(login.headers["set-cookie"])));
-
     return ((login.body === false) ? false : login.headers["set-cookie"][0].split("token=")[1].split(";")[0]);
 };
 
 if (require.main === module) {
+    var assert = require("../assert.js");
     (async () => {
         var user = "admin";
         var pass = "pass";
@@ -27,16 +25,22 @@ if (require.main === module) {
 
         console.log("Logging in with the correct login...");
         var token = await module.exports(user, pass);
+        assert(token.length === 32);
+
         console.log("Logging in with an invalid username...");
-        await module.exports(user + "1", pass);
+        assert((await module.exports(user + "1", pass)) === false);
+
         console.log("Logging in with an invalid password...");
-        await module.exports(user, pass + "1");
+        assert((await module.exports(user, pass + "1")) === false);
+
         console.log("Logging in with an invalid username and password...");
-        await module.exports(user + "1", pass + "1");
+        assert((await module.exports(user + "1", pass + "1")) === false);
+
         console.log("Logging in with an empty username...");
-        await module.exports("", pass);
+        assert((await module.exports("", pass)) === false);
+
         console.log("Logging in with an empty password...");
-        await module.exports(user, "");
+        assert((await module.exports(user, "")) === false);
 
         console.log("Trying to do a POST request to log us out with the auth token from the correct login.");
         var logout = await request({
@@ -45,7 +49,7 @@ if (require.main === module) {
             json: true,
             headers: {Cookie: "token=" + token}
         });
-        console.log("Did we logout? " + logout);
+        assert(logout === true)
 
         console.log("Trying to redo that POST request without logging in again.");
         logout = await request({
@@ -54,7 +58,7 @@ if (require.main === module) {
             json: true,
             headers: {Cookie: "token=" + token}
         });
-        console.log("Did we logout? " + logout);
+        assert(logout === "You are not logged in.");
 
         console.log("Finally, trying this with a blank token.");
         logout = await request({
@@ -63,6 +67,8 @@ if (require.main === module) {
             json: true,
             headers: {Cookie: "token=;"}
         });
-        console.log("Did we logout? " + logout);
+        assert(logout === "You are not logged in.");
+
+        console.log("All tests succeeded.");
     })();
 }
