@@ -43,11 +43,15 @@ module.exports = async (config) => {
         delete orders[address];
     });
 
-    //Create the web server with nocache. This is for dev purposes.
-    //This will soon have a middleware to guarantee the user is authed.
+    //Create the web server with JSON parsing, cookies, accounts, and nocache.
+    //The JSON is for passing data. The cookies are for logins.
+    //The accounts.middleware forces the user to be logged in.
+    //The nocache lib is for dev purposes (rapidly changing HTML/CSS).
     express =
         express()
         .use(express.json())
+        .use(require("cookie-parser")())
+        .use(accounts.middleware)
         .use(require("nocache")())
         .use("/", express.static(publicPath));
 
@@ -78,7 +82,9 @@ module.exports = async (config) => {
 
     //POST route to login.
     express.post("/users/login", async (req, res) => {
-        if (await accounts.login(req.body.user, req.body.pass)) {
+        var login = await accounts.login(req.body.user, req.body.pass);
+        if (typeof(login) === "string") {
+            res.cookie("token", login, {maxAge: 24*60*60*1000}).send("cookie set");
             res.end("true");
             return;
         }

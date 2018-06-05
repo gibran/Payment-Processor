@@ -71,5 +71,5 @@ module.exports = async (settings) => {
             delete confirmed[address];
             delete unconfirmed[address];
         }
-    }
+    };
 }
