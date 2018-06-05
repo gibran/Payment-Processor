@@ -57,27 +57,27 @@ module.exports = async (config) => {
     });
 
     //Route to get the IOP price.
-    express.get("/getIOPPrice", async (req, res) => {
+    express.get("/iop/price", async (req, res) => {
         res.end(await cmc.getIOPPrice());
     });
 
     //GET route to get the orders.
-    express.get("/getOrders", async (req, res) => {
+    express.get("/orders/active", async (req, res) => {
         res.end(JSON.stringify(orders));
     });
 
     //GET route to get the succeeded orders.
-    express.get("/getSucceeded", async (req, res) => {
+    express.get("/orders/succeeded", async (req, res) => {
         res.end(JSON.stringify(succeeded));
     });
 
     //Route to get the failed orders.
-    express.get("/getFailed", async (req, res) => {
+    express.get("/orders/failed", async (req, res) => {
         res.end(JSON.stringify(failed));
     });
 
     //POST route to login.
-    express.post("/login", async (req, res) => {
+    express.post("/users/login", async (req, res) => {
         if (await accounts.login(req.body.user, req.body.pass)) {
             res.end("true");
             return;
@@ -86,8 +86,8 @@ module.exports = async (config) => {
     });
 
     //POST route to create a new user.
-    express.post("/newUser", async (req, res) => {
-        if (await accounts.newUser(req.body.user)) {
+    express.post("/users/new", async (req, res) => {
+        if (await accounts.newUser(req.body.user, req.body.pass)) {
             res.end("true");
             return;
         }
@@ -95,7 +95,7 @@ module.exports = async (config) => {
     });
 
     //POST route to change a password.
-    express.post("/changePassword", async (req, res) => {
+    express.post("/users/changePassword", async (req, res) => {
         if (await accounts.changePassword(req.body.user, req.body.pass)) {
             res.end("true");
             return;
@@ -104,7 +104,7 @@ module.exports = async (config) => {
     });
 
     //POST route to delete an user.
-    express.post("/deleteUser", async (req, res) => {
+    express.post("/users/delete", async (req, res) => {
         if (await accounts.deleteUser(req.body.user)) {
             res.end("true");
             return;
@@ -113,7 +113,7 @@ module.exports = async (config) => {
     });
 
     //POST route to create an order.
-    express.post("/new", async (req, res) => {
+    express.post("/orders/new", async (req, res) => {
         //Validate the input.
         if (typeof(req.body.amount) !== "number") {
             res.end("false");
@@ -135,7 +135,7 @@ module.exports = async (config) => {
     });
 
     //POST route to cancel an order.
-    express.post("/cancel", async (req, res) => {
+    express.post("/orders/cancel", async (req, res) => {
         //Validate the input.
         if (typeof(req.body.address) !== "string") {
             res.end("false");
@@ -150,7 +150,7 @@ module.exports = async (config) => {
     });
 
     //POST route in progress to update the settings.
-    express.post("/updateSettings", async (req, res) => {
+    express.post("/settings/update", async (req, res) => {
 
     });
 

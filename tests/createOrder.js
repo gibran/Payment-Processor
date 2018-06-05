@@ -2,7 +2,7 @@ var request = require("request-promise");
 (async () => {
     var address = await request({
         method: "POST",
-        uri: "http://localhost:8080/new",
+        uri: "http://localhost:8080/orders/new",
         body: {
             amount: 0.3,
             note: "This is a test."

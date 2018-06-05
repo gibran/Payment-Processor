@@ -1,0 +1,18 @@
+GET
+    /                     -- Renders public/index.html.
+    /file.html            -- Renders public/file.html.
+    /iop/price            -- Returns the price of IOP in USD.
+    /orders/active        -- Returns all active orders.
+    /orders/succeeded     -- Returns all succeeded orders.
+    /orders/failed        -- Return all failed orders.
+
+POST
+    /users/login          -- Logs in using {user, pass}.
+    /users/new            -- Creates a new user using {user, pass}.
+    /users/changePassword -- Changes an users password using {user, pass}.
+    /users/delete         -- Deletes an user using {user}.
+
+    /orders/new           -- Creates a new order using {amount, note}.
+    /orders/cancel        -- Cancels an order using {address}.
+
+    /settings/update      -- In progress.

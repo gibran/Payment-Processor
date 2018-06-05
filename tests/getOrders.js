@@ -4,7 +4,7 @@ async function createOrder(amount) {
     amount = parseFloat(amount.toPrecision(4));
     return await request({
         method: "POST",
-        uri: "http://localhost:8080/new",
+        uri: "http://localhost:8080/orders/new",
         body: {
             amount: amount,
             note: ("This is a test for " + amount + " IOP.")
@@ -23,7 +23,7 @@ async function createOrder(amount) {
 
     console.log("Now, let's get the orders.");
     var getOrders = JSON.parse(await request({
-        uri: "http://localhost:8080/getOrders"
+        uri: "http://localhost:8080/orders/active"
     }));
     console.log("Printing the response...");
     console.log(JSON.stringify(getOrders, null, 4));

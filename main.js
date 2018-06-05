@@ -1,5 +1,5 @@
 //Core files.
-var coin, orders, UI;
+var coin, orders, ui;
 //Lib files that support the core files.
 var cmc = require("./lib/cmc.js"), fs;
 
@@ -61,7 +61,7 @@ async function main() {
 
     //Now that the emitter is ready, create the UI.
     //It also needs the path to the files it serves, the CMC lib, and the fs lib.
-    UI = require("./src/UI.js")({
+    ui = require("./src/ui.js")({
         emitter: emitter,
         publicPath: paths.public,
         cmc: cmc,
