@@ -91,6 +91,13 @@ module.exports = async (config) => {
         res.end("false");
     });
 
+    //POST route to logout.
+    express.post("/users/logout", async (req, res) => {
+        await accounts.logout(req.cookies.token);
+        res.clearCookie("token");
+        res.end("true");
+    });
+
     //POST route to create a new user.
     express.post("/users/new", async (req, res) => {
         if (await accounts.newUser(req.body.user, req.body.pass)) {
