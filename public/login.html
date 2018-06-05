@@ -10,8 +10,8 @@
         </div>
         <div id="formDiv">
             <form>
-                Username: <input type="text" id="username">
-                Password: <input type="password" id="password">
+                Username: <input type="text" id="user">
+                Password: <input type="password" id="pass">
             </form>
             <button onclick="submitForm()" id="submitButton">Submit</button>
         </div>
@@ -20,7 +20,7 @@
     <script>
         function submitForm() {
             var xhr = new XMLHttpRequest();
-            xhr.open("POST", "/login", true);
+            xhr.open("POST", "/users/login", true);
             xhr.setRequestHeader("Content-type", "application/json");
 
             xhr.onreadystatechange = (() => {
@@ -33,8 +33,8 @@
                 }
             });
             xhr.send(JSON.stringify({
-                username: document.getElementById("username").value,
-                password: document.getElementById("password").value
+                user: document.getElementById("user").value,
+                pass: document.getElementById("pass").value
             }));
         }
 
@@ -50,7 +50,7 @@
             domObj.addEventListener("keypress", handleEnter);
             domObj.addEventListener("input", handleEnter);
         }
-        addListeners(document.getElementById("username"));
-        addListeners(document.getElementById("password"));
+        addListeners(document.getElementById("user"));
+        addListeners(document.getElementById("pass"));
     </script>
 </html>

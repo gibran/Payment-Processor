@@ -4,12 +4,13 @@ async function createOrder(amount) {
     amount = parseFloat(amount.toPrecision(4));
     return await request({
         method: "POST",
-        uri: "http://localhost:8080/orders/new",
+        url: "http://localhost:8080/orders/new",
         body: {
             amount: amount,
             note: ("This is a test for " + amount + " IOP.")
         },
-        json: true
+        json: true,
+        headers: {Cookie: "token=admin"}
     });
 }
 
@@ -23,7 +24,8 @@ async function createOrder(amount) {
 
     console.log("Now, let's get the orders.");
     var getOrders = JSON.parse(await request({
-        uri: "http://localhost:8080/orders/active"
+        url: "http://localhost:8080/orders/active",
+        headers: {Cookie: "token=admin"}
     }));
     console.log("Printing the response...");
     console.log(JSON.stringify(getOrders, null, 4));

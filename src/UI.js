@@ -62,7 +62,7 @@ module.exports = async (config) => {
 
     //Route to get the IOP price.
     express.get("/iop/price", async (req, res) => {
-        res.end(await cmc.getIOPPrice());
+        res.end((await cmc.getIOPPrice()).toString());
     });
 
     //GET route to get the orders.
@@ -84,7 +84,7 @@ module.exports = async (config) => {
     express.post("/users/login", async (req, res) => {
         var login = await accounts.login(req.body.user, req.body.pass);
         if (typeof(login) === "string") {
-            res.cookie("token", login, {maxAge: 24*60*60*1000}).send("cookie set");
+            res.cookie("token", login, {maxAge: 24*60*60*1000});
             res.end("true");
             return;
         }
