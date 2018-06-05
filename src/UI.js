@@ -13,15 +13,10 @@ var emitter, publicPath;
 var orders, succeeded, failed;
 
 module.exports = async (config) => {
-    //Set the libs.
+    //Set/include the libs.
     cmc = config.cmc;
     fs = config.fs;
     accounts = require("../lib/accounts.js")(fs);
-    console.log(await accounts.login("admin", "password"));
-    await accounts.changePassword("admin", "password2");
-    console.log(await accounts.login("admin", "password"));
-    console.log(await accounts.login("admin", "password2"));
-    await accounts.deleteUser("admin");
 
     //Set the global vars.
     emitter = config.emitter;
@@ -78,11 +73,26 @@ module.exports = async (config) => {
 
     //POST route to login. Currently hardcoded to admin and password.
     express.post("/login", async (req, res) => {
-        if ((req.body.username !== "admin") || (req.body.password !== "password")) {
-            res.end("false");
+        if (await accounts.login(req.body.username, req.body.password)) {
+            res.end("true");
             return;
         }
-        res.end("true");
+        res.end("false");
+    });
+
+    //POST route to login. Currently hardcoded to admin and password.
+    express.post("/newUser", async (req, res) => {
+
+    });
+
+    //POST route to login. Currently hardcoded to admin and password.
+    express.post("/changePassword", async (req, res) => {
+
+    });
+
+    //POST route to login. Currently hardcoded to admin and password.
+    express.post("/deleteUser", async (req, res) => {
+
     });
 
     //POST route to create an order.
@@ -122,7 +132,9 @@ module.exports = async (config) => {
         res.end("true");
     });
 
+    //POST route in progress to update the settings.
     express.post("/updateSettings", async (req, res) => {
+
     });
 
     express.listen(8080, "0.0.0.0");
