@@ -1,18 +1,21 @@
+Unless the return data is specified as JSON, it is raw.
+That means the IOP price GET route returns "1.50" not "{price: 1.50}".
+
 GET
     /                     -- Renders public/index.html.
     /file.html            -- Renders public/file.html.
-    /iop/price            -- Returns the price of IOP in USD.
-    /orders/active        -- Returns all active orders.
-    /orders/succeeded     -- Returns all succeeded orders.
-    /orders/failed        -- Return all failed orders.
+    /iop/price            -- Returns the price of IOP in USD as raw data.
+    /orders/active        -- Returns all active orders as a JSON object.
+    /orders/succeeded     -- Returns all succeeded orders as a JSON object.
+    /orders/failed        -- Return all failed orders as a JSON objects.
 
 POST
-    /users/login          -- Logs in using {user, pass}.
-    /users/new            -- Creates a new user using {user, pass}.
-    /users/changePassword -- Changes an users password using {user, pass}.
-    /users/delete         -- Deletes an user using {user}.
+    /users/login          -- Logs in using {user, pass}. Returns true/false. This will also set a cookie in the future.
+    /users/new            -- Creates a new user using {user, pass}. Returns true/false.
+    /users/changePassword -- Changes an users password using {user, pass}. Returns true/false.
+    /users/delete         -- Deletes an user using {user}. Returns true/false.
 
-    /orders/new           -- Creates a new order using {amount, note}.
-    /orders/cancel        -- Cancels an order using {address}.
+    /orders/new           -- Creates a new order using {amount, note}. Returns the address to pay to/the order is indexed under.
+    /orders/cancel        -- Cancels an order using {address}. Returns true/false.
 
     /settings/update      -- In progress.
