@@ -56,6 +56,11 @@ module.exports = async (config) => {
         res.sendFile(path.join(publicPath, "index.html"));
     });
 
+    //Route to get the IOP price.
+    express.get("/getIOPPrice", async (req, res) => {
+        res.end(await cmc.getIOPPrice());
+    });
+
     //GET route to get the orders.
     express.get("/getOrders", async (req, res) => {
         res.end(JSON.stringify(orders));
@@ -71,28 +76,40 @@ module.exports = async (config) => {
         res.end(JSON.stringify(failed));
     });
 
-    //POST route to login. Currently hardcoded to admin and password.
+    //POST route to login.
     express.post("/login", async (req, res) => {
-        if (await accounts.login(req.body.username, req.body.password)) {
+        if (await accounts.login(req.body.user, req.body.pass)) {
             res.end("true");
             return;
         }
         res.end("false");
     });
 
-    //POST route to login. Currently hardcoded to admin and password.
+    //POST route to create a new user.
     express.post("/newUser", async (req, res) => {
-
+        if (await accounts.newUser(req.body.user)) {
+            res.end("true");
+            return;
+        }
+        res.end("false");
     });
 
-    //POST route to login. Currently hardcoded to admin and password.
+    //POST route to change a password.
     express.post("/changePassword", async (req, res) => {
-
+        if (await accounts.changePassword(req.body.user, req.body.pass)) {
+            res.end("true");
+            return;
+        }
+        res.end("false");
     });
 
-    //POST route to login. Currently hardcoded to admin and password.
+    //POST route to delete an user.
     express.post("/deleteUser", async (req, res) => {
-
+        if (await accounts.deleteUser(req.body.user)) {
+            res.end("true");
+            return;
+        }
+        res.end("false");
     });
 
     //POST route to create an order.
