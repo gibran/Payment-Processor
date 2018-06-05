@@ -1,5 +1,5 @@
 //Needed libs.
-var cmc, fs;
+var cmc, fs, accounts;
 
 //Express web server.
 var express = require("express");
@@ -16,6 +16,12 @@ module.exports = async (config) => {
     //Set the libs.
     cmc = config.cmc;
     fs = config.fs;
+    accounts = require("../lib/accounts.js")(fs);
+    console.log(await accounts.login("admin", "password"));
+    await accounts.changePassword("admin", "password2");
+    console.log(await accounts.login("admin", "password"));
+    console.log(await accounts.login("admin", "password2"));
+    await accounts.deleteUser("admin");
 
     //Set the global vars.
     emitter = config.emitter;
