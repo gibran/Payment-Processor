@@ -16,6 +16,7 @@ var submitForm = function () {
             $("#message").show();
         }else{
             $("#message").hide(); 
+            localStorage.setItem('USERNAME', $('#username').val());            
             window.location.href = "index.html";           
         }
     }
@@ -40,6 +41,12 @@ var initialize = function () {
         var targeted_popup_class = jQuery(this).attr('data-popup-close');
         $('[data-popup="' + targeted_popup_class + '"]').fadeOut(350);
         e.preventDefault();
+    });
+
+    $(document).keypress(function(e) {
+        if(e.which == 13) {
+            submitForm();
+        }
     });
 }
 

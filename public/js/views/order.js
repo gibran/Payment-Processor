@@ -5,8 +5,10 @@ var getIopCurrentlyPrice = function(){
     var success = function(response){
         var data = parseFloat(response);
 
-        window.iopUnitPrice = data.toFixed(2);
-        $('#iopCurrentlyPrice').text('$ ' + window.iopUnitPrice);
+        window.iopUnitPrice = data;
+        $('#iopCurrentlyPrice').text('$ ' + window.iopUnitPrice.toFixed(2));
+        recalculatePrice();
+        calcultateTotal();
     }
 
     var error = function(response){
@@ -16,10 +18,32 @@ var getIopCurrentlyPrice = function(){
     ajax(url, method, null, success, error);
 }
 
-var confirmOrder = function () {
-    var targeted_popup_class = jQuery(this).attr('data-popup-open');
-    $('[data-popup="' + targeted_popup_class + '"]').fadeIn(350);
-    e.preventDefault();
+var confirmedPay = function() {
+    var result = false;
+
+    var url = "/orders/new";
+    var method = "POST";
+    var message = {
+        amount: window.iopPrice,
+        note: `Coffee sale by ${localStorage.getItem('USERNAME')}`
+    };
+
+    var success = function(response){
+        var data = response;
+
+        if (data != 'false') {            
+            alert('Confirmed');
+            $('#address').text(data);
+        }else{
+            alert('Error');
+        }
+    }
+
+    var error = function(response){
+        return false;
+    }
+
+    ajax(url, method, message, success, error);
 }
 
 var getProductsInCard = function () {
@@ -42,8 +66,8 @@ var getProductsInCard = function () {
             orderedItem.name = product.name;
             orderedItem.qtd = item.qtd;
             orderedItem.unitPrice = product.price;
-            orderedItem.usdPrice = Math.round(parseFloat(orderedItem.unitPrice) * parseFloat(item.qtd));
-            orderedItem.iopPrice = Math.round(orderedItem.usdPrice / window.iopUnitPrice);
+            orderedItem.usdPrice = (parseFloat(orderedItem.unitPrice) * parseFloat(item.qtd));
+            orderedItem.iopPrice = (orderedItem.usdPrice / window.iopUnitPrice);
             orderedItem.image = product.image;
 
             result.push(orderedItem)
@@ -62,12 +86,29 @@ var calcultateTotal = function () {
         iopPrice += item.iopPrice;
     });
 
-    $(`#total td:nth-child(${2})`).text('$' + usdPrice);
-    $(`#total td:nth-child(${3})`).text(iopPrice);
+    $(`#total td:nth-child(${2})`).text('$' + usdPrice.toFixed(2));
+    $(`#total td:nth-child(${3})`).text(iopPrice.toFixed(8));
+
+    window.usdPrice = usdPrice;
+    window.iopPrice = iopPrice;
 
     $('#confirmItems').text(window.orderedList.length);
     $('#confirmUsdPrice').text('$'+ usdPrice);
     $('#confirmIopPrice').text(iopPrice);
+}
+
+var recalculatePrice = function(){
+    window.orderedList.forEach(item => {
+        var tr = $(`#${item.productId}`);
+        var usdPrice = $(tr).find('#usdPrice');
+        var iopPrice = $(tr).find('#iopPrice');
+
+        item.usdPrice = (parseFloat(item.unitPrice) * parseFloat(item.qtd));
+        item.iopPrice = (item.usdPrice / window.iopUnitPrice);
+
+        usdPrice.text('$' + item.usdPrice.toFixed(2));
+        iopPrice.text(item.iopPrice.toFixed(2));
+    });
 }
 
 var buildOrderedList = function () {
@@ -95,7 +136,7 @@ var buildOrderedList = function () {
         `);
 
         var columnPrice = $(`<td class="text-center text-lg text-medium" id='usdPrice'>$${item.usdPrice}</td>`);
-        var columnIoPPrice = $(`<td class="text-center text-lg text-medium" id='iopPrice'>${item.iopPrice}</td>`);
+        var columnIoPPrice = $(`<td class="text-center text-lg text-medium iopPrice" id='iopPrice'>${item.iopPrice}</td>`);
         var columnRemoveItem = $(`<td class="text-center"><a class="remove-from-cart" href="#" data-toggle="tooltip" title="" data-original-title="Remove item"><i class="icon-cross"></i></a></td>`);
 
         rowItem.append(columnImage);
@@ -119,11 +160,11 @@ var buildOrderedList = function () {
             if (item.productId != productId) return;
 
             item.qtd = parseInt(this.value);
-            item.usdPrice = Math.round(parseFloat(item.unitPrice) * parseFloat(item.qtd));
-            item.iopPrice = Math.round(item.usdPrice / window.iopUnitPrice);
+            item.usdPrice = (parseFloat(item.unitPrice) * parseFloat(item.qtd));
+            item.iopPrice = (item.usdPrice / window.iopUnitPrice);
 
-            usdPrice.text('$' + item.usdPrice);
-            iopPrice.text(item.iopPrice);
+            usdPrice.text('$' + item.usdPrice.toFixed(2));
+            iopPrice.text(item.iopPrice.toFixed(2));
         });
 
         //Recalculate total

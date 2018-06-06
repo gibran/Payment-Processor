@@ -38,6 +38,9 @@ var logout = function(){
         var data = parseBoolean(response);
 
         if (data) {
+            localStorage.removeItem('CARD');
+            localStorage.removeItem('USERNAME');
+
             window.location.href = "login.html";
         }
     }

@@ -128,4 +128,6 @@ $(document).ready(function(){
       $('#header').removeClass('header-scrolled');
     }
   })
+
+  $("#username").text(localStorage.getItem('USERNAME'));
  });

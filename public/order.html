@@ -46,9 +46,8 @@
 				<h2 class="text-white">Order</h2>
 				<nav id="nav-menu-container">
 					<ul class="nav-menu">
-						<li class="menu-active">
-							<a href="index.html">Coffee</a>
-						</li>
+						  <li class="text-white">Hi <span id="username" class="text-white"></span></li>
+						  <li class="menu-active"><a href="index.html">Coffee</a></li>
 						<li><a href="#" onclick="javascript:logout();">Logout</a></li>
 					</ul>
 				</nav>
@@ -229,13 +228,16 @@
 					</div>
 					<div class="col-lg-4">
 						<div class="row">
-							QRCODE READER
+							<span id="qrcode" class="text-black"> QRCODE WRITER</span>
+						</div>
+						<div class="row">
+							<span id="address" class="text-black">ADDRESS</span>
 						</div>
 					</div>
 				</div>
 				<div class="row float-right">
 					<div class="button-group-area mt-40">
-						<a href="#" class="genric-btn primary e-large">Pay</a>
+						<button type="button" onclick="javascript:confirmedPay();" class="genric-btn primary e-large">Paid</button>
 					</div>
 				</div>
 				<a class="popup-close" data-popup-close="popup-1" href="#">x</a>
