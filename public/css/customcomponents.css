@@ -1,0 +1,25 @@
+.single-input-number-primary {
+    display: block;
+    width: 100%;
+    border: none;
+    outline: none;
+    background: #b688343d;
+    padding: 0 5px;
+}
+
+.menu-coffee {
+    background:  linear-gradient(rgba(255,255,255,1), rgba(255,255,255,.5)), url('../img/menu/cappuccino.png') no-repeat center;
+}
+
+.menu-americano {
+    background:  linear-gradient(rgba(255,255,255,1), rgba(255,255,255,.5)), url('../img/menu/americano.png') no-repeat center;
+}
+
+.menu-expresso {
+    background:  linear-gradient(rgba(255,255,255,1), rgba(255,255,255,.5)), url('../img/menu/espresso.png') no-repeat center;
+}
+
+.about-ordered-list {
+    background: #fff;
+    padding: 30px 0;
+}

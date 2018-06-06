@@ -1,5 +1,175 @@
-<html>
-    <p>
-        Login succesful.
-    </p>
-</html>
+	<!DOCTYPE html>
+	<html lang="zxx" class="no-js">
+	<head>
+		<!-- Mobile Specific Meta -->
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<!-- Author Meta -->
+		<meta name="author" content="codepixer">
+		<!-- Meta Description -->
+		<meta name="description" content="">
+		<!-- Meta Keyword -->
+		<meta name="keywords" content="">
+		<!-- meta character set -->
+		<meta charset="UTF-8">
+		<!-- Site Title -->
+		<title>Coffee</title>
+
+		<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet"> 
+			<!--
+			CSS
+			============================================= -->
+			<link rel="stylesheet" href="css/font-awesome.min.css">
+			<link rel="stylesheet" href="css/bootstrap.css">
+			<link rel="stylesheet" href="css/main.css">
+			<link rel="stylesheet" href="css/customcomponents.css">		
+			<link rel="stylesheet" href="css/popup.css">
+		</head>
+		<body>
+
+			  <header id="header">
+				<div class="header-top">
+		  			<div class="container">
+				  		<div class="row justify-content-end">
+				  			<div class="col-lg-8 col-sm-4 col-8 header-top-right no-padding">
+				  			</div>
+				  		</div>			  					
+		  			</div>
+				</div>			  	
+			    <div class="container">
+			    	<div class="row align-items-center justify-content-between d-flex">
+				      <div id="logo">
+				        <a href="index.html"><img src="img/logo.png" alt="" title="" /></a>
+				      </div>
+				      <nav id="nav-menu-container">
+				        <ul class="nav-menu">
+				          <li><a href="#" onclick="javascript:logout();">Logout</a></li>
+				        </ul>
+				      </nav><!-- #nav-menu-container -->		    		
+			    	</div>
+			    </div>
+			  </header><!-- #header -->
+
+			  <section class="generic-banner relative">
+				<div class="container">
+					<div class="row align-items-center justify-content-center">
+						<div class="col-lg-10">
+							<div class="generic-banner-content">
+								<h2 class="text-white">&nbsp;</h2>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<!-- End banner Area -->
+
+			<!-- Start menu Area -->
+			<section class="menu-area section-gap" id="coffee">
+				<div class="container">
+					<div class="row d-flex justify-content-center">
+						<div class="menu-content pb-60 col-lg-10">
+							<div class="title text-center">
+								<h1 class="mb-10">What kind of Coffee we serve for you</h1>
+								<p>Who are in extremely love with eco friendly system.</p>
+							</div>
+						</div>
+					</div>						
+					<div class="row" id="products">
+						<div class="col-lg-4">
+							<div class="single-menu menu-coffee">
+								<div class="title-div justify-content-between d-flex">
+									<h4>Cappuccino</h4>
+									<p class="price float-right">
+										$12
+									</p>
+								</div>
+								<p>
+									Usage of the Internet is becoming more common due to rapid advance.
+								</p>					
+								<p class="float-right">
+									<input type="number" name="qtde" min="0" max="10" value="0" class="single-input-number-primary">									
+								</p>
+								<p class="font-weight-bold float-right">
+									Qtd:&nbsp;
+								</p>
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div class="single-menu menu-americano">
+								<div class="title-div justify-content-between d-flex">
+									<h4>Americano</h4>
+									<p class="price float-right">
+										$7
+									</p>
+								</div>
+								<p>
+									Usage of the Internet is becoming more common due to rapid advance.
+								</p>	
+								<p class="float-right">
+									<span name="qtde" class="ingle-input-number-primary">0</span>
+								</p>
+								<p class="font-weight-bold float-right">
+									Qtd:&nbsp;
+								</p>															
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div class="single-menu menu-expresso">
+								<div class="title-div justify-content-between d-flex">
+									<h4>Espresso</h4>
+									<p class="price float-right">
+										$5
+									</p>
+								</div>
+								<p>
+									Usage of the Internet is becoming more common due to rapid advance.
+								</p>	
+								<p class="float-right">
+									<input type="number" name="qtde" min="0" max="10" value="0" class="single-input-number-primary">									
+								</p>
+								<p class="font-weight-bold float-right">
+									Qtd:&nbsp;
+								</p>								
+							</div>							
+						</div>																
+					</div>
+					<div class="row float-right">
+						<div class="button-group-area mt-40">
+							<a href="javascript:order();" class="genric-btn primary e-large">Order</a>
+						</div>
+					</div>
+				</div>	
+			</section>
+			<!-- End menu Area -->
+
+			<!-- start footer Area -->		
+			<footer class="footer-area section-gap">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-5 col-md-6 col-sm-6">
+							<div class="single-footer-widget">
+								<h6>About Us</h6>
+								<p>
+									Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore dolore magna aliqua.
+								</p>
+								<p class="footer-text">
+									<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+								</p>								
+							</div>
+						</div>																
+					</div>
+				</div>
+			</footer>	
+			<!-- End footer Area -->	
+
+			<script src="js/vendor/jquery-2.2.4.min.js"></script>
+			<script src="js/vendor/bootstrap.min.js"></script>			
+			<script src="js/main.js"></script>	
+			<script src="js/common.js"></script>
+			<script src="js/views/index.js"></script>
+		</body>
+	</html>
+
+
+
