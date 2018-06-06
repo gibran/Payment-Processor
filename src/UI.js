@@ -92,6 +92,11 @@ module.exports = async (config) => {
         res.end(JSON.stringify(succeeded));
     });
 
+    //Route to get the list of all products.
+    express.get("/products/list", async (req, res) => {
+
+    });
+
     //Route to get the failed orders.
     express.get("/orders/failed", async (req, res) => {
         res.end(JSON.stringify(failed));
@@ -177,6 +182,21 @@ module.exports = async (config) => {
         //Emit the cancel event and tell the user it worked.
         emitter.emit("cancel", req.body.address);
         res.end("true");
+    });
+
+    //Route to create a new product.
+    express.post("/products/new", async (req, res) => {
+        
+    });
+
+    //Route to delete a product.
+    express.post("/products/delete", async (req, res) => {
+
+    });
+
+    //Route to buy some products.
+    express.post("/products/buy", async (req, res) => {
+
     });
 
     //POST route in progress to update the settings.
