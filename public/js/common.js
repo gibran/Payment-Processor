@@ -1,23 +1,18 @@
-var ajax = function(url, method, data, success, error){
-    var xhr = new XMLHttpRequest();
-    xhr.open(method, url, true);
-    xhr.setRequestHeader("Content-type", "application/json");
-
-    xhr.onreadystatechange = (() => {
-        if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-            if (success != null)
-                success(xhr.responseText);
-        }
-        else if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (error != null)
-                error(xhr.responseText);
-        }
-    });
-
+var ajax = function(url, method, dataType, data, success, error){
+    var dataJson = null;
     if (data != null)
-        xhr.send(JSON.stringify(data));
-    else
-        xhr.send();
+        dataJson = JSON.stringify(data);
+
+    $.ajax({
+        url: url,
+        method: method,
+        async: false,
+        contentType: "application/json; charset=utf-8",
+        dataType: dataType,  
+        data: dataJson,
+        success: success,
+        error: error
+    });
 }
 
 var parseBoolean = function(data){
@@ -35,9 +30,7 @@ var logout = function(){
     var method = "POST";
 
     var success = function(response){
-        var data = parseBoolean(response);
-
-        if (data) {
+        if (response) {
             localStorage.removeItem('CARD');
             localStorage.removeItem('USERNAME');
 
@@ -49,5 +42,5 @@ var logout = function(){
         return false;
     }
 
-    ajax(url, method, null, success, error);
+    ajax(url, method, "json", null, success, error);
 }

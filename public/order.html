@@ -4,12 +4,6 @@
 <head>
 	<!-- Mobile Specific Meta -->
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<!-- Author Meta -->
-	<meta name="author" content="colorlib">
-	<!-- Meta Description -->
-	<meta name="description" content="">
-	<!-- Meta Keyword -->
-	<meta name="keywords" content="">
 	<!-- meta character set -->
 	<meta charset="UTF-8">
 	<!-- Site Title -->
@@ -19,10 +13,10 @@
 	<!--
 			CSS
 			============================================= -->
-	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/custom-bootstrap.css">
+	<link rel="stylesheet" href="css/custom-media.css">
+	<link rel="stylesheet" href="css/custom-components.css">
 	<link rel="stylesheet" href="css/main.css">
-	<link rel="stylesheet" href="css/customcomponents.css">
 	<link rel="stylesheet" href="css/popup.css">
 </head>
 
@@ -80,9 +74,6 @@
 					<h4>Price IoP:&nbsp;</h4>
 					<span id="iopCurrentlyPrice" class="text-center text-lg text-medium">Valor</span>
 				</div>
-				<div class="row justify-content-start align-items-center">
-					<p>Processing Order Information</p>
-				</div>
 			</div>
 		</section>
 		<!-- End video-sec Area -->
@@ -100,16 +91,13 @@
 								<th class="text-center">Quantity</th>
 								<th class="text-center">USD</th>
 								<th class="text-center">IOPs</th>
-								<th class="text-center">
-									<a class="btn btn-sm btn-outline-danger" href="#">Clear Cart</a>
-								</th>
 							</tr>
 						</thead>
 						<tbody id="tbodyOrder">
 							<tr>
 								<td>
 									<div class="product-item">
-										<img src="img/menu/cappuccino.png" alt="Cappuccino" style="max-height: 64px; max-width: 64px">
+										<img src="img/assets/cappuccino.png" alt="Cappuccino" style="max-height: 64px; max-width: 64px">
 										<span class="text-center text-lg text-medium">Cappuccino</span>
 									</div>
 								</td>
@@ -126,37 +114,6 @@
 								</td>
 								<td class="text-center text-lg text-medium">$12.90</td>
 								<td class="text-center text-lg text-medium">8.75</td>
-								<td class="text-center">
-									<a class="remove-from-cart" href="#" data-toggle="tooltip" title="" data-original-title="Remove item">
-										<i class="icon-cross"></i>
-									</a>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<div class="product-item">
-										<img src="img/menu/espresso.png" alt="Espresso" style="max-height: 64px; max-width: 64px">
-										<span class="text-center text-lg text-medium">Espresso</span>
-									</div>
-								</td>
-								<td class="text-center">
-									<div class="count-input">
-										<select class="form-control">
-											<option>1</option>
-											<option selected="">2</option>
-											<option>3</option>
-											<option>4</option>
-											<option>5</option>
-										</select>
-									</div>
-								</td>
-								<td class="text-center text-lg text-medium">$5.00</td>
-								<td class="text-center">3.74</td>
-								<td class="text-center">
-									<a class="remove-from-cart" href="#" data-toggle="tooltip" title="" data-original-title="Remove item">
-										<i class="icon-cross"></i>
-									</a>
-								</td>
 							</tr>
 						</tbody>
 						<tfoot>
@@ -184,10 +141,6 @@
 				<div class="row">
 					<div class="col-lg-5 col-md-6 col-sm-6">
 						<div class="single-footer-widget">
-							<h6>About Us</h6>
-							<p>
-								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore dolore magna aliqua.
-							</p>
 							<p class="footer-text">
 								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 								Copyright &copy;
@@ -210,7 +163,7 @@
 				<h2>Confirm Payment</h2>
 				<hr />
 				<div class="row">
-					<div class="col-lg-4">
+					<div class="col-lg-6">
 						<div class="row justify-content-start align-items-center">
 							<h4>Items:&nbsp;</h4>
 							<span id="confirmItems" class="text-center text-lg text-medium">Valor</span>
@@ -228,7 +181,7 @@
 					</div>
 					<div class="col-lg-4">
 						<div class="row">
-							<span id="qrcode" class="text-black"> QRCODE WRITER</span>
+							<span id="qrcode" class="text-black"></span>
 						</div>
 						<div class="row">
 							<span id="address" class="text-black">ADDRESS</span>
@@ -248,6 +201,7 @@
 		<script src="js/vendor/bootstrap.min.js"></script>
 		<script src="js/main.js"></script>
 		<script src="js/common.js"></script>
+		<script src="js/qrcode.js"></script>
 		<script src="js/views/order.js"></script>
 	</div>
 </body>

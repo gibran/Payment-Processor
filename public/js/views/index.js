@@ -16,7 +16,7 @@ var buildProductList = function(){
         var cardDiv = $(`<div class='col-lg-4'></div>`)
 
         //TODO: Alterar o css menu-coffee
-        var style = `background: linear-gradient(rgba(255,255,255,1), rgba(255,255,255,.5)), url(img/menu/${product.image}) no-repeat center;`;
+        var style = `background: linear-gradient(rgba(255,255,255,1), rgba(255,255,255,.5)), url(img/assets/${product.image}) no-repeat center;`;
         var productContentDiv = $(`<div id='${product.productId}' class='single-menu' style='${style}'></div>`);
         var productHeaderDiv = $(` <div class='title-div justify-content-between d-flex'></div>`);
 

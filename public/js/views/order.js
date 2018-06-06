@@ -15,7 +15,7 @@ var getIopCurrentlyPrice = function(){
         return false;
     }
 
-    ajax(url, method, null, success, error);
+    ajax(url, method, "json", null, success, error);
 }
 
 var confirmedPay = function() {
@@ -33,6 +33,9 @@ var confirmedPay = function() {
 
         if (data != 'false') {            
             alert('Confirmed');
+
+
+            qrcode.makeCode(data);
             $('#address').text(data);
         }else{
             alert('Error');
@@ -43,7 +46,7 @@ var confirmedPay = function() {
         return false;
     }
 
-    ajax(url, method, message, success, error);
+    ajax(url, 'POST', 'text', message, success, error);
 }
 
 var getProductsInCard = function () {
@@ -87,7 +90,7 @@ var calcultateTotal = function () {
     });
 
     $(`#total td:nth-child(${2})`).text('$' + usdPrice.toFixed(2));
-    $(`#total td:nth-child(${3})`).text(iopPrice.toFixed(8));
+    $(`#total td:nth-child(${3})`).text(iopPrice.toFixed(13));
 
     window.usdPrice = usdPrice;
     window.iopPrice = iopPrice;
@@ -107,7 +110,7 @@ var recalculatePrice = function(){
         item.iopPrice = (item.usdPrice / window.iopUnitPrice);
 
         usdPrice.text('$' + item.usdPrice.toFixed(2));
-        iopPrice.text(item.iopPrice.toFixed(2));
+        iopPrice.text(item.iopPrice.toFixed(13));
     });
 }
 
@@ -122,7 +125,7 @@ var buildOrderedList = function () {
 
         var columnImage = $(`<td>
         <div class="product-item">
-            <img src="img/menu/${item.image}" alt="${item.name}" style="max-height: 64px; max-width: 64px">
+            <img src="img/assets/${item.image}" alt="${item.name}" style="max-height: 64px; max-width: 64px">
             <span class="text-center text-lg text-medium">${item.name}</span>
         </div>
         </td>`);
@@ -137,13 +140,11 @@ var buildOrderedList = function () {
 
         var columnPrice = $(`<td class="text-center text-lg text-medium" id='usdPrice'>$${item.usdPrice}</td>`);
         var columnIoPPrice = $(`<td class="text-center text-lg text-medium iopPrice" id='iopPrice'>${item.iopPrice}</td>`);
-        var columnRemoveItem = $(`<td class="text-center"><a class="remove-from-cart" href="#" data-toggle="tooltip" title="" data-original-title="Remove item"><i class="icon-cross"></i></a></td>`);
 
         rowItem.append(columnImage);
         rowItem.append(columnQtd);
         rowItem.append(columnPrice);
         rowItem.append(columnIoPPrice);
-        rowItem.append(columnRemoveItem);
 
         $("#tbodyOrder").append(rowItem);
     });
@@ -164,7 +165,7 @@ var buildOrderedList = function () {
             item.iopPrice = (item.usdPrice / window.iopUnitPrice);
 
             usdPrice.text('$' + item.usdPrice.toFixed(2));
-            iopPrice.text(item.iopPrice.toFixed(2));
+            iopPrice.text(item.iopPrice.toFixed(13));
         });
 
         //Recalculate total
@@ -187,6 +188,7 @@ var buildOrderedList = function () {
 }
 
 window.orderedList = [];
+var qrcode = new QRCode("qrcode", {	width: 180, height: 180 });
 
 getIopCurrentlyPrice();
 setInterval(getIopCurrentlyPrice, 60000);

@@ -9,9 +9,7 @@ var submitForm = function () {
     };
 
     var success = function(response){
-        var data = parseBoolean(response);
-
-        if (!data) {
+        if (!response) {
             $("#message").text('User or password invalid.');
             $("#message").show();
         }else{
@@ -25,7 +23,7 @@ var submitForm = function () {
         return false;
     }
 
-    ajax(url, method, message, success, error);
+    ajax(url, method, "json", message, success, error);
 }
 
 var initialize = function () {
