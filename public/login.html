@@ -1,56 +1,123 @@
-<html>
-    <head>
-        <title>POS</title>
-        <link rel="stylesheet" type="text/css" href="/login.css">
-    </head>
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
 
-    <div id="page">
-        <div id="textDiv">
-            <h1 id="text">Login</h1>
-        </div>
-        <div id="formDiv">
-            <form>
-                Username: <input type="text" id="user">
-                Password: <input type="password" id="pass">
-            </form>
-            <button onclick="submitForm()" id="submitButton">Submit</button>
-        </div>
-    </div>
+<head>
+	<!-- Mobile Specific Meta -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- meta character set -->
+	<meta charset="UTF-8">
+	<!-- Site Title -->
+	<title>Coffee</title>
 
-    <script>
-        function submitForm() {
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", "/users/login", true);
-            xhr.setRequestHeader("Content-type", "application/json");
+	<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
+	<!--
+	CSS
+	============================================= -->
+	<link rel="stylesheet" href="css/custom-bootstrap.css">
+	<link rel="stylesheet" href="css/custom-media.css">
+	<link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="css/popup.css">
+</head>
 
-            xhr.onreadystatechange = (() => {
-                if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                    if (xhr.responseText === "true") {
-                        window.location.href = "/";
-                        return;
-                    }
-                    document.write("Invalid login.");
-                }
-            });
-            xhr.send(JSON.stringify({
-                user: document.getElementById("user").value,
-                pass: document.getElementById("pass").value
-            }));
-        }
+<body>
 
-        function handleEnter(event) {
-            if (event.keyCode === 13) {
-                event.preventDefault();
-                submitForm();
-            }
-        }
-        function addListeners(domObj) {
-            domObj.addEventListener("keydown", handleEnter);
-            domObj.addEventListener("keyup", handleEnter);
-            domObj.addEventListener("keypress", handleEnter);
-            domObj.addEventListener("input", handleEnter);
-        }
-        addListeners(document.getElementById("user"));
-        addListeners(document.getElementById("pass"));
-    </script>
+	<header id="header">
+		<div class="header-top">
+			<div class="container">
+				<div class="row justify-content-end">
+					<div class="col-lg-8 col-sm-4 col-8 header-top-right no-padding">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="row align-items-center justify-content-between d-flex">
+				<div id="logo">
+					<a href="index.html">
+						<img src="img/logo.png" alt="" title="" />
+					</a>
+				</div>
+			</div>
+		</div>
+	</header>
+	<!-- #header -->
+
+
+	<!-- start banner Area -->
+	<section class="banner-area" id="home">
+		<div class="container">
+			<div class="row fullscreen d-flex align-items-center justify-content-start">
+				<div class="banner-content col-lg-7">
+					<h6 class="text-white text-uppercase">Now you can feel the Energy</h6>
+					<h1>
+						Start your day with
+						<br> a black Coffee
+					</h1>
+					<a href="#" data-popup-open="popup-1" class="primary-btn text-uppercase">Login</a>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- End banner Area -->
+
+	<!-- start Login Popup -->
+	<div class="popup" data-popup="popup-1">
+		<div class="popup-inner">
+			<h2>Login</h2>
+			<hr />
+			<div class="row">
+				<div class="col-form-label col-md-12">
+					<input type="text" id="username" placeholder="Username" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'"
+					    required class="single-input">
+				</div>
+				<div class="col-form-label col-md-12">
+					<input type="password" id="password" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'"
+					    required class="single-input">
+				</div>
+				<div class="col-form-label col-md-12">
+					<span id="message" style="display: none;" class="border-danger text-danger text-center col-lg-12">teste</span>
+				</div>
+			</div>
+			<div class="row float-right">
+				<div class="button-group-area mt-40">
+					<button type="button" onclick="javascript:submitForm();" class="genric-btn primary e-large">Confirm</button>
+				</div>
+			</div>
+
+			<a class="popup-close" data-popup-close="popup-1" href="#">x</a>
+		</div>
+	</div>
+
+	<!-- End Login Popup -->
+
+	<!-- start footer Area -->
+	<footer class="footer-area section-gap">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-5 col-md-6 col-sm-6">
+					<div class="single-footer-widget">
+						<p class="footer-text">
+							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+							Copyright &copy;
+							<script>
+								document.write(new Date().getFullYear());
+							</script> All rights reserved | This template is made with
+							<i class="fa fa-heart-o" aria-hidden="true"></i> by
+							<a href="https://colorlib.com" target="_blank">Colorlib</a>
+							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!-- End footer Area -->
+
+	<script src="js/vendor/jquery-2.2.4.min.js"></script>
+	<script src="js/vendor/bootstrap.min.js"></script>
+	<script src="js/main.js"></script>
+	<script src="js/views/login.js"></script>
+	<script src="js/common.js"></script>
+</body>
+
 </html>
