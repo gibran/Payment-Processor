@@ -20,9 +20,9 @@ var cancelOrder = function(address){
     POST("/orders/cancel", message, success, error);
 }
 
-var processOrderList = function (url, elementName, enabledCancel) {
+var processOrderList = function (url, elementName) {
     var success = function (data) {
-        buildingTable(data, elementName, enabledCancel);
+        buildingTable(data, elementName);
     }
 
     var error = function (response) {
@@ -32,7 +32,7 @@ var processOrderList = function (url, elementName, enabledCancel) {
     GET(url, null, success, error);
 }
 
-var buildingTable = function (data, elementName, enabledCancel) {
+var buildingTable = function (data, elementName) {
     $(`#${elementName}`).empty();
 
     $.each(data, function (index, item) {
@@ -49,20 +49,18 @@ var buildingTable = function (data, elementName, enabledCancel) {
         rowItem.append(columnUsd);
         rowItem.append(columnIoP);
 
-        if (enabledCancel) {
+        if (item.success == undefined)
             var columnButton = $(`<td class="text-center text-lg text-medium"><button type="button" class="genric-btn primary small" onclick="javascript:cancelOrder('${index}')">Cancel</button></td>`);
             rowItem.append(columnButton);
             
-        }
-
         $(`#${elementName}`).append(rowItem);
     });
 }
 
 var initialize = function () {
-    processOrderList("/orders/active", 'tbodyActiveOrder', true);
-    processOrderList("/orders/succeeded", 'tbodySucceededOrder', false);
-    processOrderList("/orders/failed", 'tbodyFailedOrder', false);
+    processOrderList("/orders/active", 'tbodyActiveOrder');
+    processOrderList("/orders/succeeded", 'tbodySucceededOrder');
+    processOrderList("/orders/failed", 'tbodyFailedOrder');
 }
 
 initialize();

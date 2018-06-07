@@ -38,7 +38,7 @@ var confirmedOrder = function () {
 
     var message = {
         amount: window.iopPrice,
-        note: `Coffee sale by ${localStorage.getItem('USERNAME')}`
+        note: `Product sale by ${localStorage.getItem('USERNAME')}`
     };
 
     POST("/orders/new", message, success, error);
@@ -168,9 +168,6 @@ var buildOrderedList = function () {
     });
 
 
-}
-
-var openPopup = function () {
 }
 
 var initialize = function () {
