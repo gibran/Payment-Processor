@@ -152,15 +152,18 @@ module.exports = async (config) => {
         //Validate the input.
         if (typeof(req.body.amount) !== "number") {
             res.end("false");
+            return;
         }
         var amount = parseFloat(req.body.amount.toPrecision(4));
 
-        if (amount <= 0) {
+        if (amount <= 0.01) {
             res.end("false");
+            return;
         }
 
         if (typeof(req.body.note) !== "string") {
             res.end("false");
+            return;
         }
 
         //Emit the new order event.
@@ -174,9 +177,11 @@ module.exports = async (config) => {
         //Validate the input.
         if (typeof(req.body.address) !== "string") {
             res.end("false");
+            return;
         }
         if (typeof(orders[req.body.address]) !== "object") {
             res.end("false");
+            return;
         }
 
         //Emit the cancel event and tell the user it worked.
