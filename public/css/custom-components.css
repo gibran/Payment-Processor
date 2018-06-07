@@ -13,7 +13,22 @@
 }
 
 #qrcode {
-    width:190px;
-    height:190px;
-    margin-top:15px;
-  }
+    width: 190px;
+    height: 190px;
+    margin-top: 15px;
+}
+
+.table tbody tr>td.success {
+    background-color: #acf19182 !important;
+    padding: 5px;
+}
+
+.table tbody tr>td.cancel {
+    background-color: #e77474a8 !important;
+    padding: 5px;
+}
+
+.table tbody tr>td.active {
+    background-color: #fff !important;
+    padding: 5px;
+}
