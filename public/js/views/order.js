@@ -1,8 +1,5 @@
-var getIopCurrentlyPrice = function(){
-    var url = "/iop/price";
-    var method = "GET";
-
-    var success = function(response){
+var getIopCurrentlyPrice = function () {
+    var success = function (response) {
         var data = parseFloat(response);
 
         window.iopUnitPrice = data;
@@ -11,42 +8,40 @@ var getIopCurrentlyPrice = function(){
         calcultateTotal();
     }
 
-    var error = function(response){
+    var error = function (response) {
         return false;
     }
 
-    ajax(url, method, "json", null, success, error);
+    GET("/iop/price", null, success, error);
 }
 
-var confirmedPay = function() {
-    var result = false;
+var confirmedPay = function () {
+    $('[data-popup=popup-1]').fadeOut(350);
+}
 
-    var url = "/orders/new";
-    var method = "POST";
+var confirmedOrder = function () {
+    var success = function (response) {
+        var data = response;
+
+        if (data != 'false') {
+            $('[data-popup=popup-1]').fadeIn(350);
+            qrcode.makeCode(data);
+            $('#address').text(data);
+        } else {
+            alert('Error');
+        }
+    }
+
+    var error = function (response) {
+        return false;
+    }
+
     var message = {
         amount: window.iopPrice,
         note: `Coffee sale by ${localStorage.getItem('USERNAME')}`
     };
 
-    var success = function(response){
-        var data = response;
-
-        if (data != 'false') {            
-            alert('Confirmed');
-
-
-            qrcode.makeCode(data);
-            $('#address').text(data);
-        }else{
-            alert('Error');
-        }
-    }
-
-    var error = function(response){
-        return false;
-    }
-
-    ajax(url, 'POST', 'text', message, success, error);
+    POST("/orders/new", message, success, error);
 }
 
 var getProductsInCard = function () {
@@ -96,11 +91,11 @@ var calcultateTotal = function () {
     window.iopPrice = iopPrice;
 
     $('#confirmItems').text(window.orderedList.length);
-    $('#confirmUsdPrice').text('$'+ usdPrice);
+    $('#confirmUsdPrice').text('$' + usdPrice);
     $('#confirmIopPrice').text(iopPrice);
 }
 
-var recalculatePrice = function(){
+var recalculatePrice = function () {
     window.orderedList.forEach(item => {
         var tr = $(`#${item.productId}`);
         var usdPrice = $(tr).find('#usdPrice');
@@ -172,13 +167,13 @@ var buildOrderedList = function () {
         calcultateTotal();
     });
 
-    //----- OPEN
-    $('[data-popup-open]').on('click', function (e) {
-        var targeted_popup_class = jQuery(this).attr('data-popup-open');
-        $('[data-popup="' + targeted_popup_class + '"]').fadeIn(350);
-        e.preventDefault();
-    });
 
+}
+
+var openPopup = function () {
+}
+
+var initialize = function () {
     //----- CLOSE
     $('[data-popup-close]').on('click', function (e) {
         var targeted_popup_class = jQuery(this).attr('data-popup-close');
@@ -188,8 +183,12 @@ var buildOrderedList = function () {
 }
 
 window.orderedList = [];
-var qrcode = new QRCode("qrcode", {	width: 180, height: 180 });
+var qrcode = new QRCode("qrcode", {
+    width: 180,
+    height: 180
+});
 
+initialize();
 getIopCurrentlyPrice();
 setInterval(getIopCurrentlyPrice, 60000);
 buildOrderedList();
