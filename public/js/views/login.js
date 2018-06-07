@@ -1,13 +1,4 @@
 var submitForm = function () {
-    var result = false;
-
-    var url = "/users/login";
-    var method = "POST";
-    var message = { 
-        user: $('#username').val(),
-        pass: $('#password').val()
-    };
-
     var success = function(response){
         if (!response) {
             $("#message").text('User or password invalid.');
@@ -23,7 +14,11 @@ var submitForm = function () {
         return false;
     }
 
-    ajax(url, method, "json", message, success, error);
+    var message = { 
+        user: $('#username').val(),
+        pass: $('#password').val()
+    };
+    POST("/users/login", message, success, error);
 }
 
 var initialize = function () {
@@ -32,6 +27,7 @@ var initialize = function () {
         var targeted_popup_class = jQuery(this).attr('data-popup-open');
         $('[data-popup="' + targeted_popup_class + '"]').fadeIn(350);
         e.preventDefault();
+        $('#username').focus();
     });
 
     //----- CLOSE

@@ -17,7 +17,6 @@
 	<link rel="stylesheet" href="css/custom-media.css">
 	<link rel="stylesheet" href="css/custom-components.css">
 	<link rel="stylesheet" href="css/main.css">
-	<link rel="stylesheet" href="css/popup.css">
 </head>
 
 <body>
@@ -37,12 +36,11 @@
 						<img src="img/logo.png" alt="" title="" />
 					</a>
 				</div>
-				<h2 class="text-white">Order</h2>
+				<h2 class="text-white">History</h2>
 				<nav id="nav-menu-container">
 					<ul class="nav-menu">
 						  <li class="text-white">Hi <span id="username" class="text-white"></span></li>
-						  <li class="menu-active"><a href="index.html">Coffee</a></li>
-						  <li><a href="history.html">History</a></li>
+						  <li><a href="index.html">Coffee</a></li>
 						<li><a href="#" onclick="javascript:logout();">Logout</a></li>
 					</ul>
 				</nav>
@@ -68,47 +66,59 @@
 	<!-- About Generic Start -->
 	<div class="main-wrapper">
 
-		<!-- Start video-sec Area -->
-		<section class="iop-informations pt-50" id="about">
-			<div class="container">
-				<div class="row justify-content-start align-items-center">
-					<h4>Price IoP:&nbsp;</h4>
-					<span id="iopCurrentlyPrice" class="text-center text-lg text-medium">Valor</span>
-				</div>
-			</div>
-		</section>
-		<!-- End video-sec Area -->
-
 		<!-- Start OrderList Area -->
 		<section class="about-ordered-list">
 			<div class="container border-top-generic">
-				<h3 class="about-title mb-30">Ordered List</h3>
+				<h3 class="about-title mb-30">Active Orders</h3>
 				<div class="row">
-
 					<table class="table">
 						<thead>
 							<tr>
-								<th>Product Name</th>
-								<th class="text-center">Quantity</th>
+								<th class="text-center">Hora</th>
+								<th>Address</th>
+								<th class="text-center">Note</th>
+								<th class="text-center">USD</th>
+								<th class="text-center">IOPs</th>
+								<th class="text-center"></th>
+							</tr>
+						</thead>
+						<tbody id="tbodyActiveOrder">
+						</tbody>
+					</table>
+				</div>
+
+				<h3 class="about-title mb-30">Succeeded Orders</h3>
+				<div class="row">
+					<table class="table">
+						<thead>
+							<tr>
+								<th class="text-center">Hora</th>
+								<th>Address</th>
+								<th class="text-center">Note</th>
 								<th class="text-center">USD</th>
 								<th class="text-center">IOPs</th>
 							</tr>
 						</thead>
-						<tbody id="tbodyOrder">
+						<tbody id="tbodySucceededOrder">
 						</tbody>
-						<tfoot>
-							<tr id="total">
-								<td colspan="2">Total</td>
-								<td id="usdPrice" class="text-center">$0</td>
-								<td id="iopPrice" class="text-center">0</td>
-							</tr>
-						</tfoot>
 					</table>
 				</div>
-				<div class="row float-right">
-					<div class="button-group-area mt-40">
-						<a href="#" onclick="javascript:confirmedOrder();" class="genric-btn primary e-large">Confirm</a>
-					</div>
+
+				<h3 class="about-title mb-30">Failed Orders</h3>
+				<div class="row">
+					<table class="table">
+						<thead>
+							<tr>
+								<th class="text-center">Hora</th>
+								<th>Address</th>
+								<th class="text-center">Note</th>
+								<th class="text-center">USD</th>
+								<th class="text-center">IOPs</th>
+							</tr>
+						</thead>
+						<tbody id="tbodyFailedOrder">
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</section>
@@ -137,51 +147,11 @@
 		</footer>
 		<!-- End footer Area -->
 
-		<div class="popup" data-popup="popup-1">
-			<div class="popup-inner">
-				<h2>Confirm Payment</h2>
-				<hr />
-				<div class="row">
-					<div class="col-lg-6">
-						<div class="row justify-content-start align-items-center">
-							<h4>Items:&nbsp;</h4>
-							<span id="confirmItems" class="text-center text-lg text-medium">Valor</span>
-						</div>
-
-						<div class="row justify-content-start align-items-center">
-							<h4>Price USD:&nbsp;</h4>
-							<span id="confirmUsdPrice" class="text-center text-lg text-medium">Valor</span>
-						</div>
-
-						<div class="row justify-content-start align-items-center">
-							<h4>Price IoP:&nbsp;</h4>
-							<span id="confirmIopPrice" class="text-center text-lg text-medium">Valor</span>
-						</div>
-					</div>
-					<div class="col-lg-4">
-						<div class="row">
-							<span id="qrcode" class="text-black"></span>
-						</div>
-						<div class="row">
-							<span id="address" class="text-black">ADDRESS</span>
-						</div>
-					</div>
-				</div>
-				<div class="row float-right">
-					<div class="button-group-area mt-40">
-						<button type="button" onclick="javascript:confirmedPay();" class="genric-btn primary e-large">Paid</button>
-					</div>
-				</div>
-				<a class="popup-close" data-popup-close="popup-1" href="#">x</a>
-			</div>
-		</div>
-
 		<script src="js/vendor/jquery-2.2.4.min.js"></script>
 		<script src="js/vendor/bootstrap.min.js"></script>
 		<script src="js/main.js"></script>
 		<script src="js/common.js"></script>
-		<script src="js/qrcode.js"></script>
-		<script src="js/views/order.js"></script>
+		<script src="js/views/history.js"></script>
 	</div>
 </body>
 

@@ -111,6 +111,11 @@ textarea {
     line-height: 1.5;
 }
 
+img {
+    vertical-align: middle;
+    border-style: none;
+  }
+
 footer,
 header,
 main,
