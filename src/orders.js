@@ -24,7 +24,7 @@ async function archiveOrder(address, success) {
     //Stop tracking the address.
     await coin.untrackAddress(address);
     //Move it from current orders to archived.
-    fs.archiveOrder(address, orders[address], success);
+    fs.orders.archive(address, orders[address], success);
     //Delete it from the cache.
     delete orders[address];
     //Emit the order and it's status.
@@ -61,7 +61,7 @@ module.exports = async (config) => {
                 time: (new Date()).getTime()
             }
             //Save it to disk.
-            fs.saveOrder(address, orders[address]);
+            fs.orders.save(address, orders[address]);
 
             //Return the address and order.
             return {
