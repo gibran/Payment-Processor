@@ -24,8 +24,8 @@ module.exports = async (config) => {
 
     //Init the vars that handle orders.
     orders = {};
-    succeeded = [];
-    failed = [];
+    succeeded = {};
+    failed = {};
 
     //Handle events.
     emitter.on("created", async (address, order, cb) => {
@@ -48,15 +48,15 @@ module.exports = async (config) => {
     emitter.on("success", async (address) => {
         console.log("Order " + address + " succeeded.");
 
-        //When an order succeeds, move it over to the succeeded array.
-        succeeded.push(address);
+        //When an order succeeds, move it over to the succeeded object.
+        succeeded[address] = orders[address];
         delete orders[address];
     });
     emitter.on("failure", async (address) => {
         console.log("Order " + address + "failed.");
 
-        //When an order fails, move it over to the failed array.
-        failed.push(address);
+        //When an order fails, move it over to the failed object.
+        failed[address] = orders[address];
         delete orders[address];
     });
 
@@ -186,7 +186,7 @@ module.exports = async (config) => {
 
     //Route to create a new product.
     express.post("/products/new", async (req, res) => {
-        
+
     });
 
     //Route to delete a product.
