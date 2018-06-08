@@ -3,18 +3,6 @@ var getProducts = function(){
     return result;
 }
 
-var processOrderList = function (url) {
-    var success = function (data) {
-        buildingTable(data, 'tbOrders');
-    }
-
-    var error = function (response) {
-        return false;
-    }
-
-    GET(url, null, success, error);
-}
-
 var buildingTable = function (data, elementName) {
     $.each(data, function (index, item) {
         var rowItem = $(`<tr id='${index}'></tr>`);
@@ -32,14 +20,15 @@ var buildingTable = function (data, elementName) {
     });
 }
 
-var getAllOrders = function () {
-    $(`#tbOrders`).empty();
-    processOrderList("/orders/active");
-    processOrderList("/orders/succeeded");
-    processOrderList("/orders/failed");
-}
-
 var order = function(){
+    debugger;
+
+    if (window.orderList.length == 0)
+    {
+        alert('Inform the product to ordered');
+        return;
+    }
+
     localStorage.setItem('CARD',  JSON.stringify( window.orderList ));
     window.location.href = "order.html";
 }
@@ -50,15 +39,19 @@ var addProductInOrder = function (productId, qtdeValue){
     item.qtd = qtdeValue;
 
     var itemFounded = false;
-    window.orderList.forEach(item => {
+
+    $.each(window.orderList, function(index, item){
         if (item.productId == productId)
         {
-            item.qtd = qtdeValue;
             itemFounded = true;
+            if (qtdeValue > 0)
+                item.qtd = qtdeValue;
+            else
+                window.orderList.splice(index, 1);
         }
     });
 
-    if (!itemFounded)
+    if (!itemFounded && item.qtd > 0)
         window.orderList.push(item);
 }
 
@@ -101,6 +94,3 @@ var buildProductList = function(){
 window.currentlyOrder = [];
 window.orderList = [];
 buildProductList();
-getAllOrders();
-
-//setInterval(getAllOrders, 5000);
