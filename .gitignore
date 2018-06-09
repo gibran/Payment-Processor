@@ -1,2 +1,7 @@
 node_modules
 data
+
+build/
+main-win.exe
+main-linux
+main-macos
