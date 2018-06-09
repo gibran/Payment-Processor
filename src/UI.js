@@ -53,7 +53,7 @@ module.exports = async (config) => {
         delete orders[address];
     });
     emitter.on("failure", async (address) => {
-        console.log("Order " + address + "failed.");
+        console.log("Order " + address + " failed.");
 
         //When an order fails, move it over to the failed object.
         failed[address] = orders[address];
@@ -92,14 +92,14 @@ module.exports = async (config) => {
         res.end(JSON.stringify(succeeded));
     });
 
-    //Route to get the list of all products.
-    express.get("/products/list", async (req, res) => {
-
-    });
-
     //Route to get the failed orders.
     express.get("/orders/failed", async (req, res) => {
         res.end(JSON.stringify(failed));
+    });
+
+    //Route to get the list of all products.
+    express.get("/products/list", async (req, res) => {
+        res.end(JSON.stringify(await fs.products.load()));
     });
 
     //POST route to login.
@@ -191,17 +191,31 @@ module.exports = async (config) => {
 
     //Route to create a new product.
     express.post("/products/new", async (req, res) => {
-
+        res.end((await fs.products.add(req.body.product)).toString());
     });
 
     //Route to delete a product.
     express.post("/products/delete", async (req, res) => {
+        //Filter input.
+        if (typeof(req.body.index) !== "number") {
+            res.end("false");
+            return;
+        }
+        if (req.body.index < 0) {
+            res.end("false");
+            return;
+        }
+        if (typeof(req.body.name) !== "string") {
+            res.end("false");
+            return;
+        }
 
+        res.end((await fs.products.delete(req.body.index, req.body.name)).toString());
     });
 
     //Route to buy some products.
     express.post("/products/buy", async (req, res) => {
-
+        //req.body.products
     });
 
     //POST route in progress to update the settings.
