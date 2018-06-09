@@ -13,8 +13,7 @@ var zeroConf, orders;
 //Updates the zeroConf amount in IOP. Runs every half hour.
 async function updateZeroConf() {
     zeroConf = parseFloat(
-        (await cmc.usdToIOP(zeroConfUSD))
-        .toPrecision(4)
+        cmc.iopFormat(await cmc.usdToIOP(zeroConfUSD))
     );
 }
 setInterval(updateZeroConf, 30*60*1000);
@@ -56,7 +55,7 @@ module.exports = async (config) => {
             //Create the order object. Amount, USD value, note, and time index.
             orders[address] = {
                 amount: amount,
-                usd: parseFloat((await cmc.iopToUSD(amount)).toPrecision(2)),
+                usd: await cmc.iopToUSD(amount),
                 note: note,
                 time: (new Date()).getTime()
             }

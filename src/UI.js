@@ -154,7 +154,7 @@ module.exports = async (config) => {
             res.end("false");
             return;
         }
-        var amount = parseFloat(req.body.amount.toPrecision(4));
+        var amount = parseFloat(cmc.iopFormat(req.body.amount));
 
         if (amount <= 0.01) {
             res.end("false");
@@ -210,12 +210,35 @@ module.exports = async (config) => {
             return;
         }
 
-        res.end((await fs.products.delete(req.body.index, req.body.name)).toString());
+        res.end((await fs.products.remove(req.body.index, req.body.name)).toString());
     });
 
     //Route to buy some products.
     express.post("/products/buy", async (req, res) => {
-        //req.body.products
+        if (typeof(req.body.products) !== "object") {
+            res.end("false");
+            return;
+        }
+
+        var products = await fs.products.load();
+        for (var i in req.body.products) {
+            if (typeof(req.body.products[i]) !== "number") {
+                res.end("false");
+                return;
+            }
+            if (!((0 <= req.body.products[i]) && (req.body.products[i] < products.length))) {
+                res.end("false");
+                return;
+            }
+        }
+
+        var usd = 0;
+        for (var i in req.body.products) {
+            fs.products.bought(req.body.products[i], 1);
+            usd += products[req.body.products[i]].usdCost;
+        }
+
+        res.end(cmc.iopFormat(await cmc.usdToIOP(usd)));
     });
 
     //POST route in progress to update the settings.

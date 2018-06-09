@@ -3,8 +3,6 @@ var request = require("request-promise");
 var login = require("./login.js");
 
 module.exports = async (token, user, pass) => {
-    var token = await login("admin", "pass");
-
     var changePassword = await request({
         method: "POST",
         url: "http://localhost:8080/users/changePassword",
