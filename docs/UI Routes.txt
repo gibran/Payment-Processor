@@ -6,6 +6,8 @@ GET
     /file.html            -- Renders public/file.html.
 
     /iop/price            -- Returns the price of IOP in USD as raw data.
+	
+	/users/list           -- Returns the usernames for every user as a JSON array.
 
     /orders/active        -- Returns all active orders as a JSON object.
     /orders/succeeded     -- Returns all succeeded orders as a JSON object.
