@@ -142,3 +142,7 @@
     height: 30px;
     background-color: blue;
   }
+
+  input:invalid {
+    border: 1px solid #f11010 !important;
+  }

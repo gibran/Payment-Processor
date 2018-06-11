@@ -1,6 +1,15 @@
 var getProducts = function(){
-    var result = JSON.parse('[{"productId":"1","name":"Cappuccino","price":"12","image":"cappuccino.png"},{"productId":"2","name":"Americano","price":"7","image":"americano.png"},{"productId":"3","name":"Espresso","price":"5","image":"espresso.png"}]');
-    return result;
+    var success = function (data) {
+
+        if (data != null)
+            buildProductList(data);
+    }
+
+    var error = function (response) {
+        return false;
+    }
+
+    GET("/products/list", null, success, error);
 }
 
 var buildingTable = function (data, elementName) {
@@ -21,8 +30,6 @@ var buildingTable = function (data, elementName) {
 }
 
 var order = function(){
-    debugger;
-
     if (window.orderList.length == 0)
     {
         alert(`You didn't select any products`);
@@ -55,19 +62,18 @@ var addProductInOrder = function (productId, qtdeValue){
         window.orderList.push(item);
 }
 
-var buildProductList = function(){
-    var products = getProducts();
+var buildProductList = function(products){
     $("#products").empty();
 
-    products.forEach(product => {
+    $.each(products, function(index, product){
         var cardDiv = $(`<div class='col-lg-4'></div>`)
 
-        var style = `background: linear-gradient(rgba(255,255,255,1), rgba(255,255,255,.5)), url(img/assets/${product.image}) no-repeat center;`;
-        var productContentDiv = $(`<div id='${product.productId}' class='single-menu productId' style='${style}'></div>`);
+        var style = `background: linear-gradient(rgba(255,255,255,1), rgba(255,255,255,.5)), url(img/assets/${product.assetPath}) no-repeat center;`;
+        var productContentDiv = $(`<div id='${index}' class='single-menu productId' style='${style}'></div>`);
         var productHeaderDiv = $(` <div class='title-div justify-content-between d-flex'></div>`);
 
-        var productData = $(`<h4> ${product.name} </h4><p class='price float-right'> $${product.price} </p>`);
-        var productBody = $(`<p>Usage of the Internet is becoming more common due to rapid advance.</p>
+        var productData = $(`<h4> ${product.name} </h4><p class='price float-right'> $${product.usdCost} </p>`);
+        var productBody = $(`<p>&nbsp;&nbsp;</p>
                     <p class='float-right'>
 					<input type="number" name="qtde" min="0" max="10" value="0" class="single-input-number-primary quantity">
                     </p>
@@ -93,4 +99,4 @@ var buildProductList = function(){
 
 window.currentlyOrder = [];
 window.orderList = [];
-buildProductList();
+getProducts();
