@@ -36,7 +36,7 @@
                         <img src="../img/logo.png" alt="" title="" />
                     </a>
                 </div>
-                <h2 class="text-white">List of Products</h2>
+                <h2 class="text-white">New User</h2>
                 <nav id="nav-menu-container">
                     <ul class="nav-menu">
                         <li class="text-white">Hi
@@ -75,20 +75,17 @@
         <!-- Start OrderList Area -->
         <section class="about-ordered-list">
             <div class="container border-top-generic">
-                <h3 class="about-title mb-30">Product</h3>
+                <h3 class="about-title mb-30">User</h3>
                 <div class="row">
 
-                    <form id="newProductForm" method="GET" action="index.html" class="col-lg-6">
+                    <form id="newUserForm" method="GET" action="index.html" class="col-lg-6">
                         <div class="col-form-label col-md-12">
-                            <input type="text" id="productName" placeholder="Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Name'"
+                            <input type="text" id="user" placeholder="Username" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'"
                                 required class="single-input">
                         </div>
                         <div class="col-form-label col-md-12">
-                            <input type="text" id="assetPath" placeholder="Image Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Image Name'"
+                            <input type="password" id="pass" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'"
                                 required class="single-input">
-                        </div>
-                        <div class="col-form-label col-md-12">
-                            <input type="number" id="usdCost" required class="single-input" min="0.1" value="0" step="0.01" pattern="^\d+(?:\.\d{1,2})?$">
                         </div>
                         <div class="col-form-label col-md-12">
                             <button type="button" onclick="javascript:beforeSave();" class="genric-btn primary float-right">Save</button>
@@ -110,7 +107,7 @@
         <script src="../js/vendor/jquery-2.2.4.min.js"></script>
         <script src="../js/main.js"></script>
         <script src="../js/common.js"></script>
-        <script src="../js/views/products/detail.js"></script>
+        <script src="../js/views/users/detail.js"></script>
     </div>
 </body>
 
