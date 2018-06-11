@@ -82,6 +82,11 @@ module.exports = async (config) => {
         res.end((await cmc.getIOPPrice()).toString());
     });
 
+    //Route to get an array of all usernames.
+    express.get("/users/list", async (req, res) => {
+        res.end(JSON.stringify(await accounts.list()));
+    });
+
     //GET route to get the orders.
     express.get("/orders/active", async (req, res) => {
         res.end(JSON.stringify(orders));
