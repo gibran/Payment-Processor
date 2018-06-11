@@ -1,0 +1,21 @@
+{
+    "id": "iop.pos.terminal",
+    "name": "IOP PoS Terminal",
+    "description": "This is a point of sale terminal for use by shops to accept IOP for their product.",
+    "labels": [
+        "app", "point-of-sale", "terminal"
+    ],
+    "tags": [
+        "iop", "community"
+    ],
+    "repository": "https://github.com/kayabaNerve/Payment-Processor",
+    "ports": [{
+        "name": "ui",
+        "port": 8080,
+        "protocol": "tcp",
+        "type": "local"
+    }],
+    "env": {},
+    "volumes": ["/home/posTerminal/app"], ?????
+    "image": "???????????????????????"
+}

@@ -23,8 +23,8 @@ POST
     /orders/new           -- Creates a new order using {amount, note}. Returns the address to pay to/the order is indexed under.
     /orders/cancel        -- Cancels an order using {address}. Returns true/false.
 
-    /products/new         -- Creates a new product using {name, assetPath, usdCost}. Returns true.
-    /products/delete      -- Deletes a product {index, name}. Returns true/false.
+    /products/new         -- Creates a new product using {name, assetPath, usdCost}. Returns true/false.
+    /products/delete      -- Deletes a product using {index, name}. Returns true/false.
     /products/buy         -- Takes in an array of objects that are {index, name}. Returns the total cost in IOP and marks them as purchased in the DB.
 
     /settings/update      -- In progress.

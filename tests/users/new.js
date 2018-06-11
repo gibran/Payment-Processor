@@ -1,9 +1,13 @@
 var request = require("request-promise");
 
-var user = "admin";
+var login = require("./login.js");
+
+var user = "adminTwo";
 var pass = "pass";
 
 (async () => {
+    var token = await login("admin", "pass");
+
     var newUser = await request({
         method: "POST",
         url: "http://localhost:8080/users/new",
@@ -12,7 +16,7 @@ var pass = "pass";
             pass: pass
         },
         json: true,
-        headers: {Cookie: "token=admin"}
+        headers: {Cookie: "token=" + token}
     });
 
     if (newUser) {

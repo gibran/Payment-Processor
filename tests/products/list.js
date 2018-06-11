@@ -4,15 +4,8 @@ var login = require("../users/login.js");
 
 module.exports = async (token) => {
     var res = await request({
-        method: "POST",
-        url: "http://localhost:8080/products/new",
-        body: {
-            product: {
-                name: "Product 2",
-                usdCost: 3
-            }
-        },
-        json: true,
+        method: "GET",
+        url: "http://localhost:8080/products/list",
         headers: {Cookie: "token=" + token}
     });
 

@@ -53,7 +53,7 @@ module.exports = async (config) => {
         delete orders[address];
     });
     emitter.on("failure", async (address) => {
-        console.log("Order " + address + "failed.");
+        console.log("Order " + address + " failed.");
 
         //When an order fails, move it over to the failed object.
         failed[address] = orders[address];
@@ -92,14 +92,14 @@ module.exports = async (config) => {
         res.end(JSON.stringify(succeeded));
     });
 
-    //Route to get the list of all products.
-    express.get("/products/list", async (req, res) => {
-
-    });
-
     //Route to get the failed orders.
     express.get("/orders/failed", async (req, res) => {
         res.end(JSON.stringify(failed));
+    });
+
+    //Route to get the list of all products.
+    express.get("/products/list", async (req, res) => {
+        res.end(JSON.stringify(await fs.products.load()));
     });
 
     //POST route to login.
@@ -152,15 +152,18 @@ module.exports = async (config) => {
         //Validate the input.
         if (typeof(req.body.amount) !== "number") {
             res.end("false");
+            return;
         }
-        var amount = parseFloat(req.body.amount.toPrecision(4));
+        var amount = parseFloat(cmc.iopFormat(req.body.amount));
 
-        if (amount <= 0) {
+        if (amount <= 0.01) {
             res.end("false");
+            return;
         }
 
         if (typeof(req.body.note) !== "string") {
             res.end("false");
+            return;
         }
 
         //Emit the new order event.
@@ -174,9 +177,11 @@ module.exports = async (config) => {
         //Validate the input.
         if (typeof(req.body.address) !== "string") {
             res.end("false");
+            return;
         }
         if (typeof(orders[req.body.address]) !== "object") {
             res.end("false");
+            return;
         }
 
         //Emit the cancel event and tell the user it worked.
@@ -186,17 +191,54 @@ module.exports = async (config) => {
 
     //Route to create a new product.
     express.post("/products/new", async (req, res) => {
-
+        res.end((await fs.products.add(req.body.product)).toString());
     });
 
     //Route to delete a product.
     express.post("/products/delete", async (req, res) => {
+        //Filter input.
+        if (typeof(req.body.index) !== "number") {
+            res.end("false");
+            return;
+        }
+        if (req.body.index < 0) {
+            res.end("false");
+            return;
+        }
+        if (typeof(req.body.name) !== "string") {
+            res.end("false");
+            return;
+        }
 
+        res.end((await fs.products.remove(req.body.index, req.body.name)).toString());
     });
 
     //Route to buy some products.
     express.post("/products/buy", async (req, res) => {
+        if (typeof(req.body.products) !== "object") {
+            res.end("false");
+            return;
+        }
 
+        var products = await fs.products.load();
+        for (var i in req.body.products) {
+            if (typeof(req.body.products[i]) !== "number") {
+                res.end("false");
+                return;
+            }
+            if (!((0 <= req.body.products[i]) && (req.body.products[i] < products.length))) {
+                res.end("false");
+                return;
+            }
+        }
+
+        var usd = 0;
+        for (var i in req.body.products) {
+            fs.products.bought(req.body.products[i], 1);
+            usd += products[req.body.products[i]].usdCost;
+        }
+
+        res.end(cmc.iopFormat(await cmc.usdToIOP(usd)));
     });
 
     //POST route in progress to update the settings.

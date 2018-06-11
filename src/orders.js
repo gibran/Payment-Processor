@@ -13,8 +13,7 @@ var zeroConf, orders;
 //Updates the zeroConf amount in IOP. Runs every half hour.
 async function updateZeroConf() {
     zeroConf = parseFloat(
-        (await cmc.usdToIOP(zeroConfUSD))
-        .toPrecision(4)
+        cmc.iopFormat(await cmc.usdToIOP(zeroConfUSD))
     );
 }
 setInterval(updateZeroConf, 30*60*1000);
@@ -24,7 +23,7 @@ async function archiveOrder(address, success) {
     //Stop tracking the address.
     await coin.untrackAddress(address);
     //Move it from current orders to archived.
-    fs.archiveOrder(address, orders[address], success);
+    fs.orders.archive(address, orders[address], success);
     //Delete it from the cache.
     delete orders[address];
     //Emit the order and it's status.
@@ -56,12 +55,12 @@ module.exports = async (config) => {
             //Create the order object. Amount, USD value, note, and time index.
             orders[address] = {
                 amount: amount,
-                usd: parseFloat((await cmc.iopToUSD(amount)).toPrecision(2)),
+                usd: await cmc.iopToUSD(amount),
                 note: note,
                 time: (new Date()).getTime()
             }
             //Save it to disk.
-            fs.saveOrder(address, orders[address]);
+            fs.orders.save(address, orders[address]);
 
             //Return the address and order.
             return {
