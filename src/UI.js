@@ -191,7 +191,7 @@ module.exports = async (config) => {
 
     //Route to create a new product.
     express.post("/products/new", async (req, res) => {
-        res.end((await fs.products.add(req.body.product)).toString());
+        res.end((await fs.products.add(req.body)).toString());
     });
 
     //Route to delete a product.
@@ -215,27 +215,27 @@ module.exports = async (config) => {
 
     //Route to buy some products.
     express.post("/products/buy", async (req, res) => {
-        if (typeof(req.body.products) !== "object") {
+        if (typeof(req.body) !== "object") {
             res.end("false");
             return;
         }
 
         var products = await fs.products.load();
-        for (var i in req.body.products) {
-            if (typeof(req.body.products[i]) !== "number") {
+        for (var i in req.body) {
+            if (typeof(req.body[i]) !== "number") {
                 res.end("false");
                 return;
             }
-            if (!((0 <= req.body.products[i]) && (req.body.products[i] < products.length))) {
+            if (!((0 <= req.body[i]) && (req.body[i] < products.length))) {
                 res.end("false");
                 return;
             }
         }
 
         var usd = 0;
-        for (var i in req.body.products) {
-            fs.products.bought(req.body.products[i], 1);
-            usd += products[req.body.products[i]].usdCost;
+        for (var i in req.body) {
+            fs.products.bought(req.body[i], 1);
+            usd += products[req.body[i]].usdCost;
         }
 
         res.end(cmc.iopFormat(await cmc.usdToIOP(usd)));

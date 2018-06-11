@@ -6,9 +6,13 @@ module.exports = async (token) => {
     var res = await request({
         method: "POST",
         url: "http://localhost:8080/products/buy",
-        body: {
-            products: [0, 1, 0, 1, 0]
-        },
+        body: [
+            0,
+            1,
+            0,
+            1,
+            0
+        ],
         json: true,
         headers: {Cookie: "token=" + token}
     });
