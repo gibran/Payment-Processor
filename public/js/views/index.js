@@ -25,7 +25,7 @@ var order = function(){
 
     if (window.orderList.length == 0)
     {
-        alert('Inform the product to ordered');
+        alert(`You didn't select any products`);
         return;
     }
 
