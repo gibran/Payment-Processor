@@ -71,11 +71,7 @@ var confirmedOrder = function () {
         }
     });
 
-    var body = {
-        products: orderedProducts
-    };
-
-    POST("/products/buy", body, success, error);
+    POST("/products/buy", orderedProducts, success, error);
 }
 
 var loadCart = function(products){

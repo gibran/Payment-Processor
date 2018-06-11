@@ -13,25 +13,25 @@ var deleteUser = function(username){
     }
 
     var message = {
-        username: username
+        user: username
     };
 
     POST("/users/delete", message, success, error);
 }
 
-var listUsers = function (data) {
-    $(`#${`tbodyUsers`}`).empty();
+var listUsers = function (users) {
+    $('#tbodyUsers').empty();
 
-    $.each(data, function (index, item) {
+    $.each(users, function (index, username) {
         var rowItem = $(`<tr id='${index}'></tr>`);
         
-        var columnUsername = $(`<td class="text-center text-lg text-medium" id='userName'>$${item.username}</td>`);
-        var columnButton = $(`<td class="text-center text-lg text-medium"><button type="button" class="genric-btn primary small" onclick="javascript:deleteUser('${item.username}')">Delete</button></td>`);
+        var columnUsername = $(`<td class="text-center text-lg text-medium" id='userName'>${username}</td>`);
+        var columnButton = $(`<td class="text-center text-lg text-medium"><button type="button" class="genric-btn primary small" onclick="javascript:deleteUser('${username}')">Delete</button></td>`);
 
         rowItem.append(columnUsername);
         rowItem.append(columnButton);
 
-        $(`#${elementName}`).append(rowItem);
+        $('#tbodyUsers').append(rowItem);
     });
 }
 
