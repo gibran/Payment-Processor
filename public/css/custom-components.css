@@ -135,3 +135,14 @@
     outline: none;
     border: 1px solid #6ac6d9;
   }
+
+  .logo {
+    display: block;
+    width: 123px;
+    height: 30px;
+    background-color: blue;
+  }
+
+  input:invalid {
+    border: 1px solid #f11010 !important;
+  }

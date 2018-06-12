@@ -41,7 +41,9 @@
 				<nav id="nav-menu-container">
 					<ul class="nav-menu">
 						  <li class="text-white">Hi <span id="username" class="text-white"></span></li>
-						  <li class="menu-active"><a href="index.html">Products</a></li>
+						  <li class="menu-active"><a href="index.html">Menu</a></li>
+						  <li><a href="products/index.html">Products</a></li>						  
+						  <li><a href="users/index.html">Users</a></li>						  
 						  <li><a href="history.html">History</a></li>
 						<li><a href="#" onclick="javascript:logout();">Logout</a></li>
 					</ul>
@@ -72,6 +74,8 @@
 		<section class="iop-informations pt-50" id="about">
 			<div class="container">
 				<div class="row justify-content-start align-items-center">
+					<br />
+					<br />
 					<h4>Price IoP:&nbsp;</h4>
 					<span id="iopCurrentlyPrice" class="text-center text-lg text-medium">Valor</span>
 				</div>
@@ -91,7 +95,6 @@
 								<th>Product Name</th>
 								<th class="text-center">Quantity</th>
 								<th class="text-center">USD</th>
-								<th class="text-center">IOPs</th>
 							</tr>
 						</thead>
 						<tbody id="tbodyOrder">
@@ -99,8 +102,7 @@
 						<tfoot>
 							<tr id="total">
 								<td colspan="2">Total</td>
-								<td id="usdPrice" class="text-center">$0</td>
-								<td id="iopPrice" class="text-center">0</td>
+								<td id="usdCost" class="text-center">$0</td>
 							</tr>
 						</tfoot>
 					</table>
@@ -117,22 +119,6 @@
 		<!-- start footer Area -->
 		<footer class="footer-area section-gap">
 			<div class="container">
-				<div class="row">
-					<div class="col-lg-5 col-md-6 col-sm-6">
-						<div class="single-footer-widget">
-							<p class="footer-text">
-								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-								Copyright &copy;
-								<script>
-									document.write(new Date().getFullYear());
-								</script> All rights reserved | This template is made with
-								<i class="fa fa-heart-o" aria-hidden="true"></i> by
-								<a href="https://colorlib.com" target="_blank">Colorlib</a>
-								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-							</p>
-						</div>
-					</div>
-				</div>
 			</div>
 		</footer>
 		<!-- End footer Area -->
@@ -150,7 +136,7 @@
 
 						<div class="row justify-content-start align-items-center">
 							<h4>Price USD:&nbsp;</h4>
-							<span id="confirmUsdPrice" class="text-center text-lg text-medium">Valor</span>
+							<span id="confirmUsdCost" class="text-center text-lg text-medium">Valor</span>
 						</div>
 
 						<div class="row justify-content-start align-items-center">

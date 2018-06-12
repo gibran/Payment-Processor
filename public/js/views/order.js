@@ -4,8 +4,6 @@ var getIopCurrentlyPrice = function () {
 
         window.iopUnitPrice = data;
         $('#iopCurrentlyPrice').text('$ ' + window.iopUnitPrice.toFixed(2));
-        recalculatePrice();
-        calcultateTotal();
     }
 
     var error = function (response) {
@@ -19,14 +17,19 @@ var confirmedPay = function () {
     $('[data-popup=popup-1]').fadeOut(350);
 }
 
-var confirmedOrder = function () {
+var generateIoPAddressToPay = function(iopCost){
     var success = function (response) {
         var data = response;
 
-        if (data != 'false') {
+        if (data) {
+            $(`#confirmItems`).text(window.orderedList.length);
+            $(`#confirmUsdCost`).text(`$` + window.usdTotal);
+            $(`#confirmIopPrice`).text(iopCost);
+
             $('[data-popup=popup-1]').fadeIn(350);
             qrcode.makeCode(data);
             $('#address').text(data);
+
         } else {
             alert('Error');
         }
@@ -37,81 +40,87 @@ var confirmedOrder = function () {
     }
 
     var message = {
-        amount: window.iopPrice,
+        amount: iopCost,
         note: `Product sale by ${localStorage.getItem('USERNAME')}`
     };
 
     POST("/orders/new", message, success, error);
 }
 
-var getProductsInCard = function () {
+var confirmedOrder = function () {
+    var success = function (response) {
+        var data = response;
+
+        if (data) {
+            generateIoPAddressToPay(data);
+        } else {
+            alert('Error');
+        }
+    }
+
+    var error = function (response) {
+        return false;
+    };
+
+    var orderedProducts = [];
+
+            
+    window.orderedList.forEach(item => {
+        for (let index = 0; index < item.qtd; index++) {
+            orderedProducts.push(item.productId);
+        }
+    });
+
+    POST("/products/buy", orderedProducts, success, error);
+}
+
+var loadCart = function(products){
     var data = localStorage.getItem('CARD');
     localStorage.removeItem('CARD');
 
     var cardItems = [];
 
     if (data != null) cardItems = JSON.parse(data);
-    var products = JSON.parse('[{"productId":"1","name":"Cappuccino","price":"12","image":"cappuccino.png"},{"productId":"2","name":"Americano","price":"7","image":"americano.png"},{"productId":"3","name":"Espresso","price":"5","image":"espresso.png"}]');
 
     var result = [];
 
+    window.usdTotal = 0.0;
+
     cardItems.forEach(item => {
-        products.forEach(product => {
-            if (item.productId != product.productId) return;
+        $.each(products, function(index, product){
+            if (item.productId != index) return;
 
             var orderedItem = {};
-            orderedItem.productId = product.productId;
+            orderedItem.productId = index;
             orderedItem.name = product.name;
             orderedItem.qtd = item.qtd;
-            orderedItem.unitPrice = product.price;
-            orderedItem.usdPrice = (parseFloat(orderedItem.unitPrice) * parseFloat(item.qtd));
-            orderedItem.iopPrice = (orderedItem.usdPrice / window.iopUnitPrice);
-            orderedItem.image = product.image;
+            orderedItem.unitCost = product.usdCost;
+            orderedItem.usdCost = (parseFloat(orderedItem.unitCost) * parseFloat(item.qtd));
+            orderedItem.image = product.assetPath;
+            window.usdTotal += orderedItem.usdCost;
 
             result.push(orderedItem)
         });
     });
 
-    return result;
+    window.orderedList = result;
+    buildOrderedList();
 }
 
-var calcultateTotal = function () {
-    var usdPrice = 0.0;
-    var iopPrice = 0.0;
+var getProductsInCard = function () {
+    var success = function (data) {
+        if (data != null)
+            loadCart(data);
+    }
 
-    window.orderedList.forEach(item => {
-        usdPrice += item.usdPrice;
-        iopPrice += item.iopPrice;
-    });
+    var error = function (response) {
+        return false;
+    }
 
-    $(`#total td:nth-child(${2})`).text('$' + usdPrice.toFixed(2));
-    $(`#total td:nth-child(${3})`).text(iopPrice.toFixed(13));
-
-    window.usdPrice = usdPrice;
-    window.iopPrice = iopPrice;
-
-    $('#confirmItems').text(window.orderedList.length);
-    $('#confirmUsdPrice').text('$' + usdPrice);
-    $('#confirmIopPrice').text(iopPrice);
-}
-
-var recalculatePrice = function () {
-    window.orderedList.forEach(item => {
-        var tr = $(`#${item.productId}`);
-        var usdPrice = $(tr).find('#usdPrice');
-        var iopPrice = $(tr).find('#iopPrice');
-
-        item.usdPrice = (parseFloat(item.unitPrice) * parseFloat(item.qtd));
-        item.iopPrice = (item.usdPrice / window.iopUnitPrice);
-
-        usdPrice.text('$' + item.usdPrice.toFixed(2));
-        iopPrice.text(item.iopPrice.toFixed(13));
-    });
+    GET("/products/list", null, success, error);
 }
 
 var buildOrderedList = function () {
-    window.orderedList = getProductsInCard();
-
     $("#tbodyOrder").empty();
 
     window.orderedList.forEach(item => {
@@ -133,41 +142,39 @@ var buildOrderedList = function () {
         </td>
         `);
 
-        var columnPrice = $(`<td class="text-center text-lg text-medium" id='usdPrice'>$${item.usdPrice}</td>`);
-        var columnIoPPrice = $(`<td class="text-center text-lg text-medium iopPrice" id='iopPrice'>${item.iopPrice}</td>`);
+        var columnCost = $(`<td class="text-center text-lg text-medium" id='usdCost'>$${item.usdCost.toFixed(2)}</td>`);
 
         rowItem.append(columnImage);
         rowItem.append(columnQtd);
-        rowItem.append(columnPrice);
-        rowItem.append(columnIoPPrice);
+        rowItem.append(columnCost);
 
         $("#tbodyOrder").append(rowItem);
     });
 
-    calcultateTotal();
-
     $('.quantity').on('change', function () {
         var tr = $(this).closest('tr');
-        var productId = $(tr).attr('id');
-        var usdPrice = $(tr).find('#usdPrice')
-        var iopPrice = $(tr).find('#iopPrice')
+        var productId = parseInt($(tr).attr('id'));
+        var usdCost = $(tr).find('#usdCost')
+
+        window.usdTotal = 0.0;
 
         window.orderedList.forEach(item => {
-            if (item.productId != productId) return;
+            if (item.productId != productId) {
+                window.usdTotal += item.usdCost;
+                return;
+            }
 
             item.qtd = parseInt(this.value);
-            item.usdPrice = (parseFloat(item.unitPrice) * parseFloat(item.qtd));
-            item.iopPrice = (item.usdPrice / window.iopUnitPrice);
-
-            usdPrice.text('$' + item.usdPrice.toFixed(2));
-            iopPrice.text(item.iopPrice.toFixed(13));
+            item.usdCost = (parseFloat(item.unitCost) * parseFloat(item.qtd));
+            usdCost.text('$' + item.usdCost.toFixed(2));
+            window.usdTotal += item.usdCost;
         });
 
-        //Recalculate total
-        calcultateTotal();
+        $(`#total td:nth-child(${2})`).text('$' + window.usdTotal.toFixed(2));
+        
     });
 
-
+    $(`#total td:nth-child(${2})`).text('$' + window.usdTotal.toFixed(2));
 }
 
 var initialize = function () {
@@ -188,4 +195,4 @@ var qrcode = new QRCode("qrcode", {
 initialize();
 getIopCurrentlyPrice();
 setInterval(getIopCurrentlyPrice, 60000);
-buildOrderedList();
+getProductsInCard();

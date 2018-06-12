@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+
+<head>
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- meta character set -->
+    <meta charset="UTF-8">
+    <!-- Site Title -->
+    <title>IoP POS</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
+    <!--
+	CSS
+	============================================= -->
+    <link rel="stylesheet" href="../css/custom-bootstrap.css">
+    <link rel="stylesheet" href="../css/custom-media.css">
+    <link rel="stylesheet" href="../css/custom-components.css">
+    <link rel="stylesheet" href="../css/custom-main.css">
+</head>
+
+<body>
+    <header id="header">
+        <div class="header-top">
+            <div class="container">
+                <div class="row justify-content-end">
+                    <div class="col-lg-8 col-sm-4 col-8 header-top-right no-padding">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row align-items-center justify-content-between d-flex">
+                <div id="logo">
+                    <a href="../index.html">
+                        <img src="../img/logo.png" alt="" title="" />
+                    </a>
+                </div>
+                <h2 class="text-white">New User</h2>
+                <nav id="nav-menu-container">
+                    <ul class="nav-menu">
+                        <li class="text-white">Hi
+                            <span id="username" class="text-white"></span>
+                        </li>
+                        <li><a href="../index.html">Menu</a></li>
+                        <li><a href="../products/index.html">Products</a></li>
+                        <li><a href="#" onclick="javascript:logout();">Logout</a></li>
+                    </ul>
+                </nav>
+                <!-- #nav-menu-container -->
+            </div>
+        </div>
+    </header>
+    <!-- #header -->
+
+    <section class="generic-banner relative">
+        <div class="container">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-lg-10">
+                    <div class="generic-banner-content">
+                        <h2 class="text-white">&nbsp;</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End banner Area -->
+
+    <!-- About Generic Start -->
+    <div class="main-wrapper">
+
+        <!-- Start OrderList Area -->
+        <section class="about-ordered-list">
+            <div class="container border-top-generic">
+                <h3 class="about-title mb-30">User</h3>
+                <div class="row">
+
+                    <form id="newUserForm" method="GET" action="index.html" class="col-lg-6">
+                        <div class="col-form-label col-md-12">
+                            <input type="text" id="user" placeholder="Username" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'"
+                                required class="single-input">
+                        </div>
+                        <div class="col-form-label col-md-12">
+                            <input type="password" id="pass" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'"
+                                required class="single-input">
+                        </div>
+                        <div class="col-form-label col-md-12">
+                            <button type="button" onclick="javascript:beforeSave();" class="genric-btn primary float-right">Save</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </section>
+        <!-- End OrderList Start -->
+
+        <!-- start footer Area -->
+        <footer class="footer-area section-gap">
+            <div class="container">
+            </div>
+        </footer>
+        <!-- End footer Area -->
+
+        <script src="../js/vendor/jquery-2.2.4.min.js"></script>
+        <script src="../js/main.js"></script>
+        <script src="../js/common.js"></script>
+        <script src="../js/views/users/detail.js"></script>
+    </div>
+</body>
+
+</html>
