@@ -1,12 +1,12 @@
 var submitForm = function () {
     var success = function(response){
         if (!response) {
-            $("#message").text('User or password invalid.');
+            $("#message").text('Your username or password is invalid.');
             $("#message").show();
         }else{
-            $("#message").hide(); 
-            localStorage.setItem('USERNAME', $('#username').val());            
-            window.location.href = "index.html";           
+            $("#message").hide();
+            localStorage.setItem('USERNAME', $('#username').val());
+            window.location.href = "index.html";
         }
     }
 
@@ -14,7 +14,7 @@ var submitForm = function () {
         return false;
     }
 
-    var message = { 
+    var message = {
         user: $('#username').val(),
         pass: $('#password').val()
     };
@@ -26,7 +26,7 @@ var initialize = function () {
     $('[data-popup-open]').on('click', function (e) {
         var targeted_popup_class = jQuery(this).attr('data-popup-open');
         $('[data-popup="' + targeted_popup_class + '"]').fadeIn(350);
-        
+
         e.preventDefault();
         $('#username').focus();
     });

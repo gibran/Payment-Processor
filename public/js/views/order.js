@@ -64,7 +64,7 @@ var confirmedOrder = function () {
 
     var orderedProducts = [];
 
-            
+
     window.orderedList.forEach(item => {
         for (let index = 0; index < item.qtd; index++) {
             orderedProducts.push(item.productId);
@@ -75,6 +75,11 @@ var confirmedOrder = function () {
 }
 
 var loadCart = function(products){
+    if (typeof(window.iopUnitPrice) === "undefined") {
+        setTimeout(loadCart, 100, products);
+        return;
+    }
+
     var data = localStorage.getItem('CARD');
     localStorage.removeItem('CARD');
 
@@ -98,8 +103,9 @@ var loadCart = function(products){
             orderedItem.usdCost = (parseFloat(orderedItem.unitCost) * parseFloat(item.qtd));
             orderedItem.image = product.assetPath;
             window.usdTotal += orderedItem.usdCost;
+            window.iopTotal = parseFloat(window.usdTotal.toFixed(2)) * parseFloat(window.iopUnitPrice.toFixed(2));
 
-            result.push(orderedItem)
+            result.push(orderedItem);
         });
     });
 
@@ -121,6 +127,11 @@ var getProductsInCard = function () {
 }
 
 var buildOrderedList = function () {
+    if (typeof(window.iopUnitPrice) === "undefined") {
+        setTimeout(buildOrderedList, 100);
+        return;
+    }
+
     $("#tbodyOrder").empty();
 
     window.orderedList.forEach(item => {
@@ -137,16 +148,18 @@ var buildOrderedList = function () {
         var columnQtd = $(`
         <td class="text-center">
             <div class="count-input">
-                <input type='number' id='quantity' min='0' max='10' value='${item.qtd}' class='quantity single-input-number-primary'>									
+                <input type='number' id='quantity' min='0' max='10' value='${item.qtd}' class='quantity single-input-number-primary'>
             </div>
         </td>
         `);
 
-        var columnCost = $(`<td class="text-center text-lg text-medium" id='usdCost'>$${item.usdCost.toFixed(2)}</td>`);
+        var columnUSDCost = $(`<td class="text-center text-lg text-medium" id='usdCost'>$${item.usdCost.toFixed(2)}</td>`);
+        var columnIOPCost = $(`<td class="text-center text-lg text-medium" id='iopCost'>${parseFloat(item.usdCost.toFixed(2)) * parseFloat(window.iopUnitPrice.toFixed(2))}</td>`);
 
         rowItem.append(columnImage);
         rowItem.append(columnQtd);
-        rowItem.append(columnCost);
+        rowItem.append(columnUSDCost);
+        rowItem.append(columnIOPCost);
 
         $("#tbodyOrder").append(rowItem);
     });
@@ -161,6 +174,7 @@ var buildOrderedList = function () {
         window.orderedList.forEach(item => {
             if (item.productId != productId) {
                 window.usdTotal += item.usdCost;
+                window.iopTotal = parseFloat(window.usdTotal.toFixed(2)) * parseFloat(window.iopUnitPrice.toFixed(2));
                 return;
             }
 
@@ -168,13 +182,16 @@ var buildOrderedList = function () {
             item.usdCost = (parseFloat(item.unitCost) * parseFloat(item.qtd));
             usdCost.text('$' + item.usdCost.toFixed(2));
             window.usdTotal += item.usdCost;
+            window.iopTotal = parseFloat(window.usdTotal.toFixed(2)) * parseFloat(window.iopUnitPrice.toFixed(2));
         });
 
         $(`#total td:nth-child(${2})`).text('$' + window.usdTotal.toFixed(2));
-        
+        $(`#total td:nth-child(${3})`).text('$' + window.iopTotal.toFixed(2));
+
     });
 
     $(`#total td:nth-child(${2})`).text('$' + window.usdTotal.toFixed(2));
+    $(`#total td:nth-child(${3})`).text('$' + window.iopTotal.toFixed(2));
 }
 
 var initialize = function () {
