@@ -41,7 +41,7 @@ var generateIoPAddressToPay = function(iopCost){
 
     var message = {
         amount: iopCost,
-        note: `Product sale by ${localStorage.getItem('USERNAME')}`
+        note: `Sale entered by ${localStorage.getItem('USERNAME')}.`
     };
 
     POST("/orders/new", message, success, error);
