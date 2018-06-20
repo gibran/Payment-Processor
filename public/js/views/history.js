@@ -9,15 +9,11 @@ var cancelOrder = function(address){
         }
     }
 
-    var error = function (response) {
-        return false;
-    }
-
     var message = {
         address: address
     };
 
-    POST("/orders/cancel", message, success, error);
+    POST("/orders/cancel", message, success);
 }
 
 var processOrderList = function (url, elementName) {
@@ -25,11 +21,7 @@ var processOrderList = function (url, elementName) {
         buildingTable(data, elementName);
     }
 
-    var error = function (response) {
-        return false;
-    }
-
-    GET(url, null, success, error);
+    GET(url, success);
 }
 
 var buildingTable = function (data, elementName) {
@@ -52,7 +44,7 @@ var buildingTable = function (data, elementName) {
         if (item.success == undefined)
             var columnButton = $(`<td class="text-center text-lg text-medium"><button type="button" class="genric-btn primary small" onclick="javascript:cancelOrder('${index}')">Cancel</button></td>`);
             rowItem.append(columnButton);
-            
+
         $(`#${elementName}`).append(rowItem);
     });
 }

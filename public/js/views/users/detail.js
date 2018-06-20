@@ -21,15 +21,11 @@ var saveUser = function () {
             alert('Error');
         }
     }
-
-    var error = function (response) {
-        return false;
-    }
-
+    
     var message = {
         user: $('#user').val(),
         pass: $('#pass').val(),
     };
 
-    POST("/users/new", message, success, error);
+    POST("/users/new", message, success);
 }

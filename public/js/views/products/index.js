@@ -8,16 +8,12 @@ var deleteProduct = function(index, name){
         }
     }
 
-    var error = function (response) {
-        return false;
-    }
-
     var message = {
         index: index,
         name: name
     };
 
-    POST("/products/delete", message, success, error);
+    POST("/products/delete", message, success);
 }
 
 var listProducts = function (url, elementName) {
@@ -25,11 +21,7 @@ var listProducts = function (url, elementName) {
         buildingTable(data, elementName);
     }
 
-    var error = function (response) {
-        return false;
-    }
-
-    GET(url, null, success, error);
+    GET(url, success);
 }
 
 var buildingTable = function (data, elementName) {
@@ -37,7 +29,7 @@ var buildingTable = function (data, elementName) {
 
     $.each(data, function (index, item) {
         var rowItem = $(`<tr id='${index}'></tr>`);
-        
+
         var columnImage = $(`<td>
         <div class="product-item">
             <img src="../img/assets/${item.assetPath}" alt="${item.name}" style="max-height: 64px; max-width: 64px">

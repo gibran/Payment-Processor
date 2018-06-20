@@ -21,16 +21,12 @@ var saveProduct = function () {
             alert('Error');
         }
     }
-
-    var error = function (response) {
-        return false;
-    }
-
+    
     var message = {
         name: $('#productName').val(),
         assetPath: $('#assetPath').val(),
         usdCost: parseFloat($('#usdCost').val()),
     };
 
-    POST("/products/new", message, success, error);
+    POST("/products/new", message, success);
 }

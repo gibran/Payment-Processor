@@ -6,11 +6,7 @@ var getIopCurrentlyPrice = function () {
         $('#iopCurrentlyPrice').text('$ ' + window.iopUnitPrice.toFixed(2));
     }
 
-    var error = function (response) {
-        return false;
-    }
-
-    GET("/iop/price", null, success, error);
+    GET("/iop/price", success);
 }
 
 var confirmedPay = function () {
@@ -35,16 +31,12 @@ var generateIoPAddressToPay = function(iopCost){
         }
     }
 
-    var error = function (response) {
-        return false;
-    }
-
     var message = {
         amount: iopCost,
         note: `Sale entered by ${localStorage.getItem('USERNAME')}.`
     };
 
-    POST("/orders/new", message, success, error);
+    POST("/orders/new", message, success);
 }
 
 var confirmedOrder = function () {
@@ -58,10 +50,6 @@ var confirmedOrder = function () {
         }
     }
 
-    var error = function (response) {
-        return false;
-    };
-
     var orderedProducts = [];
 
 
@@ -71,7 +59,7 @@ var confirmedOrder = function () {
         }
     });
 
-    POST("/products/buy", orderedProducts, success, error);
+    POST("/products/buy", orderedProducts, success);
 }
 
 var loadCart = function(products){
@@ -85,7 +73,7 @@ var loadCart = function(products){
 
     var cardItems = [];
 
-    if (data != null) cardItems = JSON.parse(data);
+    if (data !== null) cardItems = JSON.parse(data);
 
     var result = [];
 
@@ -93,7 +81,7 @@ var loadCart = function(products){
 
     cardItems.forEach(item => {
         $.each(products, function(index, product){
-            if (item.productId != index) return;
+            if (item.productId !== index) return;
 
             var orderedItem = {};
             orderedItem.productId = index;
@@ -115,15 +103,11 @@ var loadCart = function(products){
 
 var getProductsInCard = function () {
     var success = function (data) {
-        if (data != null)
+        if (data !== null)
             loadCart(data);
     }
 
-    var error = function (response) {
-        return false;
-    }
-
-    GET("/products/list", null, success, error);
+    GET("/products/list", success);
 }
 
 var buildOrderedList = function () {
@@ -172,7 +156,7 @@ var buildOrderedList = function () {
         window.usdTotal = 0.0;
 
         window.orderedList.forEach(item => {
-            if (item.productId != productId) {
+            if (item.productId !== productId) {
                 window.usdTotal += item.usdCost;
                 window.iopTotal = parseFloat(window.usdTotal.toFixed(2)) * parseFloat(window.iopUnitPrice.toFixed(2));
                 return;

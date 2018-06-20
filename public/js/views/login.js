@@ -1,4 +1,4 @@
-var submitForm = function () {
+function submitForm() {
     var success = function(response){
         if (!response) {
             $("#message").text('Your username or password is invalid.');
@@ -9,16 +9,12 @@ var submitForm = function () {
             window.location.href = "index.html";
         }
     }
-
-    var error = function(response){
-        return false;
-    }
-
+    
     var message = {
         user: $('#username').val(),
         pass: $('#password').val()
     };
-    POST("/users/login", message, success, error);
+    POST("/users/login", message, success);
 }
 
 var initialize = function () {
