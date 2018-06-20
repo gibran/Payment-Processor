@@ -1,12 +1,16 @@
-var parseResponse = function (data) {
+function parseRes(data) {
+    if (data === null) {
+        return null;
+    }
+
     try {
         return JSON.parse(data);
-    } catch (e) {
+    } catch(e) {
         return data;
     }
 }
 
-var formatDate = function (date) {
+function formatDate(date) {
     return date.getFullYear() +
         "-" + ("0" + (date.getMonth() + 1)).slice(-2) +
         "-" + ("0" + date.getDate()).slice(-2) +
@@ -16,57 +20,56 @@ var formatDate = function (date) {
         ":" + ("0" + (date.getSeconds())).slice(-2);
 }
 
-async function POST (url, data, success, error) {
-    var dataJson = null;
-    if (data != null)
-        dataJson = JSON.stringify(data);
-
+async function GET(url, success) {
     $.ajax({
         url: url,
-        async: true,
-        method: 'POST',
-        contentType: "application/json; charset=utf-8",
-        data: dataJson,
-        success: function(data){ 
-            if (success != null) 
-                success(parseResponse(data)); 
+        method: "GET",
+        success: (res) => {
+            res = parseRes(res);
+            success(res);
         },
-        error: error
-    });
-}
-
-async function GET (url, data, success, error) {
-    var dataJson = null;
-    if (data != null)
-        dataJson = JSON.stringify(data);
-
-    $.ajax({
-        url: url,
-        method: 'GET',
-        contentType: "application/json; charset=utf-8",
-        data: dataJson,
-        success: function(data){ 
-            if (success != null) 
-                success(parseResponse(data)); 
-        },
-        error: error
-    });
-}
-
-var logout = function () {
-
-    var success = function (response) {
-        if (response) {
-            localStorage.removeItem('CARD');
-            localStorage.removeItem('USERNAME');
-
-            window.location.href = "login.html";
+        error: () => {
+            console.log("The GET request to " + url + "faiiled.")
         }
-    }
+    });
+}
 
-    var error = function (response) {
+async function POST(url, data, success) {
+    if (typeof(data) === "string") {
         return false;
     }
+    if (data !== null) {
+        data = JSON.stringify(data);
+    }
 
-    POST("/users/logout", null, success, error);
+    if (success === null) {
+        success = async () => {};
+    }
+
+    $.ajax({
+        url: url,
+        method: "POST",
+        contentType: "application/json",
+        data: data,
+        success: (res) => {
+            res = parseRes(res);
+            success(res);
+        },
+        error: () => {
+            console.log("The POST request to " + url + "faiiled.")
+        }
+    });
+}
+
+async function logout() {
+    POST("/users/logout", null, async (res) => {
+        if (res === true) {
+            localStorage.removeItem("CARD");
+            localStorage.removeItem("USERNAME");
+
+            window.location.href = "login.html";
+        } else {
+            console.log("The logout function has encountered an unknown bug.");
+        }
+    });
 }
