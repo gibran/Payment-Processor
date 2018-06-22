@@ -1,18 +1,30 @@
 window.orders = {
     getActive: async () => {
         GET("/orders/active", async (res) => {
+            if (typeof(res) !== "object") {
+                return;
+            }
+
             window.orders.active = res;
         });
     },
 
     getSucceeded: async () => {
         GET("/orders/succeeded", async (res) => {
+            if (typeof(res) !== "object") {
+                return;
+            }
+
             window.orders.succeeded = res;
         });
     },
 
     getFailed: async () => {
         GET("/orders/failed", async (res) => {
+            if (typeof(res) !== "object") {
+                return;
+            }
+            
             window.orders.failed = res;
         });
     },

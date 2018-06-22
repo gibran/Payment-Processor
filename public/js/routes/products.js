@@ -1,6 +1,10 @@
 window.products = {
     list: async () => {
         GET("/products/list", async (res) => {
+            if (typeof(res) !== "object") {
+                return;
+            }
+
             window.products.products = res;
         });
     },

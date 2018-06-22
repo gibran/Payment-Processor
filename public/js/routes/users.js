@@ -24,6 +24,10 @@ window.users = {
 
     list: async () => {
         GET("/users/list", async (res) => {
+            if (typeof(res) !== "object") {
+                return;
+            }
+            
             window.users.users = res;
         });
     },

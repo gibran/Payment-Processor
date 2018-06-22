@@ -11,6 +11,10 @@ window.price = {
 
     getIOP: async () => {
         GET("/iop/price", async (res) => {
+            if (Number.isNaN(parseFloat(res))) {
+                return;
+            }
+
             window.price.iop = await window.price.format(res);
         });
     },
