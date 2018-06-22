@@ -10,16 +10,6 @@ function parseRes(data) {
     }
 }
 
-function formatDate(date) {
-    return date.getFullYear() +
-        "-" + ("0" + (date.getMonth() + 1)).slice(-2) +
-        "-" + ("0" + date.getDate()).slice(-2) +
-        " " +
-        ("0" + (date.getHours() + 1)).slice(-2) +
-        ":" + ("0" + (date.getMinutes())).slice(-2) +
-        ":" + ("0" + (date.getSeconds())).slice(-2);
-}
-
 async function GET(url, success) {
     $.ajax({
         url: url,
@@ -57,19 +47,6 @@ async function POST(url, data, success) {
         },
         error: () => {
             console.log("The POST request to " + url + "faiiled.")
-        }
-    });
-}
-
-async function logout() {
-    POST("/users/logout", null, async (res) => {
-        if (res === true) {
-            localStorage.removeItem("CARD");
-            localStorage.removeItem("USERNAME");
-
-            window.location.href = "login.html";
-        } else {
-            console.log("The logout function has encountered an unknown bug.");
         }
     });
 }
