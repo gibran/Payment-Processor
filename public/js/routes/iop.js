@@ -23,3 +23,5 @@ window.price = {
         return (await window.price.format(amount / window.price.iop));
     }
 };
+
+window.price.getIOP();

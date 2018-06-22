@@ -41,7 +41,7 @@ window.users = {
         });
     },
 
-    changePassword: async () => {
+    changePassword: async (user, pass) => {
         POST("/users/changePassword", {
             user: user,
             pass: pass
@@ -49,15 +49,14 @@ window.users = {
             if (res === true) {
                 window.location.href = window.location.href;
             } else {
-                alert("Changing the password failed.");
+                alert("Changing " + user + "'s password failed.");
             }
         });
     },
 
-    remove: async () => {
+    remove: async (user) => {
         POST("/users/delete", {
-            user: user,
-            pass: pass
+            user: user
         }, async (res) => {
             if (res === true) {
                 window.location.href = window.location.href;
@@ -66,4 +65,6 @@ window.users = {
             }
         });
     }
-}
+};
+
+window.users.list();

@@ -40,3 +40,7 @@ window.orders = {
         });
     }
 };
+
+window.orders.getActive();
+window.orders.getSucceeded();
+window.orders.getFailed();

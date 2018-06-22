@@ -6,8 +6,8 @@ GET
     /file.html            -- Renders public/file.html.
 
     /iop/price            -- Returns the price of IOP in USD as raw data.
-	
-	/users/list           -- Returns the usernames for every user as a JSON array.
+
+    /users/list           -- Returns the usernames for every user as a JSON array.
 
     /orders/active        -- Returns all active orders as a JSON object.
     /orders/succeeded     -- Returns all succeeded orders as a JSON object.
@@ -27,6 +27,6 @@ POST
 
     /products/new         -- Creates a new product using {name, assetPath, usdCost}. Returns true/false.
     /products/delete      -- Deletes a product using {index, name}. Returns true/false.
-    /products/buy         -- Takes in an array of objects that are {index, name}. Returns the total cost in IOP and marks them as purchased in the DB.
+    /products/buy         -- Takes in an array of objects that are {index, name}. Returns the total cost in IOP and marks them as purchased in the DB, or false on error.
 
     /settings/update      -- In progress.
