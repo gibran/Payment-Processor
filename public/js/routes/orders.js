@@ -24,13 +24,12 @@ window.orders = {
             if (typeof(res) !== "object") {
                 return;
             }
-            
+
             window.orders.failed = res;
         });
     },
 
     create: async (amount, note) => {
-        window.orders.address = 0;
         POST("/orders/new", {
             amount: amount,
             note: note

@@ -27,6 +27,6 @@ POST
 
     /products/new         -- Creates a new product using {name, assetPath, usdCost}. Returns true/false.
     /products/delete      -- Deletes a product using {index, name}. Returns true/false.
-    /products/buy         -- Takes in an array of objects that are {index, name}. Returns the total cost in IOP and marks them as purchased in the DB, or false on error.
+    /products/buy         -- Takes in an array of numbers (product indexes). Returns the total cost in IOP and marks them as purchased in the DB, or false on error.
 
     /settings/update      -- In progress.

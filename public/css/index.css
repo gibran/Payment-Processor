@@ -1,0 +1,62 @@
+table, tr {
+    height: 70%;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+td {
+    width: 30%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.productImg {
+    height: 100px;
+    width: 100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#totals {
+    position: fixed;
+    height: 5%;
+    width: 100%;
+    bottom: 20%;
+
+    font-size: 24px;
+}
+
+#totals #usdTotal {
+    float: left;
+    margin-left: 40%;
+    display: inline-block;
+}
+
+#totals #iopTotal {
+    float: right;
+    margin-right: 40%;
+    display: inline-block;
+}
+
+#orderDiv {
+    height: 8%;
+    width: 90%;
+
+    position: fixed;
+    bottom: 10%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+#order {
+    height: 100%;
+    width: 100%;
+    text-align: center;
+
+    background-color: #6ac6d9;
+    color: white;
+    font-size: 24px;
+    text-decoration: none;
+}

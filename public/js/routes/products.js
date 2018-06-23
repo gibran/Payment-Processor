@@ -23,22 +23,8 @@ window.products = {
         });
     },
 
-    calculate: async (products) => {
-        var result = {
-            usd: 0,
-            iop: 0
-        };
-
-        for (var i in products) {
-            var product = window.products.products[products[i].index];
-            result.usd += product.usdCost;
-        }
-        result.iop = await window.price.usdToIOP(result.usd);
-
-        return result;
-    },
-
     buy: async (products) => {
+        console.log(JSON.stringify(products));
         POST("/products/buy", products, async (res) => {
             if (res !== false) {
                 window.products.price = res;
