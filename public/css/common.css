@@ -1,0 +1,20 @@
+.header {
+    overflow: hidden;
+    background-color: #6ac6d9;
+    padding: 20px 10px;
+}
+
+.header .right {
+    float: right;
+    text-align: center;
+}
+
+.header .right a {
+    padding: 12px;
+    line-height: 25px;
+    border-radius: 4px;
+    
+    color: white;
+    font-size: 24px;
+    text-decoration: none;
+}
