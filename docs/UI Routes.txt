@@ -1,5 +1,14 @@
+All POST requests must be encapusalted with {message, hash}.
+`message` is the RSA encrypted POST body, with an extra field.
+This extra field is a challenge. This is to stop replay attacks.
+`hash` is the SHA256 hash of the message, stringified as JSON.stringify(message).
+
 Unless the return data is specified as JSON, it is raw.
 That means the IOP price GET route returns "1.50" not "{price: 1.50}".
+
+1) Server sends private key.
+2) Client sends encrypted (pass + private key). Only the server can decrypt that. Only the client with the password can prove identity.
+3) Server sends out new private key, encrypted with the private key it just received. Only the client has the public key to decrypt it.
 
 GET
     /                     -- Renders public/index.html.
@@ -7,6 +16,7 @@ GET
 
     /iop/price            -- Returns the price of IOP in USD as raw data.
 
+    /users/login          -- Returns a private key to use to login.
     /users/list           -- Returns the usernames for every user as a JSON array.
 
     /orders/active        -- Returns all active orders as a JSON object.
@@ -15,8 +25,14 @@ GET
 
     /products/list        -- Returns an array of all products as a JSON object.
 
+    /challenge/new        -- Returns a new challenge.
+
 POST
-    /users/login          -- Logs in using {user, pass}. Returns true/false. This also sets a cookie of the auth token.
+    /users/login          -- Logs in using {user, pass, privateKey}. This should be signed with a key from /users/login.
+                             The new key is for the server to send messages with.
+                             Returns a new private key, encrypted with the key it just received, or false.
+                             This also sets a cookie of the auth token.
+
     /users/logout         -- Logs the user out by deleting their cookie and invalidating it on the server. Returns true.
     /users/new            -- Creates a new user using {user, pass}. Returns true/false.
     /users/changePassword -- Changes an users password using {user, pass}. Returns true/false.
