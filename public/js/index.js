@@ -6,8 +6,8 @@ async function updateTotals() {
     iop = await window.price.usdToIOP(usd);
 
     //Update the HTML.
-    document.getElementById("usd").innerHTML = usd;
-    document.getElementById("iop").innerHTML = iop;
+    document.getElementById("usdTotalNum").innerHTML = usd;
+    document.getElementById("iopTotalNum").innerHTML = iop;
 }
 
 async function add(i) {

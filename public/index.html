@@ -21,22 +21,27 @@
     <br>
 
     <body>
+        <div id="iopValue">
+            The value of 1 IOP is $<span id="iopValueNum"></span>
+        </div>
+        <br>
+
         <table id="products">
         </table>
         <br>
 
         <div id="totals">
             <span id="usdTotal">
-                USD total is: <span id="usd">0</span>
+                USD: <span id="usdTotalNum">0</span>
             </span>
             <span id="iopTotal">
-                IOP total is: <span id="iop">0</span>
+                IOP: <span id="iopTotalNum">0</span>
             </span>
         </div>
         <br>
 
-        <div id="orderDiv">
-            <button type="button" onclick="order()" id="order">Order</button>
+        <div id="orderButtonDiv">
+            <button type="button" onclick="order()" id="orderButton">Order</button>
         </div>
     <body>
 

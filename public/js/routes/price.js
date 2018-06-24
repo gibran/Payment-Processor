@@ -15,7 +15,13 @@ window.price = {
                 return;
             }
 
+            //Set a global variable.
             window.price.iop = await window.price.format(res);
+            //Update the HTML field if it exists.
+            var iopHTML = document.getElementById("iopValueNum");
+            if (iopHTML !== null) {
+                iopHTML.innerHTML = window.price.iop;
+            }
         });
     },
 
