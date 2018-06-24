@@ -1,8 +1,9 @@
 .header {
-    overflow: hidden;
-    background-color: #6ac6d9;
     height: 10%;
     padding: 20px 10px;
+
+    overflow: hidden;
+    background-color: #6ac6d9;
 }
 
 .header .right {

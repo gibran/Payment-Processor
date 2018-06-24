@@ -5,16 +5,16 @@
         <title>IoP POS</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta charset="UTF-8">
-        <link rel="stylesheet" href="/css/common.css">
+        <link rel="stylesheet" href="/css/login.css">
     </head>
 
     <body>
-        <h1>Login here.</h1>
+        <h1>Login</h1>
         <form>
-            <input type="text" id="user">
-            <input type="password" id="pass">
+            <input type="text" placeholder="Username" id="user">
+            <input type="password" placeholder="Password" id="pass">
+            <button type="button" onclick="login()" id="submitButton">Submit</button>
         </form>
-        <button onclick="login()" id="submitButton">Submit</button>
     <body>
 
     <script src="/js/routes/request.js"></script>
