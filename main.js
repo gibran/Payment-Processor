@@ -56,6 +56,11 @@ async function main() {
         //Tell UI it was created, here's the address, order data, and carry the cb.
         emitter.emit("created", order.address, order.order, cb);
     });
+    emitter.on("cash", async (address) => {
+        console.log("Marking order " + address + " as paid in cash");
+        //Mark the order as paid in cash.
+        await orders.paidInCash(address);
+    });
     emitter.on("cancel", async (address) => {
         console.log("Cancelling order " + address);
         //Cancel the order.

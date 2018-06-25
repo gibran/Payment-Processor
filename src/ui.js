@@ -4,6 +4,9 @@ var cmc, fs, accounts;
 //Express web server.
 var express = require("express");
 
+//QR lib.
+var qr = require("qr-image");
+
 //Path lib.
 var path = require("path");
 
@@ -75,6 +78,11 @@ module.exports = async (config) => {
     //Redirect the site root to index.html
     express.get("/", async (req, res) => {
         res.sendFile(path.join(publicPath, "index.html"));
+    });
+
+    express.get("/qr/:address", async (req, res) => {
+        res.setHeader("Content-Type", "image/svg+xml");
+        res.end(qr.imageSync(req.params.address, {type: "svg"}));
     });
 
     //Route to get the IOP price.
@@ -175,6 +183,23 @@ module.exports = async (config) => {
         emitter.emit("new", amount, req.body.note, async (address) => {
             res.end(address);
         });
+    });
+
+    //POST route to mark an order as paid in cash.
+    express.post("/orders/cash", async (req, res) => {
+        //Validate the input.
+        if (typeof(req.body.address) !== "string") {
+            res.end("false");
+            return;
+        }
+        if (typeof(orders[req.body.address]) !== "object") {
+            res.end("false");
+            return;
+        }
+
+        //Emit the cash event and tell the user it worked.
+        emitter.emit("cash", req.body.address);
+        res.end("true");
     });
 
     //POST route to cancel an order.

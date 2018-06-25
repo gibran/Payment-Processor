@@ -7,16 +7,22 @@ async function cancel() {
     }
 
     window.orders.cancel(address);
-    setTimeout(async () => {
-        window.location.href = window.location.href;
-    }, 100);
 }
 
 async function paidInCash() {
+    if (status !== "Pending") {
+        alert("This order can't be marked as paid in cash.");
+        return;
+    }
 
+    window.orders.cash(address);
 }
 
 async function done() {
+    if (status !== "Pending") {
+        alert("This order can't be cancelled.");
+        return;
+    }
     window.location.href = "/";
 }
 
@@ -48,6 +54,11 @@ async function init() {
             document.getElementById("statusDiv").style.background = "red";
             break;
     }
+
+    var img = document.getElementById("qr");
+    qr.src = "/qr/" + address;
+    qr.setAttribute("height", "100%");
+    qr.setAttribute("width", "100%");
 
     document.getElementById("date").innerHTML = (new Date(order.time)).toString().split("GMT")[0];
     document.getElementById("usd").innerHTML = await window.price.format(order.usd);

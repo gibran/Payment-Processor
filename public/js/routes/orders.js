@@ -38,16 +38,33 @@ window.orders = {
         });
     },
 
+    cash: async (address) => {
+        POST("/orders/cash", {
+            address: address
+        }, async (res) => {
+            if (res === false) {
+                alert("The marking of order " + address + " as paid has failed.");
+                return;
+            }
+
+            setTimeout(async () => {
+                window.location.href = window.location.href;
+            }, 100);
+        });
+    },
+
     cancel: async (address) => {
         POST("/orders/cancel", {
             address: address
         }, async (res) => {
             if (res === false) {
                 alert("The cancelling of order " + address + " failed.");
+                return;
             }
 
-            window.orders.getActive();
-            window.orders.getFailed();
+            setTimeout(async () => {
+                window.location.href = window.location.href;
+            }, 100);
         });
     }
 };

@@ -69,6 +69,10 @@ module.exports = async (config) => {
             };
         },
 
+        paidInCash: async (address) => {
+            archiveOrder(address, true);
+        },
+
         //Cancels an order in progress.
         cancel: async (address) => {
             //If the order exists, archive it as a fail.

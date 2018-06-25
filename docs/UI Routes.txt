@@ -4,6 +4,7 @@ That means the IOP price GET route returns "1.50" not "{price: 1.50}".
 GET
     /                     -- Renders public/index.html.
     /file.html            -- Renders public/file.html.
+    /qr/ADDRESS           -- Renders the QR code for ADDRESS.
 
     /iop/price            -- Returns the price of IOP in USD as raw data.
 
@@ -23,6 +24,7 @@ POST
     /users/delete         -- Deletes an user using {user}. Returns true/false.
 
     /orders/new           -- Creates a new order using {amount, note}. Returns the address to pay to/the order is indexed under.
+    /orders/cash          -- Marks an order as succeeded using {address}. Returns true/false.
     /orders/cancel        -- Cancels an order using {address}. Returns true/false.
 
     /products/new         -- Creates a new product using {name, assetPath, usdCost}. Returns true/false.
