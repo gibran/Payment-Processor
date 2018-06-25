@@ -21,13 +21,28 @@
     <br>
 
     <body>
-        <div id="iopValue">
-            The value of 1 IOP is $<span id="iopValueNum"></span>
-        </div>
+        <h1>Order <span id="address"></span></h1>
         <br>
-        
-        <table id="products">
-        </table>
+
+        <div id="statusDiv">Status:&nbsp;<span id="status"></span></div>
+
+        <div id="details">
+            Placed on <span id="date"></span>
+            <br>
+            USD: <span id="usd"></span>
+            <br>
+            IOP at the time: <span id="iopPayment"></span>
+            <br>
+            IOP now: <span id="iopNow"></span>
+            <br>
+            Note: "<span id="note"></span>"
+        </div>
+
+        <div id="buttons">
+            <button type="button" onclick="cancel()" id="cancelButton">Order</button>
+            <button type="button" onclick="paidInCash()" id="cashButton">Paid in Cash</button>
+            <button type="button" onclick="done()" id="doneButton">Done</button>
+        </div>
     <body>
 
     <script src="/js/routes/request.js"></script>

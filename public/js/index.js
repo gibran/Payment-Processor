@@ -112,7 +112,7 @@ async function init() {
     }
 }
 
-//Once we have the server data we need, populate the products table.
+//Wait until we have the price and products...
 async function timeout() {
     if (
         (typeof(window.price.iop) === "undefined") ||
