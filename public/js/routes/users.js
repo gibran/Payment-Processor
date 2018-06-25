@@ -5,6 +5,7 @@ window.users = {
             pass: pass
         }, async (res) => {
             if (res === true) {
+                document.cookie = "user=" + user;
                 window.location.href = "/";
             } else {
                 alert("That login is invalid.");
@@ -15,6 +16,8 @@ window.users = {
     logout: async () => {
         POST("/users/logout", null, async (res) => {
             if (res === true) {
+                document.cookie = "user=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+                document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
                 window.location.href = "/login.html";
             } else {
                 alert("You are not logged in.");
@@ -27,7 +30,7 @@ window.users = {
             if (typeof(res) !== "object") {
                 return;
             }
-            
+
             window.users.users = res;
         });
     },
