@@ -57,7 +57,7 @@ async function order() {
             return;
         }
 
-        window.orders.create(window.products.price, "");
+        window.orders.create(window.products.price, "Sale made by " + window.user + ".");
 
         async function handleOrder() {
             if (typeof(window.orders.address) === "undefined") {
