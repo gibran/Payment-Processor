@@ -78,6 +78,10 @@ async function order() {
 }
 
 async function init() {
+    //If the table is bigger than 3x3, make it scrollable.
+    if (window.products.products.length > 9) {
+        document.getElementById("productsDiv").style["overflow-y"] = "scroll";
+    }
     //Get the table. Create arrays for the rows and cells.
     var table = document.getElementById("products");
     var rows = [];

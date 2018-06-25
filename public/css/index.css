@@ -1,14 +1,27 @@
-table, tr {
+#productsDiv {
     height: 70%;
     width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+table {
+    height: 100%;
+    width: 100%;
+}
+
+tr {
+    height: 33.33%;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
 }
 
 td {
-    width: 30%;
+    width: 33.33%;
     margin-left: auto;
     margin-right: auto;
+
     text-align: center;
 }
 
