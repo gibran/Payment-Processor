@@ -2,13 +2,13 @@ async function newUser() {
     var user = prompt("What should the new user's username be? No symbols or numbers are allowed.", "Username");
     if ((user === null) || (user === "")) {
         alert("User creation failed.");
-        return
+        return;
     }
 
     var pass = prompt("What should " + user + "'s new password be?'", "Password");
     if ((pass === null) || (pass === "")) {
         alert("User creation failed.");
-        return
+        return;
     }
 
     window.users.new(user, pass);

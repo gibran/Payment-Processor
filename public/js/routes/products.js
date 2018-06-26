@@ -9,7 +9,7 @@ window.products = {
         });
     },
 
-    create: async (name, assetPath, usdCost) => {
+    new: async (name, assetPath, usdCost) => {
         POST("/products/new", {
             name: name,
             assetPath: assetPath,

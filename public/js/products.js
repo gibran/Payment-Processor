@@ -1,5 +1,23 @@
 async function newProduct() {
-    window.location.href = "/product.html";
+    var name = prompt("What is the product's name?", "Product Name");
+    if ((name === null) || (name === "")) {
+        alert("Product creation failed.");
+        return;
+    }
+
+    var price = parseFloat(prompt("What's the USD price of the product?", "USD Cost"));
+    if ((price === null) || (price === "") || Number.isNaN(price)) {
+        alert("Product creation failed.");
+        return;
+    }
+
+    //Eventually, users will upload an image file. For now...
+    var assetPath = prompt("What's the name of the image file in /public/img/products that matches this product?", "Image File Name");
+    if (typeof(assetPath) !== "string") {
+        assetPath = "";
+    }
+
+    window.products.new(name, assetPath, price);
 }
 
 async function deleteProduct(index, name) {
