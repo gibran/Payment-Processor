@@ -5,6 +5,15 @@
     margin-right: 5%;
 }
 
+#iopValue {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+
+    font-size: 24px;
+}
+
 table {
     height: 100%;
     width: 100%;

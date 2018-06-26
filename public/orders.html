@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta charset="UTF-8">
         <link rel="stylesheet" href="/css/common.css">
+        <link rel="stylesheet" href="/css/orders.css">
     </head>
 
     <div class="header">
@@ -19,7 +20,53 @@
     </div>
 
     <body>
-        <h1>View order history here.</h1>
+        <h1 id="pendingH1">Pending Orders</h1>
+        <div class="tableDiv" id="pendingDiv">
+            <table id="pendingTable">
+                <thead>
+                    <tr>
+                        <th>Address</th>
+                        <th>Note</th>
+                        <th>USD</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody id="pending">
+                </tbody id="pending">
+            </table>
+        </div>
+
+        <h1 id="succeededH1">Succeeded Orders</h1>
+        <div class="tableDiv" id="succeededDiv">
+            <table id="succeededTable">
+                <thead>
+                    <tr>
+                        <th>Address</th>
+                        <th>Note</th>
+                        <th>USD</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody id="succeeded">
+                </tbody id="succeeded">
+            </table>
+        </div>
+
+        <h1 id="failedH1">Failed Orders</h1>
+        <div class="tableDiv" id="failedDiv">
+            <table id="failedTable">
+                <thead>
+                    <tr>
+                        <th>Address</th>
+                        <th>Note</th>
+                        <th>USD</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody id="failed">
+                </tbody id="failed">
+            </table>
+        </div>
     <body>
 
     <script src="/js/routes/request.js"></script>
