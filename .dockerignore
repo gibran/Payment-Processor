@@ -1,7 +1,14 @@
+.git
+.gitattributes
+.gitignore
+
 node_modules
 data
 
-build/
+docs
+tests
+
+build
 main-win.exe
 main-linux
 main-macos
