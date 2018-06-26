@@ -21,6 +21,14 @@ async function createRow(data) {
 }
 
 async function init() {
+    if (Object.keys(window.orders.active).length > 5) {
+        document.getElementById("pendingDiv").style["overflow-y"] = "scroll";
+    } else if (Object.keys(window.orders.succeeded).length > 5) {
+        document.getElementById("succeededDiv").style["overflow-y"] = "scroll";
+    } else if (Object.keys(window.orders.failed).length > 5) {
+        document.getElementById("failedDiv").style["overflow-y"] = "scroll";
+    }
+
     var pending = document.getElementById("pending");
     var succeeded = document.getElementById("succeeded");
     var failed = document.getElementById("failed");
