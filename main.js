@@ -70,10 +70,11 @@ async function main() {
     //Now that the emitter is ready, create the UI.
     //It also needs the path to the files it serves, the CMC lib, and the fs lib.
     ui = require("./src/ui.js")({
+        cmc: cmc,
+        fs: fs,
         emitter: emitter,
         publicPath: paths.public,
-        cmc: cmc,
-        fs: fs
+        ssl: settings.ssl
     });
 }
 
