@@ -1,0 +1,74 @@
+#productsDiv {
+    position: fixed;
+
+    height: 60%;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+#iopValue {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+
+    font-size: 24px;
+}
+
+table, tr {
+    width: 100%;
+}
+
+td {
+    text-align: center;
+}
+
+.productImg {
+    height: 100px;
+    width: 100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#totals {
+    position: fixed;
+    height: 5%;
+    width: 100%;
+    bottom: 15%;
+
+    font-size: 24px;
+}
+
+#totals #usdTotal {
+    float: left;
+    margin-left: 33%;
+    display: inline-block;
+}
+
+#totals #iopTotal {
+    float: right;
+    margin-right: 33%;
+    display: inline-block;
+}
+
+#orderButtonDiv {
+    height: 8%;
+    width: 90%;
+
+    position: fixed;
+    bottom: 5%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+#orderButton {
+    height: 100%;
+    width: 100%;
+    text-align: center;
+
+    background-color: #6ac6d9;
+    color: white;
+    font-size: 24px;
+    text-decoration: none;
+}

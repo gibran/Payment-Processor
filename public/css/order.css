@@ -1,0 +1,82 @@
+h1 {
+    position: fixed;
+    top: 10%;
+
+    height: 5%;
+    width: 100%;
+
+    text-align: center;
+}
+
+#statusDiv {
+    position: fixed;
+    top: 20%;
+    margin-left: 37.5%;
+    margin-right: 37.5%;
+
+    height: 7.5%;
+    width: 25%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+}
+
+#qrDiv {
+    position: fixed;
+    top: 28.75%;
+
+    height: 25%;
+    width: 25%;
+
+    margin-left: 37.5%;
+    margin-right: 37.5%;
+}
+
+#details {
+    position: fixed;
+    top: 55%;
+    margin-left: 25%;
+
+    height: 30%;
+    width: 50%;
+
+    font-size: 30px;
+}
+
+#buttons {
+    position: fixed;
+    top: 85%;
+    margin-left: 20%;
+
+    height: 10%;
+    width: 60%;
+}
+
+#buttons #cancelButton {
+    height: 100%;
+    width: 33.33%;
+
+    float: left;
+
+    background-color: red;
+}
+
+#buttons #cashButton {
+    height: 100%;
+    width: 33.33%;
+
+    float: none;
+
+    background-color: lightgreen;
+}
+
+#buttons #doneButton {
+    height: 100%;
+    width: 33.33%;
+
+    float: right;
+
+    background-color: #6ac6d9;
+}

@@ -1,0 +1,53 @@
+#pendingH1 {
+    position: fixed;
+    top: 10%;
+    height: 5%;
+}
+
+#succeededH1 {
+    position: fixed;
+    top: 40%;
+    height: 5%;
+}
+
+#failedH1 {
+    position: fixed;
+    top: 70%;
+    height: 5%;
+}
+
+.tableDiv {
+    position: fixed;
+    height: 15%;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+#pendingDiv {
+    top: 20%;
+}
+
+#succeededDiv {
+    top: 50%;
+}
+
+
+#failedDiv {
+    top: 80%;
+}
+
+table, tr {
+    width: 100%;
+
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+th {
+    text-align: left;
+}
+
+td {
+    width: 25%;
+}

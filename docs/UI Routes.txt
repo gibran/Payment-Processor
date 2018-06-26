@@ -4,10 +4,11 @@ That means the IOP price GET route returns "1.50" not "{price: 1.50}".
 GET
     /                     -- Renders public/index.html.
     /file.html            -- Renders public/file.html.
+    /qr/ADDRESS           -- Renders the QR code for ADDRESS.
 
-    /iop/price            -- Returns the price of IOP in USD as raw data.
-	
-	/users/list           -- Returns the usernames for every user as a JSON array.
+    /price/iop            -- Returns the price of IOP in USD as raw data.
+
+    /users/list           -- Returns the usernames for every user as a JSON array.
 
     /orders/active        -- Returns all active orders as a JSON object.
     /orders/succeeded     -- Returns all succeeded orders as a JSON object.
@@ -23,10 +24,11 @@ POST
     /users/delete         -- Deletes an user using {user}. Returns true/false.
 
     /orders/new           -- Creates a new order using {amount, note}. Returns the address to pay to/the order is indexed under.
+    /orders/cash          -- Marks an order as succeeded using {address}. Returns true/false.
     /orders/cancel        -- Cancels an order using {address}. Returns true/false.
 
     /products/new         -- Creates a new product using {name, assetPath, usdCost}. Returns true/false.
     /products/delete      -- Deletes a product using {index, name}. Returns true/false.
-    /products/buy         -- Takes in an array of objects that are {index, name}. Returns the total cost in IOP and marks them as purchased in the DB.
+    /products/buy         -- Takes in an array of numbers (product indexes). Returns the total cost in IOP and marks them as purchased in the DB, or false on error.
 
     /settings/update      -- In progress.

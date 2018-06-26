@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta charset="UTF-8">
         <link rel="stylesheet" href="/css/common.css">
-        <link rel="stylesheet" href="/css/index.css">
+        <link rel="stylesheet" href="/css/products.css">
     </head>
 
     <div class="header">
@@ -18,40 +18,31 @@
             <a href="/logout.html">Logout</a>
         </div>
     </div>
-    <br>
 
     <body>
-        <div id="iopValue">
-            The value of 1 IOP is $<span id="iopValueNum"></span>
+        <div id="productsHeader">
+            <h1 id="productsH1">Products</h1>
+            <button onclick="newProduct()" id="newButton">New Product</button>
         </div>
         <br>
 
         <div id="productsDiv">
             <table id="products">
+                <thead>
+                    <tr>
+                        <th>Asset</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
             </table>
-        </div>
-        <br>
-
-        <div id="totals">
-            <span id="usdTotal">
-                USD: <span id="usdTotalNum">0</span>
-            </span>
-            <span id="iopTotal">
-                IOP: <span id="iopTotalNum">0</span>
-            </span>
-        </div>
-        <br>
-
-        <div id="orderButtonDiv">
-            <button type="button" onclick="order()" id="orderButton">Order</button>
         </div>
     <body>
 
     <script src="/js/routes/request.js"></script>
     <script src="/js/routes/price.js"></script>
     <script src="/js/routes/products.js"></script>
-    <script src="/js/routes/orders.js"></script>
 
-    <script src="/js/common.js"></script>
-    <script src="/js/index.js"></script>
+    <script src="/js/products.js"></script>
 </html>

@@ -1,72 +1,17 @@
-var parseResponse = function (data) {
-    try {
-        return JSON.parse(data);
-    } catch (e) {
-        return data;
-    }
-}
-
-var formatDate = function (date) {
-    return date.getFullYear() +
-        "-" + ("0" + (date.getMonth() + 1)).slice(-2) +
-        "-" + ("0" + date.getDate()).slice(-2) +
-        " " +
-        ("0" + (date.getHours() + 1)).slice(-2) +
-        ":" + ("0" + (date.getMinutes())).slice(-2) +
-        ":" + ("0" + (date.getSeconds())).slice(-2);
-}
-
-async function POST (url, data, success, error) {
-    var dataJson = null;
-    if (data != null)
-        dataJson = JSON.stringify(data);
-
-    $.ajax({
-        url: url,
-        async: true,
-        method: 'POST',
-        contentType: "application/json; charset=utf-8",
-        data: dataJson,
-        success: function(data){ 
-            if (success != null) 
-                success(parseResponse(data)); 
-        },
-        error: error
-    });
-}
-
-async function GET (url, data, success, error) {
-    var dataJson = null;
-    if (data != null)
-        dataJson = JSON.stringify(data);
-
-    $.ajax({
-        url: url,
-        method: 'GET',
-        contentType: "application/json; charset=utf-8",
-        data: dataJson,
-        success: function(data){ 
-            if (success != null) 
-                success(parseResponse(data)); 
-        },
-        error: error
-    });
-}
-
-var logout = function () {
-
-    var success = function (response) {
-        if (response) {
-            localStorage.removeItem('CARD');
-            localStorage.removeItem('USERNAME');
-
-            window.location.href = "login.html";
+async function disableEnter(field, cb) {
+    async function handleEnter(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            if (cb) {
+                cb();
+            }
         }
     }
 
-    var error = function (response) {
-        return false;
-    }
-
-    POST("/users/logout", null, success, error);
+    document.getElementById(field).addEventListener("keydown", handleEnter);
+    document.getElementById(field).addEventListener("keyup", handleEnter);
+    document.getElementById(field).addEventListener("keypress", handleEnter);
+    document.getElementById(field).addEventListener("input", handleEnter);
 }
+
+window.user = document.cookie.split("user=")[1].split(";")[0];
