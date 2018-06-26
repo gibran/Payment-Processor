@@ -29,7 +29,7 @@ async function createRow(data) {
     assetCell.innerHTML = `<img src="/img/products/${data.asset}" class="productImg"></img>`;
 
     var nameCell = document.createElement("td");
-    nameCell.innerHTML = `<a href="/product.html?index=${data.index}">${data.name}</a>`;
+    nameCell.innerHTML = `${data.name}`;
 
     var priceCell = document.createElement("td");
     priceCell.innerHTML = data.price;
