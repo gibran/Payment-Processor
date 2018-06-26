@@ -1,5 +1,7 @@
 #productsDiv {
-    height: 70%;
+    position: fixed;
+
+    height: 60%;
     width: 90%;
     margin-left: 5%;
     margin-right: 5%;
@@ -14,23 +16,11 @@
     font-size: 24px;
 }
 
-table {
-    height: 100%;
+table, tr {
     width: 100%;
-}
-
-tr {
-    height: 33.33%;
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 td {
-    width: 33.33%;
-    margin-left: auto;
-    margin-right: auto;
-
     text-align: center;
 }
 
