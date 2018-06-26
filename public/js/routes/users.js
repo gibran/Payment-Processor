@@ -35,7 +35,7 @@ window.users = {
         });
     },
 
-    create: async (user, pass) => {
+    new: async (user, pass) => {
         POST("/users/new", {
             user: user,
             pass: pass
@@ -54,14 +54,14 @@ window.users = {
             pass: pass
         }, async (res) => {
             if (res === true) {
-                window.location.href = window.location.href;
+                alert("Success.");
             } else {
                 alert("Changing " + user + "'s password failed.");
             }
         });
     },
 
-    remove: async (user) => {
+    delete: async (user) => {
         POST("/users/delete", {
             user: user
         }, async (res) => {

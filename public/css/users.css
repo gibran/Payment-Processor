@@ -1,4 +1,4 @@
-#productsH1 {
+#usersH1 {
     position: fixed;
     top: 10%;
     left: 5%;
@@ -16,7 +16,7 @@
     color: white;
 }
 
-#productsDiv {
+#usersDiv {
     position: fixed;
     top: 20%;
     height: 70%;
@@ -38,12 +38,7 @@ th {
 }
 
 td {
-    width: 25%;
+    width: 33%;
 
     text-align: center;
-}
-
-.productImg {
-    height: 100px;
-    width: 100px;
 }

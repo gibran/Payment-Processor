@@ -6,20 +6,37 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta charset="UTF-8">
         <link rel="stylesheet" href="/css/common.css">
+        <link rel="stylesheet" href="/css/users.css">
     </head>
 
     <div class="header">
         <div class="right">
             <a href="/">Order</a>
             <a href="/orders.html">History</a>
-            <a href="/products.html">Products</a>
+            <a href="/users.html">Users</a>
             <a href="/users.html">Users</a>
             <a href="/logout.html">Logout</a>
         </div>
     </div>
 
     <body>
-        <h1>Access users DB here.</h1>
+        <div id="usersHeader">
+            <h1 id="usersH1">Users</h1>
+            <button onclick="newUser()" id="newButton">New User</button>
+        </div>
+        <br>
+
+        <div id="usersDiv">
+            <table id="users">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Change Password</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
     <body>
 
     <script src="/js/routes/request.js"></script>
