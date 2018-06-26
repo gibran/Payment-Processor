@@ -6,7 +6,7 @@ GET
     /file.html            -- Renders public/file.html.
     /qr/ADDRESS           -- Renders the QR code for ADDRESS.
 
-    /iop/price            -- Returns the price of IOP in USD as raw data.
+    /price/iop            -- Returns the price of IOP in USD as raw data.
 
     /users/list           -- Returns the usernames for every user as a JSON array.
 

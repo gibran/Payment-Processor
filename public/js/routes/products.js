@@ -24,7 +24,6 @@ window.products = {
     },
 
     buy: async (products) => {
-        console.log(JSON.stringify(products));
         POST("/products/buy", products, async (res) => {
             if (res !== false) {
                 window.products.price = res;

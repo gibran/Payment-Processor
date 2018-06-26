@@ -10,7 +10,7 @@ window.price = {
     },
 
     getIOP: async () => {
-        GET("/iop/price", async (res) => {
+        GET("/price/iop", async (res) => {
             if (Number.isNaN(parseFloat(res))) {
                 return;
             }
