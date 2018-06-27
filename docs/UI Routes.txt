@@ -20,7 +20,7 @@ GET
 POST
     /users/login          -- Logs in using {user, pass}. Returns true/false. This also sets a cookie of the auth token.
     /users/logout         -- Logs the user out by deleting their cookie and invalidating it on the server. Returns true.
-    /users/new            -- Creates a new user using {user, pass}. Returns true/false. Requires admin privileges.
+    /users/new            -- Creates a new user using {user, pass, admin}. Returns true/false. Requires admin privileges.
     /users/changePassword -- Changes an users password using {user, pass}. Returns true/false. Requires admin privileges.
     /users/delete         -- Deletes an user using {user}. Returns true/false. Requires admin privileges.
 

@@ -11,7 +11,12 @@ async function newUser() {
         return;
     }
 
-    window.users.new(user, pass);
+    var admin = confirm("Should this user be an admin?");
+    if (admin !== true) {
+        admin = false;
+    }
+
+    window.users.new(user, pass, admin);
 }
 
 async function changePassword(user) {
@@ -32,10 +37,14 @@ async function createRow(user) {
     userCell.innerHTML = user;
 
     var changePasswordCell = document.createElement("td");
-    changePasswordCell.innerHTML = `<button type="button" onclick="changePassword('${user}')" class="deleteButton">Change Password</button>`;
+    if (window.users.amIAdmin) {
+        changePasswordCell.innerHTML = `<button type="button" onclick="changePassword('${user}')" class="deleteButton">Change Password</button>`;
+    }
 
     var deleteCell = document.createElement("td");
-    deleteCell.innerHTML = `<button type="button" onclick="deleteUser('${user}')" class="deleteButton">Delete</button>`;
+    if (window.users.amIAdmin) {
+        deleteCell.innerHTML = `<button type="button" onclick="deleteUser('${user}')" class="deleteButton">Delete</button>`;
+    }
 
     var row = document.createElement("tr");
     row.appendChild(userCell);
@@ -52,16 +61,24 @@ async function init() {
 
     var users = document.getElementById("users");
     for (var i in window.users.users) {
-        console.log(window.users.users[i]);
         users.appendChild(
             await createRow(window.users.users[i])
         );
+    }
+
+    if (window.users.amIAdmin === false) {
+        newUser = (async () => {
+            alert("You aren't an admin.");
+        });
     }
 }
 
 //Wait until we have the price and users...
 async function timeout() {
-    if (typeof(window.users.users) === "undefined") {
+    if (
+        (typeof(window.users.users) === "undefined") ||
+        (typeof(window.users.amIAdmin) === "undefined")
+    ) {
         setTimeout(timeout, 50);
         return;
     }

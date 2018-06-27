@@ -42,7 +42,7 @@ module.exports = async (config) => {
 
     //Route to create a new user.
     router.post("/new", async (req, res) => {
-        if (await accounts.newUser(tokens[req.cookies.token], req.body.user, req.body.pass)) {
+        if (await accounts.newUser(tokens[req.cookies.token], req.body.user, req.body.pass, req.body.admin)) {
             res.end("true");
             return;
         }

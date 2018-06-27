@@ -35,10 +35,23 @@ window.users = {
         });
     },
 
-    new: async (user, pass) => {
+    listAdmins: async () => {
+        GET("/users/admins", async (res) => {
+            if (res === false) {
+                window.users.amIAdmin = false;
+                return;
+            }
+
+            window.users.amIAdmin = true;
+            window.users.admins = res;
+        });
+    },
+
+    new: async (user, pass, admin) => {
         POST("/users/new", {
             user: user,
-            pass: pass
+            pass: pass,
+            admin: admin
         }, async (res) => {
             if (res === true) {
                 window.location.href = window.location.href;
@@ -75,3 +88,4 @@ window.users = {
 };
 
 window.users.list();
+window.users.listAdmins();
