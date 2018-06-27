@@ -14,6 +14,7 @@ module.exports = async (token, user, pass) => {
         headers: {Cookie: "token=" + token}
     });
 
+    /*eslint-disable-next-line no-console*/
     console.log("Changed the password of \"" + user + "\" to \"" + pass + "\". Server responded with the following: " + changePassword);
 };
 

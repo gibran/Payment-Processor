@@ -10,5 +10,6 @@ var request = require("request-promise");
         json: true,
         headers: {Cookie: "token=admin"}
     });
+    /*eslint-disable-next-line no-console*/
     console.log("Created a new order. It's address is " + address + " and it expects 0.3 IOP.");
 })();

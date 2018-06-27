@@ -14,8 +14,10 @@ var user = "adminTwo";
     });
 
     if (deleted) {
+        /*eslint-disable-next-line no-console*/
         console.log("Deleted the user with an username of \"" + user + "\". Please verify they're deleted by failing to login with their credentials.");
         return;
     }
+    /*eslint-disable-next-line no-console*/
     console.log("Failed to delete the user. Was the username or token invalid?");
 })();

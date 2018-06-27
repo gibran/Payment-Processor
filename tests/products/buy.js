@@ -17,6 +17,7 @@ module.exports = async (token) => {
         headers: {Cookie: "token=" + token}
     });
 
+    /*eslint-disable-next-line no-console*/
     console.log(res);
 };
 

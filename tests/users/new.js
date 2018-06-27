@@ -20,8 +20,10 @@ var pass = "pass";
     });
 
     if (newUser) {
+        /*eslint-disable-next-line no-console*/
         console.log("Created a new user with an username of \"" + user + "\" and a password of \"" + pass + "\". Please try logging in with these credentials.");
         return;
     }
+    /*eslint-disable-next-line no-console*/
     console.log("Failed to create a new user. Was the username or token invalid?");
 })();

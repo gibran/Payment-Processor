@@ -21,27 +21,35 @@ if (require.main === module) {
         var user = "admin";
         var pass = "pass";
 
+        /*eslint-disable-next-line no-console*/
         console.log("Running the login tests using the variables inside this file.");
 
+        /*eslint-disable-next-line no-console*/
         console.log("Logging in with the correct login...");
         var token = await module.exports(user, pass);
         assert(token.length === 32);
 
+        /*eslint-disable-next-line no-console*/
         console.log("Logging in with an invalid username...");
         assert((await module.exports(user + "1", pass)) === false);
 
+        /*eslint-disable-next-line no-console*/
         console.log("Logging in with an invalid password...");
         assert((await module.exports(user, pass + "1")) === false);
 
+        /*eslint-disable-next-line no-console*/
         console.log("Logging in with an invalid username and password...");
         assert((await module.exports(user + "1", pass + "1")) === false);
 
+        /*eslint-disable-next-line no-console*/
         console.log("Logging in with an empty username...");
         assert((await module.exports("", pass)) === false);
 
+        /*eslint-disable-next-line no-console*/
         console.log("Logging in with an empty password...");
         assert((await module.exports(user, "")) === false);
 
+        /*eslint-disable-next-line no-console*/
         console.log("Trying to do a POST request to log us out with the auth token from the correct login.");
         var logout = await request({
             method: "POST",
@@ -49,8 +57,9 @@ if (require.main === module) {
             json: true,
             headers: {Cookie: "token=" + token}
         });
-        assert(logout === true)
+        assert(logout === true);
 
+        /*eslint-disable-next-line no-console*/
         console.log("Trying to redo that POST request without logging in again.");
         logout = await request({
             method: "POST",
@@ -60,6 +69,7 @@ if (require.main === module) {
         });
         assert(logout === "You are not logged in.");
 
+        /*eslint-disable-next-line no-console*/
         console.log("Finally, trying this with a blank token.");
         logout = await request({
             method: "POST",
@@ -69,6 +79,7 @@ if (require.main === module) {
         });
         assert(logout === "You are not logged in.");
 
+        /*eslint-disable-next-line no-console*/
         console.log("All tests succeeded.");
     })();
 }
