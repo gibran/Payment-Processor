@@ -58,47 +58,62 @@ module.exports = async (config) => {
     //Create the web server with:
     express =
         express()
-        .use(express.json())                      //JSON Parsing
-        .use(require("cookie-parser")())          //Cookies
-        .use(useSSL ? async (req, res, next) => { //Use the middleware to not allow remote connections if SSL is disabled.
-            next();
-        } : ssl.noSSLMiddleware)
-        .use(accounts.middleware)                 //Accounts (if you aren't logged in, you can only see the login page)
-        .use(require("nocache")())                //No Caching
-        .use("/price", await priceRouter({        //Price Route(s) (more will come in the future)
-            express: express,
-            cmc: cmc
-        }))
-        .use("/orders", await ordersRouter({      //Orders Routes
-            express: express,
-            cmc: cmc,
-            emitter: emitter
-        }))
-        .use("/qr", await qrRouter({               //QR Route
-            express: express
-        }))
-        .use("/users", await usersRouter({        //Users Routes
-            express: express,
-            accounts: accounts
-        }))
-        .use("/products", await productsRouter({  //Products Routes
-            express: express,
-            products: fs.products,
-            cmc: cmc
-        }))
-        .use("/settings", await settingsRouter({   //Settings Routes
-            express: express,
-            settings: fs.settings
-        }))
-        .use("/", express.static(publicPath))      //Static Rendering of /public
-        .get("/", async (req, res) => {            //GET handling of / to display index.html
-            res.sendFile(path.join(publicPath, "index.html"));
-        })
-        .use("/", await adminRouter({              //Admin Locked Static Files. It must be after everything else because of how middleware works.
-            express: express,
-            accounts: accounts,
-            adminPath: adminPath
-        }));
+            //JSON Parsing
+            .use(express.json())
+            //Cookies
+            .use(require("cookie-parser")())
+            //Middleware to disallow remote connections if SSL is disabled
+            .use(useSSL ? async (req, res, next) => {
+                next();
+            } : ssl.noSSLMiddleware)
+            //Accounts Middleware (if you aren't logged in, you can only see the login page)
+            .use(accounts.middleware)
+            //No Caching
+            .use(require("nocache")())
+            //Price Router
+            .use("/price", await priceRouter({
+                express: express,
+                cmc: cmc
+            }))
+            //Orders Router
+            .use("/orders", await ordersRouter({
+                express: express,
+                cmc: cmc,
+                emitter: emitter
+            }))
+            //QR Router
+            .use("/qr", await qrRouter({
+                express: express
+            }))
+            //Users Router
+            .use("/users", await usersRouter({
+                express: express,
+                accounts: accounts
+            }))
+            //Products Router
+            .use("/products", await productsRouter({
+                express: express,
+                products: fs.products,
+                cmc: cmc
+            }))
+            //Settings Router
+            .use("/settings", await settingsRouter({
+                express: express,
+                settings: fs.settings
+            }))
+            //Static Rendering of /public
+            .use("/", express.static(publicPath))
+            //Have the site root show index.html
+            .get("/", async (req, res) => {
+                res.sendFile(path.join(publicPath, "index.html"));
+            })
+            //Admin Locked Static Files
+            //It must be after everything else because of how middleware works
+            .use("/", await adminRouter({
+                express: express,
+                accounts: accounts,
+                adminPath: adminPath
+            }));
 
     if (useSSL) {
         https.createServer(await ssl.loadSSL(ip, sslPath), express).listen(8443, "0.0.0.0");

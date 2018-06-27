@@ -7,7 +7,7 @@ module.exports = async (config) => {
 
     var router =
         express.Router()
-        .use(accounts.adminMiddleware);
+            .use(accounts.adminMiddleware);
 
     //Route to get an array of all usernames.
     router.get("/list", async (req, res) => {

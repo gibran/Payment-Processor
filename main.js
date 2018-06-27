@@ -12,29 +12,39 @@ var emitter;
 //Paths, and all the folders we need.
 var path = require("path");
 var paths = {
-    data: path.join(process.cwd(), "data"),                              //Root of the data directory.
+    //Root of the data directory.
+    data: path.join(process.cwd(), "data"),
 
-    orders: {                                                            //All of the orders paths.
-        root: path.join(process.cwd(), "data", "orders"),                //Root of the orders directory.
-        current: path.join(process.cwd(), "data", "orders", "current"),  //Current orders directory.
-        archived: path.join(process.cwd(), "data", "orders", "archived") //Archived orders directory.
+    //All of the orders paths.
+    orders: {
+        //Root of the orders directory.
+        root: path.join(process.cwd(), "data", "orders"),
+        //Current orders directory.
+        current: path.join(process.cwd(), "data", "orders", "current"),
+        //Archived orders directory.
+        archived: path.join(process.cwd(), "data", "orders", "archived")
     },
-                                                                         //These next three directories aren't for one of the core three parts.
 
-                                                                         //This next one is a library usable by any UI.
-    products: path.join(process.cwd(), "data", "products"),              //Products directory.
+    //Products directory.
+    products: path.join(process.cwd(), "data", "products"),
 
-                                                                         //These next three are specific to the web server UI.
-
-    users: {                                                             //All of the users paths.
-        admins: path.join(process.cwd(), "data", "users", "admins"),     //Admins directory.
-        cashiers: path.join(process.cwd(), "data", "users", "cashiers")  //Cashiers directory.
+    //All of the users paths.
+    users: {
+        //Admins directory.
+        admins: path.join(process.cwd(), "data", "users", "admins"),
+        //Cashiers directory.
+        cashiers: path.join(process.cwd(), "data", "users", "cashiers")
     },
-    public: path.join(process.cwd(), "public"),                          //Directory of the files served by the server.
-    admin: path.join(process.cwd(), "admin_public"),                     //Directory of the files served by the server that only the admin can access.
-    ssl: path.join(process.cwd(), "data", "ssl"),                        //Directory of the SSL folder.
 
-    settings: path.join(process.cwd(), "data", "settings.json")          //Path to the settings. This is used a couple of places.
+    //Directory of the files served by the server.
+    public: path.join(process.cwd(), "public"),
+    //Directory of the files served by the server that only the admin can access.
+    admin: path.join(process.cwd(), "admin_public"),
+    //Directory of the SSL folder.
+    ssl: path.join(process.cwd(), "data", "ssl"),
+    
+    //Path to the settings. This is used a couple of places.
+    settings: path.join(process.cwd(), "data", "settings.json")
 };
 
 //Load the settings.
