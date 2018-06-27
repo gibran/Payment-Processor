@@ -1,14 +1,18 @@
 //Needed libs.
 var cmc, fs, accounts;
 
-//Express web server, all its routers, and the self generated SSL setup.
+//Express web server.
 var express = require("express");
+//Non-admin routers.
 var priceRouter = require("./ui/price.js");
-var usersRouter = require("./ui/users.js");
 var ordersRouter = require("./ui/orders.js");
-var productsRouter = require("./ui/products.js");
 var qrRouter = require("./ui/qr.js");
+//Admin routers.
+var adminRouter = require("./ui/admin.js");
+var usersRouter = require("./ui/users.js");
+var productsRouter = require("./ui/products.js");
 var settingsRouter = require("./ui/settings.js");
+//Automatic SSL lib.
 var ssl = require("./ui/ssl.js");
 
 //OS, HTTPS, and Path lib.
@@ -35,11 +39,12 @@ module.exports = async (config) => {
     //Set/include the libs.
     cmc = config.cmc;
     fs = config.fs;
-    accounts = require("../lib/accounts.js")(fs.accounts);
+    accounts = await require("../lib/accounts.js")(fs.accounts);
 
     //Set the global vars.
     emitter = config.emitter;
     publicPath = config.publicPath;
+    adminPath = config.adminPath;
 
     //Whether or not to use SSL.
     useSSL = config.ssl;
@@ -58,22 +63,22 @@ module.exports = async (config) => {
             express: express,
             cmc: cmc
         }))
-        .use("/users", await usersRouter({        //Users Routes
-            express: express,
-            accounts: accounts
-        }))
         .use("/orders", await ordersRouter({      //Orders Routes
             express: express,
             cmc: cmc,
             emitter: emitter
         }))
+        .use("/qr", await qrRouter({               //QR Route
+            express: express
+        }))
+        .use("/users", await usersRouter({        //Users Routes
+            express: express,
+            accounts: accounts
+        }))
         .use("/products", await productsRouter({  //Products Routes
             express: express,
             products: fs.products,
             cmc: cmc
-        }))
-        .use("/qr", await qrRouter({               //QR Route
-            express: express
         }))
         .use("/settings", await settingsRouter({   //Settings Routes
             express: express,
@@ -82,7 +87,12 @@ module.exports = async (config) => {
         .use("/", express.static(publicPath))      //Static Rendering of /public
         .get("/", async (req, res) => {            //GET handling of / to display index.html
             res.sendFile(path.join(publicPath, "index.html"));
-        });
+        })
+        .use("/", await adminRouter({              //Admin Locked Static Files. It must be after everything else because else it locks everything.
+            express: express,
+            accounts: accounts,
+            adminPath: adminPath
+        }));
 
     if (useSSL) {
         https.createServer(await ssl.generateSSLCert(address), express).listen(8443, "0.0.0.0");

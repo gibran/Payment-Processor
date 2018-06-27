@@ -28,8 +28,9 @@ var paths = {
         admins: path.join(process.cwd(), "data", "users", "admins"),     //Admins directory.
         cashiers: path.join(process.cwd(), "data", "users", "cashiers")  //Cashiers directory.
     },
-    public: path.join(process.cwd(), "public"),                          //HTML/CSS/JS/images/files served by the web server directory.
-    
+    public: path.join(process.cwd(), "public"),                          //Directory of the files served by the server.
+    admin: path.join(process.cwd(), "admin_public"),                           //Directory of the files served by the server that only the admin can access.
+
     settings: path.join(process.cwd(), "data", "settings.json")          //Path to the settings. This is used a couple of places.
 };
 
@@ -78,12 +79,13 @@ async function main() {
 
     //Now that the emitter is ready, create the UI.
     //It also needs the path to the files it serves, the CMC lib, and the fs lib.
-    ui = require("./src/ui.js")({
+    ui = await require("./src/ui.js")({
         cmc: cmc,
         fs: fs,
         emitter: emitter,
+        ssl: settings.ssl,
         publicPath: paths.public,
-        ssl: settings.ssl
+        adminPath: paths.admin,
     });
 }
 
