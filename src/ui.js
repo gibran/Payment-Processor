@@ -12,8 +12,11 @@ var adminRouter = require("./ui/admin.js");
 var usersRouter = require("./ui/users.js");
 var productsRouter = require("./ui/products.js");
 var settingsRouter = require("./ui/settings.js");
+
 //Automatic SSL lib.
 var ssl = require("./ui/ssl.js");
+//Config vars for the SSL lib.
+var useSSL, sslPath;
 
 //OS, HTTPS, and Path lib.
 var os = require("os");
@@ -32,8 +35,10 @@ for (var i in networkInterfaces) {
     }
 }
 
-//Global vars that are passed in. The emitter and path to files to serve staticly.
-var useSSL, emitter, publicPath;
+//Global vars that are passed in.
+//The emitter is used to interface with orders.
+//The paths are used to files to serve staticly.
+var emitter, publicPath, adminPath;
 
 module.exports = async (config) => {
     //Set/include the libs.
@@ -97,9 +102,11 @@ module.exports = async (config) => {
 
     if (useSSL) {
         https.createServer(await ssl.loadSSL(ip, sslPath), express).listen(8443, "0.0.0.0");
+        /*eslint-disable-next-line no-console*/
         console.log("The UI is running at https://" + ip + ":8443.");
     } else {
         express.listen(8080, "0.0.0.0");
+        /*eslint-disable-next-line no-console*/
         console.log("The UI is running at http://127.0.0.1:8080.");
     }
-}
+};

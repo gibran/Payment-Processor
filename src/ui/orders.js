@@ -20,8 +20,6 @@ module.exports = async (config) => {
 
     //Handle events.
     emitter.on("created", async (address, order, cb) => {
-        console.log("Order has address of " + address);
-
         //Store the order in the RAM cache.
         orders[address] = order;
 
@@ -37,15 +35,11 @@ module.exports = async (config) => {
         cb(address);
     });
     emitter.on("success", async (address) => {
-        console.log("Order " + address + " succeeded.");
-
         //When an order succeeds, move it over to the succeeded object.
         succeeded[address] = orders[address];
         delete orders[address];
     });
     emitter.on("failure", async (address) => {
-        console.log("Order " + address + " failed.");
-
         //When an order fails, move it over to the failed object.
         failed[address] = orders[address];
         delete orders[address];

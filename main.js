@@ -1,5 +1,7 @@
+/*eslint no-console: ["error", {allow: ["error"]}]*/
+
 //Core files.
-var coin, orders, ui;
+var coin, orders;
 //Lib files that support the core files.
 var cmc = require("./lib/cmc.js"), fs;
 
@@ -61,26 +63,23 @@ async function main() {
 
     //Define handlers for the new order/cancel order event.
     emitter.on("new", async (amount, note, cb) => {
-        console.log("Creating order for " + amount + " with note of " + note);
         //Create the order.
         var order = await orders.new(amount, note);
         //Tell UI it was created, here's the address, order data, and carry the cb.
         emitter.emit("created", order.address, order.order, cb);
     });
     emitter.on("cash", async (address) => {
-        console.log("Marking order " + address + " as paid in cash");
         //Mark the order as paid in cash.
         await orders.paidInCash(address);
     });
     emitter.on("cancel", async (address) => {
-        console.log("Cancelling order " + address);
         //Cancel the order.
         await orders.cancel(address);
     });
 
     //Now that the emitter is ready, create the UI.
     //It also needs the path to the files it serves, the CMC lib, and the fs lib.
-    ui = await require("./src/ui.js")({
+    await require("./src/ui.js")({
         cmc: cmc,
         fs: fs,
         emitter: emitter,
@@ -96,6 +95,6 @@ async function main() {
     try {
         await main();
     } catch(e) {
-        console.log(e);
+        console.error(e);
     }
 })();

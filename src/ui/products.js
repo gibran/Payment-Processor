@@ -44,8 +44,9 @@ module.exports = async (config) => {
             return;
         }
 
-        cart = await products.load();
-        for (var i in req.body) {
+        var cart = await products.load();
+        var i;
+        for (i in req.body) {
             if (typeof(req.body[i]) !== "number") {
                 res.end("false");
                 return;
@@ -57,7 +58,7 @@ module.exports = async (config) => {
         }
 
         var usd = 0;
-        for (var i in req.body) {
+        for (i in req.body) {
             products.bought(req.body[i], 1);
             usd += cart[req.body[i]].usdCost;
         }

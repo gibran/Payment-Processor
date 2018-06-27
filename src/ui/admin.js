@@ -1,6 +1,9 @@
 //Needed libraries...
 var express, accounts;
 
+//Global var.
+var adminPath;
+
 module.exports = async (config) => {
     express = config.express;
     accounts = config.accounts;

@@ -72,4 +72,4 @@ module.exports = async (settings) => {
             delete unconfirmed[address];
         }
     };
-}
+};

@@ -58,7 +58,7 @@ module.exports = async (config) => {
                 usd: await cmc.iopToUSD(amount),
                 note: note,
                 time: (new Date()).getTime()
-            }
+            };
             //Save it to disk.
             fs.orders.save(address, orders[address]);
 
@@ -81,7 +81,7 @@ module.exports = async (config) => {
             }
         }
     };
-}
+};
 
 //20 second interval. Code checks the status of orders, such as:
 //    If an order is 24 hours old, it is an automatic failure
