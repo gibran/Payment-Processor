@@ -16,7 +16,7 @@ async function GET(url, cb) {
         if (xhr.readyState == XMLHttpRequest.DONE) {
             cb(await parseRes(xhr.responseText));
         }
-    }
+    };
     xhr.open("GET", url, true);
     xhr.send(null);
 }
@@ -34,7 +34,7 @@ async function POST(url, data, cb) {
         if (xhr.readyState == XMLHttpRequest.DONE) {
             cb(await parseRes(xhr.responseText));
         }
-    }
+    };
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(data);

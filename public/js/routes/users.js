@@ -52,7 +52,7 @@ window.users = {
             admin: admin
         }, async (res) => {
             if (res === true) {
-                window.location.href = window.location.href;
+                window.location.reload();
             } else {
                 alert("User creation failed.");
             }
@@ -77,7 +77,7 @@ window.users = {
             user: user
         }, async (res) => {
             if (res === true) {
-                window.location.href = window.location.href;
+                window.location.reload();
             } else {
                 alert("User deletion failed.");
             }

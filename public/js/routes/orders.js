@@ -48,7 +48,7 @@ window.orders = {
             }
 
             setTimeout(async () => {
-                window.location.href = window.location.href;
+                window.location.reload();
             }, 100);
         });
     },
@@ -63,7 +63,7 @@ window.orders = {
             }
 
             setTimeout(async () => {
-                window.location.href = window.location.href;
+                window.location.reload();
             }, 100);
         });
     }

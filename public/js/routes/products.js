@@ -16,7 +16,7 @@ window.products = {
             usdCost: usdCost
         }, async (res) => {
             if (res === true) {
-                window.location.href = window.location.href;
+                window.location.reload();
             } else {
                 alert("Product creation failed.");
             }
@@ -39,7 +39,7 @@ window.products = {
             name: name
         }, async (res) => {
             if (res === true) {
-                window.location.href = window.location.href;
+                window.location.reload();
             } else {
                 alert("Product deletion failed.");
             }

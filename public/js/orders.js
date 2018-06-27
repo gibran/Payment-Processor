@@ -33,7 +33,7 @@ async function init() {
     var succeeded = document.getElementById("succeeded");
     var failed = document.getElementById("failed");
 
-    var address, order, i;
+    var address, order;
     for (address in window.orders.active) {
         order = window.orders.active[address];
         pending.appendChild(

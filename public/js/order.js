@@ -19,10 +19,6 @@ async function paidInCash() {
 }
 
 async function done() {
-    if (status !== "Pending") {
-        alert("This order can't be cancelled.");
-        return;
-    }
     window.location.href = "/";
 }
 
@@ -55,7 +51,7 @@ async function init() {
             break;
     }
 
-    var img = document.getElementById("qr");
+    var qr = document.getElementById("qr");
     qr.src = "/qr/" + address;
     qr.setAttribute("height", "100%");
     qr.setAttribute("width", "100%");

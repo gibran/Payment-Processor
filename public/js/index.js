@@ -88,11 +88,12 @@ async function init() {
     var cells = [];
 
     //Create all the rows.
-    for (var i = 0; i < Math.ceil(window.products.products.length / 3); i++) {
+    var i;
+    for (i = 0; i < Math.ceil(window.products.products.length / 3); i++) {
         rows.push(document.createElement("tr"));
     }
     //Create all the cells.
-    for (var i = 0; i < window.products.products.length; i++) {
+    for (i = 0; i < window.products.products.length; i++) {
         cells.push(document.createElement("td"));
         //Set the cells to say the product's name, cost, amount in cart, and have buttons to add/remove it from the cart.
         cells[i].innerHTML = `
@@ -110,7 +111,7 @@ async function init() {
     }
 
     //Put the cells in the rows, and the rows in the table.
-    for (var i in cells) {
+    for (i in cells) {
         rows[Math.floor(i / 3)].appendChild(cells[i]);
         table.appendChild(rows[Math.floor(i / 3)]);
     }

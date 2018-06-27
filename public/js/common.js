@@ -14,6 +14,6 @@ async function disableEnter(field, cb) {
     document.getElementById(field).addEventListener("input", handleEnter);
 }
 
-try {
+if (document.cookie.indexOf("user=") > -1) {
     window.user = document.cookie.split("user=")[1].split(";")[0];
-}catch(e){}
+}
