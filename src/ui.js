@@ -88,7 +88,7 @@ module.exports = async (config) => {
         .get("/", async (req, res) => {            //GET handling of / to display index.html
             res.sendFile(path.join(publicPath, "index.html"));
         })
-        .use("/", await adminRouter({              //Admin Locked Static Files. It must be after everything else because else it locks everything.
+        .use("/", await adminRouter({              //Admin Locked Static Files. It must be after everything else because of how middleware works.
             express: express,
             accounts: accounts,
             adminPath: adminPath
