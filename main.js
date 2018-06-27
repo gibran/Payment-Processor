@@ -22,14 +22,15 @@ var paths = {
                                                                          //This next one is a library usable by any UI.
     products: path.join(process.cwd(), "data", "products"),              //Products directory.
 
-                                                                         //These next two are specific to the web server UI.
+                                                                         //These next three are specific to the web server UI.
 
     users: {                                                             //All of the users paths.
         admins: path.join(process.cwd(), "data", "users", "admins"),     //Admins directory.
         cashiers: path.join(process.cwd(), "data", "users", "cashiers")  //Cashiers directory.
     },
     public: path.join(process.cwd(), "public"),                          //Directory of the files served by the server.
-    admin: path.join(process.cwd(), "admin_public"),                           //Directory of the files served by the server that only the admin can access.
+    admin: path.join(process.cwd(), "admin_public"),                     //Directory of the files served by the server that only the admin can access.
+    ssl: path.join(process.cwd(), "data", "ssl"),                        //Directory of the SSL folder.
 
     settings: path.join(process.cwd(), "data", "settings.json")          //Path to the settings. This is used a couple of places.
 };
@@ -86,6 +87,7 @@ async function main() {
         ssl: settings.ssl,
         publicPath: paths.public,
         adminPath: paths.admin,
+        sslPath: paths.ssl
     });
 }
 

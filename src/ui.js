@@ -20,14 +20,14 @@ var os = require("os");
 var https = require("https");
 var path = require("path");
 
-//Global var for the address.
-var address;
+//Global var for the IP.
+var ip;
 //Get the local network IP.
 var networkInterfaces = os.networkInterfaces();
 for (var i in networkInterfaces) {
     for (var x in networkInterfaces[i]) {
         if (networkInterfaces[i][x].address.substr(0, 8) === "192.168.") {
-            address = networkInterfaces[i][x].address;
+            ip = networkInterfaces[i][x].address;
         }
     }
 }
@@ -48,6 +48,7 @@ module.exports = async (config) => {
 
     //Whether or not to use SSL.
     useSSL = config.ssl;
+    sslPath = config.sslPath;
 
     //Create the web server with:
     express =
@@ -95,8 +96,8 @@ module.exports = async (config) => {
         }));
 
     if (useSSL) {
-        https.createServer(await ssl.generateSSLCert(address), express).listen(8443, "0.0.0.0");
-        console.log("The UI is running at https://" + address + ":8443.");
+        https.createServer(await ssl.loadSSL(ip, sslPath), express).listen(8443, "0.0.0.0");
+        console.log("The UI is running at https://" + ip + ":8443.");
     } else {
         express.listen(8080, "0.0.0.0");
         console.log("The UI is running at http://127.0.0.1:8080.");

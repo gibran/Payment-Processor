@@ -1,7 +1,12 @@
-//Lib used to generate the SSL certs.
-var pki = require("node-forge").pki;
+//FS libs.
+//We don't use the FS lib we built because it would mean making an extra file of ~10 lines.
+var fs = require("fs");
+var path = require("path");
 
-async function generateSSLCert(address) {
+async function generateSSLCert(ip) {
+    //Lib used to generate the SSL certs.
+    var pki = require("node-forge").pki;
+
     //Generate a key pair.
     var keys = pki.rsa.generateKeyPair(2048);
 
@@ -16,7 +21,7 @@ async function generateSSLCert(address) {
     var attributes = [
         {
             name: "commonName",
-            value: address
+            value: ip
         }, {
             shortName: "OU",
             value: "IoP POS"
@@ -33,7 +38,7 @@ async function generateSSLCert(address) {
             altNames: [
                 {
                     type: 6,
-                    value: address
+                    value: ip
                 }, {
                     type: 7,
                     ip: "127.0.0.1"
@@ -52,6 +57,25 @@ async function generateSSLCert(address) {
     };
 }
 
+async function loadSSL(ip, sslPath) {
+    try {
+        if (fs.readFileSync(path.join(sslPath, "ip")).toString() !== ip) {
+            throw "IP changed.";
+        }
+        return {
+            key: fs.readFileSync(path.join(sslPath, "key.pem")),
+            cert: fs.readFileSync(path.join(sslPath, "cert.pem"))
+        };
+    } catch(e) {
+        fs.writeFileSync(path.join(sslPath, "ip"), ip);
+        
+        var pair = await generateSSLCert(ip);
+        fs.writeFileSync(path.join(sslPath, "key.pem"), pair.key);
+        fs.writeFileSync(path.join(sslPath, "cert.pem"), pair.cert);
+        return pair;
+    }
+}
+
 //What IPs are safe without SSL.
 var safeIPs = [
     "localhost",
@@ -60,7 +84,7 @@ var safeIPs = [
 
 //Export the generateSSLCert function and middleware for if there isn't any SSL.
 module.exports = {
-    generateSSLCert: generateSSLCert,
+    loadSSL: loadSSL,
     noSSLMiddleware: async (req, res, next) => {
         if (safeIPs.indexOf(req.headers["x-forwarded-for"] || req.connection.remoteAddress) === -1) {
             return;
