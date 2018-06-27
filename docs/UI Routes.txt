@@ -9,6 +9,7 @@ GET
     /price/iop            -- Returns the price of IOP in USD as raw data.
 
     /users/list           -- Returns the usernames for every user as a JSON array.
+    /users/listAdmins     -- Returns the usernames for every admin as a JSON array. Requires admin privileges.
 
     /orders/active        -- Returns all active orders as a JSON object.
     /orders/succeeded     -- Returns all succeeded orders as a JSON object.
@@ -19,9 +20,9 @@ GET
 POST
     /users/login          -- Logs in using {user, pass}. Returns true/false. This also sets a cookie of the auth token.
     /users/logout         -- Logs the user out by deleting their cookie and invalidating it on the server. Returns true.
-    /users/new            -- Creates a new user using {user, pass}. Returns true/false.
-    /users/changePassword -- Changes an users password using {user, pass}. Returns true/false.
-    /users/delete         -- Deletes an user using {user}. Returns true/false.
+    /users/new            -- Creates a new user using {user, pass}. Returns true/false. Requires admin privileges.
+    /users/changePassword -- Changes an users password using {user, pass}. Returns true/false. Requires admin privileges.
+    /users/delete         -- Deletes an user using {user}. Returns true/false. Requires admin privileges.
 
     /orders/new           -- Creates a new order using {amount, note}. Returns the address to pay to/the order is indexed under.
     /orders/cash          -- Marks an order as succeeded using {address}. Returns true/false.

@@ -35,7 +35,7 @@ module.exports = async (config) => {
     //Set/include the libs.
     cmc = config.cmc;
     fs = config.fs;
-    accounts = require("../lib/accounts.js")(fs);
+    accounts = require("../lib/accounts.js")(fs.accounts);
 
     //Set the global vars.
     emitter = config.emitter;

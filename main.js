@@ -11,16 +11,25 @@ var emitter;
 var path = require("path");
 var paths = {
     data: path.join(process.cwd(), "data"),                              //Root of the data directory.
-    orders: {                                                            //All the orders paths.
+
+    orders: {                                                            //All of the orders paths.
         root: path.join(process.cwd(), "data", "orders"),                //Root of the orders directory.
         current: path.join(process.cwd(), "data", "orders", "current"),  //Current orders directory.
         archived: path.join(process.cwd(), "data", "orders", "archived") //Archived orders directory.
-    },                                                                   //These next three directories aren't for one of the core three parts.
-                                                                         //This next one is a library used by any UI.
+    },
+                                                                         //These next three directories aren't for one of the core three parts.
+
+                                                                         //This next one is a library usable by any UI.
     products: path.join(process.cwd(), "data", "products"),              //Products directory.
+
                                                                          //These next two are specific to the web server UI.
-    users: path.join(process.cwd(), "data", "users"),                    //Users directory.
+
+    users: {                                                             //All of the users paths.
+        admins: path.join(process.cwd(), "data", "users", "admins"),     //Admins directory.
+        cashiers: path.join(process.cwd(), "data", "users", "cashiers")  //Cashiers directory.
+    },
     public: path.join(process.cwd(), "public"),                          //HTML/CSS/JS/images/files served by the web server directory.
+    
     settings: path.join(process.cwd(), "data", "settings.json")          //Path to the settings. This is used a couple of places.
 };
 
