@@ -63,7 +63,7 @@ module.exports = async (config) => {
             usd += cart[req.body[i]].usdCost;
         }
 
-        res.end(cmc.iopFormat(await cmc.usdToIOP(usd)));
+        res.end(await cmc.iopFormat(await cmc.usdToIOP(usd)));
     });
 
     return router;

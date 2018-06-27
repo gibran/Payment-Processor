@@ -69,7 +69,7 @@ module.exports = async (config) => {
             res.end("false");
             return;
         }
-        var amount = parseFloat(cmc.iopFormat(req.body.amount));
+        var amount = parseFloat(await cmc.iopFormat(req.body.amount));
 
         if (amount <= 0.01) {
             res.end("false");

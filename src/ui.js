@@ -14,7 +14,7 @@ var productsRouter = require("./ui/products.js");
 var settingsRouter = require("./ui/settings.js");
 
 //Automatic SSL lib.
-var ssl = require("./ui/ssl.js");
+var ssl = require("../lib/ssl.js");
 //Config vars for the SSL lib.
 var useSSL, sslPath;
 

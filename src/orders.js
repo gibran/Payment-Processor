@@ -13,7 +13,7 @@ var zeroConf, orders;
 //Updates the zeroConf amount in IOP. Runs every half hour.
 async function updateZeroConf() {
     zeroConf = parseFloat(
-        cmc.iopFormat(await cmc.usdToIOP(zeroConfUSD))
+        await cmc.iopFormat(await cmc.usdToIOP(zeroConfUSD))
     );
 }
 setInterval(updateZeroConf, 30*60*1000);
