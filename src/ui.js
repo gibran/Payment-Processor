@@ -67,7 +67,7 @@ module.exports = async (config) => {
                 next();
             } : ssl.noSSLMiddleware)
             //Accounts Middleware (if you aren't logged in, you can only see the login page)
-            .use(accounts.middleware)
+            .use(accounts.middlewares.user)
             //No Caching
             .use(require("nocache")())
             //Price Router

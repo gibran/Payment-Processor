@@ -11,7 +11,7 @@ module.exports = async (config) => {
 
     var router =
         express.Router()
-            .use(accounts.adminMiddleware)
+            .use(accounts.middlewares.admin)
             .use("/", express.static(adminPath));
 
     return router;
