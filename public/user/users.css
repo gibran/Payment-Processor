@@ -1,0 +1,32 @@
+#usersH1 {
+    position: fixed;
+    top: 10%;
+    left: 5%;
+}
+
+#usersDiv {
+    position: fixed;
+    top: 20%;
+    height: 70%;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+table {
+    width: 100%;
+}
+
+tr {
+    width: 100%;
+}
+
+th {
+    text-align: center;
+}
+
+td {
+    width: 50%;
+
+    text-align: center;
+}
