@@ -23,7 +23,7 @@ async function archiveOrder(address, success) {
     //Stop tracking the address.
     await coin.untrackAddress(address);
     //Move it from current orders to archived.
-    fs.orders.archive(address, orders[address], success);
+    fs.archive(address, orders[address], success);
     //Delete it from the cache.
     delete orders[address];
     //Emit the order and it's status.
@@ -46,6 +46,29 @@ module.exports = async (config) => {
     //Init the orders cache.
     orders = {};
 
+    //Get the orders from the last instance that weren't archived.
+    async function getLastOrders() {
+        var last = await fs.getLastorders();
+        if (last === false) {
+            setTimeout(getLastOrders, 50);
+            return;
+        }
+
+        //Tell the UI in 5 seconds, once it add it's event listener.
+        async function tellUI() {
+            if (emitter.listenerCount() === 0) {
+                setTimeout(tellUI, 500);
+                return;
+            }
+
+            for (var i in last) {
+                emitter.emit("created", i, last[i]);
+            }
+        }
+        tellUI();
+    }
+    getLastOrders();
+
     //Return an object that can create a new order and cancel one.
     return {
         new: async (amount, note) => {
@@ -60,7 +83,7 @@ module.exports = async (config) => {
                 time: (new Date()).getTime()
             };
             //Save it to disk.
-            fs.orders.save(address, orders[address]);
+            fs.save(address, orders[address]);
 
             //Return the address and order.
             return {

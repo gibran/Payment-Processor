@@ -42,7 +42,7 @@ var paths = {
     admin: path.join(process.cwd(), "admin_public"),
     //Directory of the SSL folder.
     ssl: path.join(process.cwd(), "data", "ssl"),
-    
+
     //Path to the settings. This is used a couple of places.
     settings: path.join(process.cwd(), "data", "settings.json")
 };
@@ -66,12 +66,12 @@ async function main() {
     orders = await (require("./src/orders.js"))({
         coin: coin,
         cmc: cmc,
-        fs: fs,
+        fs: fs.orders,
         emitter: emitter,
         zeroConfUSD: settings.zeroConfUSD
     });
 
-    //Define handlers for the new order/cancel order event.
+    //Define handlers for the new order/paid in cash/cancel order event.
     emitter.on("new", async (amount, note, cb) => {
         //Create the order.
         var order = await orders.new(amount, note);

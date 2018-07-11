@@ -57,7 +57,6 @@ module.exports = async (config) => {
 
     //promote an user to admin.
     router.post("/promote", async (req, res) => {
-        console.log(Object.keys(accounts))
         if (await accounts.promote(req.body.user)) {
             res.end("true");
             return;
