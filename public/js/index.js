@@ -52,20 +52,25 @@ async function subtract(i) {
 }
 
 async function order() {
-    var buying = [];
-    for (var i in window.products.products) {
-        for (; window.products.products[i].cart > 0; window.products.products[i].cart--) {
-            buying.push(parseInt(i));
+    var customAmount = parseFloat(document.getElementById("customAmountInput").value);
+    if (customAmount > 0) {
+        window.products.price = parseFloat(await window.price.usdToIOP(customAmount));
+    } else {
+        var buying = [];
+        for (var i in window.products.products) {
+            for (; window.products.products[i].cart > 0; window.products.products[i].cart--) {
+                buying.push(parseInt(i));
+            }
+            delete window.products.products[i].cart;
         }
-        delete window.products.products[i].cart;
-    }
 
-    if (buying.length === 0) {
-        alert("The cart is empty.");
-        return;
-    }
+        if (buying.length === 0) {
+            alert("The cart is empty.");
+            return;
+        }
 
-    window.products.buy(buying);
+        window.products.buy(buying);
+    }
 
     //Wait to get the price...
     async function placeOrder() {

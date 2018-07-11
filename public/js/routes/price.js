@@ -26,11 +26,11 @@ window.price = {
     },
 
     iopToUSD: async (amount) => {
-        return (await window.price.format(amount * window.price.iop));
+        return (await window.price.format(amount * parseFloat(window.price.iop)));
     },
 
     usdToIOP: async (amount) => {
-        return (await window.price.format(amount / window.price.iop));
+        return (await window.price.format(amount / parseFloat(window.price.iop)));
     }
 };
 

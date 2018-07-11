@@ -35,21 +35,31 @@ td {
     position: fixed;
     height: 5%;
     width: 100%;
-    bottom: 15%;
+    bottom: 20%;
 
     font-size: 24px;
 }
 
 #totals #usdTotal {
     float: left;
-    margin-left: 33%;
+    margin-left: 20%;
     display: inline-block;
 }
 
 #totals #iopTotal {
     float: right;
-    margin-right: 33%;
+    margin-right: 20%;
     display: inline-block;
+}
+
+#customAmount {
+    width: 100%;
+
+    position: fixed;
+    bottom: 15%;
+    
+    font-size: 24px;
+    text-align: center;
 }
 
 #orderButtonDiv {
