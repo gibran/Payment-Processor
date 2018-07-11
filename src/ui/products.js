@@ -75,6 +75,22 @@ module.exports = async (config) => {
 
     //Route to create a new product.
     router.post("/new", async (req, res) => {
+        var product = req.body;
+
+        //It must be an object with a price. It doesn't need a name or assetPath (path to an image).
+        if (typeof(product) !== "object") {
+            return false;
+        }
+        if (typeof(product.name) !== "string") {
+            name = "";
+        }
+        if (typeof(product.assetPath) !== "string") {
+            product.assetPath = "";
+        }
+        if (typeof(product.usdCost) !== "number") {
+            return false;
+        }
+
         res.end((await products.add(req.body)).toString());
     });
 
