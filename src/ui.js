@@ -93,6 +93,7 @@ module.exports = async (config) => {
             //Products Router
             .use("/products", await productsRouter({
                 express: express,
+                accounts: accounts,
                 products: fs.products,
                 cmc: cmc
             }))

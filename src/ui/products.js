@@ -1,8 +1,9 @@
 //Needed libraries...
-var express, products, cmc;
+var express, accounts, products, cmc;
 
 module.exports = async (config) => {
     express = config.express;
+    accounts = config.accounts;
     products = config.products;
     cmc = config.cmc;
 
@@ -11,30 +12,6 @@ module.exports = async (config) => {
     //Route to get the list of all products.
     router.get("/list", async (req, res) => {
         res.end(JSON.stringify(await products.load()));
-    });
-
-    //Route to create a new product.
-    router.post("/new", async (req, res) => {
-        res.end((await products.add(req.body)).toString());
-    });
-
-    //Route to delete a product.
-    router.post("/delete", async (req, res) => {
-        //Filter input.
-        if (typeof(req.body.index) !== "number") {
-            res.end("false");
-            return;
-        }
-        if (req.body.index < 0) {
-            res.end("false");
-            return;
-        }
-        if (typeof(req.body.name) !== "string") {
-            res.end("false");
-            return;
-        }
-
-        res.end((await products.remove(req.body.index, req.body.name)).toString());
     });
 
     //Route to buy some products.
@@ -64,6 +41,32 @@ module.exports = async (config) => {
         }
 
         res.end(await cmc.iopFormat(await cmc.usdToIOP(usd)));
+    });
+
+    router.use(accounts.middlewares.admin);
+
+    //Route to create a new product.
+    router.post("/new", async (req, res) => {
+        res.end((await products.add(req.body)).toString());
+    });
+
+    //Route to delete a product.
+    router.post("/delete", async (req, res) => {
+        //Filter input.
+        if (typeof(req.body.index) !== "number") {
+            res.end("false");
+            return;
+        }
+        if (req.body.index < 0) {
+            res.end("false");
+            return;
+        }
+        if (typeof(req.body.name) !== "string") {
+            res.end("false");
+            return;
+        }
+
+        res.end((await products.remove(req.body.index, req.body.name)).toString());
     });
 
     return router;
