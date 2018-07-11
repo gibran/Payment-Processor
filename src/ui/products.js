@@ -14,6 +14,34 @@ module.exports = async (config) => {
         res.end(JSON.stringify(await products.load()));
     });
 
+    //Route to calculate the price of some products.
+    router.post("/calculate", async (req, res) => {
+        if (typeof(req.body) !== "object") {
+            res.end("false");
+            return;
+        }
+
+        var cart = await products.load();
+        var i;
+        for (i in req.body) {
+            if (typeof(req.body[i]) !== "number") {
+                res.end("false");
+                return;
+            }
+            if (!((0 <= req.body[i]) && (req.body[i] < cart.length))) {
+                res.end("false");
+                return;
+            }
+        }
+
+        var usd = 0;
+        for (i in req.body) {
+            usd += cart[req.body[i]].usdCost;
+        }
+
+        res.end(await cmc.iopFormat(await cmc.usdToIOP(usd)));
+    });
+
     //Route to buy some products.
     router.post("/buy", async (req, res) => {
         if (typeof(req.body) !== "object") {

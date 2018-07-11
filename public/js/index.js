@@ -1,13 +1,30 @@
 var usd = 0;
-var iop = 0;
 
 async function updateTotals() {
-    //Update the IOP total.
-    iop = await window.price.usdToIOP(usd);
-
-    //Update the HTML.
+    //Update the USD HTML.
     document.getElementById("usdTotalNum").innerHTML = usd;
-    document.getElementById("iopTotalNum").innerHTML = iop;
+
+    //Iterate over every product to get the array of what we're buying.
+    var buying = [];
+    for (var i in window.products.products) {
+        for (var x = 0; x < window.products.products[i].cart; x++) {
+            buying.push(parseInt(i));
+        }
+    }
+    //Submit it to the server.
+    await window.products.calculate(buying);
+
+    //When we get a response...
+    async function updateIOP() {
+        if (typeof(window.products.price) === "undefined") {
+            setTimeout(updateIOP, 10);
+            return;
+        }
+
+        //Update the IOP price HTML.
+        document.getElementById("iopTotalNum").innerHTML = window.products.price;
+    }
+    setTimeout(updateIOP, 10);
 }
 
 async function add(i) {
@@ -29,7 +46,7 @@ async function subtract(i) {
     window.products.products[i].cart--;
     document.getElementById("product-" + i).innerHTML = window.products.products[i].cart;
 
-    //Update the totals.l
+    //Update the totals.
     usd -= window.products.products[i].usdCost;
     updateTotals();
 }

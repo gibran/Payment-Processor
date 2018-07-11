@@ -28,8 +28,9 @@ POST
     /orders/cash          -- Marks an order as succeeded using {address}. Returns true/false.
     /orders/cancel        -- Cancels an order using {address}. Returns true/false.
 
-    /products/new         -- Creates a new product using {name, assetPath, usdCost}. Returns true/false.
-    /products/delete      -- Deletes a product using {index, name}. Returns true/false.
+    /products/new         -- Creates a new product using {name, assetPath, usdCost}. Returns true/false. Requires admin privileges.
+    /products/delete      -- Deletes a product using {index, name}. Returns true/false. Requires admin privileges.
+    /products/calculate   -- Takes in an array of numbers (product indexes). Returns the total cost in IOP, or false on error.
     /products/buy         -- Takes in an array of numbers (product indexes). Returns the total cost in IOP and marks them as purchased in the DB, or false on error.
 
     /settings/update      -- In progress.
