@@ -72,6 +72,30 @@ window.users = {
         });
     },
 
+    promote: async (user) => {
+        POST("/users/promote", {
+            user: user
+        }, async (res) => {
+            if (res === true) {
+                alert("Success.");
+            } else {
+                alert("Promoting " + user + " failed.");
+            }
+        });
+    },
+
+    demote: async (user) => {
+        POST("/users/demote", {
+            user: user
+        }, async (res) => {
+            if (res === true) {
+                alert("Success.");
+            } else {
+                alert("Demoting " + user + " failed.");
+            }
+        });
+    },
+
     delete: async (user) => {
         POST("/users/delete", {
             user: user

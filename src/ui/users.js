@@ -55,6 +55,25 @@ module.exports = async (config) => {
         res.end("false");
     });
 
+    //promote an user to admin.
+    router.post("/promote", async (req, res) => {
+        console.log(Object.keys(accounts))
+        if (await accounts.promote(req.body.user)) {
+            res.end("true");
+            return;
+        }
+        res.end("false");
+    });
+
+    //Demote an user from admin.
+    router.post("/demote", async (req, res) => {
+        if (await accounts.demote(req.body.user)) {
+            res.end("true");
+            return;
+        }
+        res.end("false");
+    });
+
     //Route to delete an user.
     router.post("/delete", async (req, res) => {
         if (await accounts.deleteUser(req.body.user)) {
