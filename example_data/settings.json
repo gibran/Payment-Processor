@@ -3,6 +3,6 @@
     "rpcuser": "username",
     "rpcpass": "password",
     "confirms": 1,
-    "zeroConfUSD": 10,
+    "zeroConfUSD": 50,
     "ssl": true
 }

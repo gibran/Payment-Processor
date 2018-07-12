@@ -1,7 +1,14 @@
+#Node modules and data.
 node_modules
 data
 
+#Binaries.
 build
 main-win.exe
 main-linux
 main-macos
+
+#Unfinished Docker/Titania config files.
+Dockerfile
+.dockerignore
+titania.json
