@@ -34,6 +34,10 @@ module.exports = async (config) => {
         //Call the callback that handles the response to the original request.
         cb(address);
     });
+    emitter.on("update", async (address, order) => {
+        //Update the RAM cache.
+        orders[address] = order;
+    });
     emitter.on("success", async (address) => {
         //When an order succeeds, move it over to the succeeded object.
         succeeded[address] = orders[address];
@@ -81,8 +85,13 @@ module.exports = async (config) => {
             return;
         }
 
+        var products = [];
+        if (typeof(req.body.products) === "object") {
+            products = req.body.products;
+        }
+
         //Emit the new order event.
-        emitter.emit("new", amount, req.body.note, async (address) => {
+        emitter.emit("new", amount, req.body.note, products, async (address) => {
             res.end(address);
         });
     });

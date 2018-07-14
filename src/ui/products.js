@@ -42,35 +42,6 @@ module.exports = async (config) => {
         res.end(await cmc.iopFormat(await cmc.usdToIOP(usd)));
     });
 
-    //Route to buy some products.
-    router.post("/buy", async (req, res) => {
-        if (typeof(req.body) !== "object") {
-            res.end("false");
-            return;
-        }
-
-        var cart = await products.load();
-        var i;
-        for (i in req.body) {
-            if (typeof(req.body[i]) !== "number") {
-                res.end("false");
-                return;
-            }
-            if (!((0 <= req.body[i]) && (req.body[i] < cart.length))) {
-                res.end("false");
-                return;
-            }
-        }
-
-        var usd = 0;
-        for (i in req.body) {
-            products.bought(req.body[i], 1);
-            usd += cart[req.body[i]].usdCost;
-        }
-
-        res.end(await cmc.iopFormat(await cmc.usdToIOP(usd)));
-    });
-
     router.use(accounts.middlewares.admin);
 
     //Route to create a new product.

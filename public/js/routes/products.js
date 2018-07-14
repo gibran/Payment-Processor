@@ -23,18 +23,6 @@ window.products = {
         });
     },
 
-    buy: async (products) => {
-        delete window.products.price;
-
-        POST("/products/buy", products, async (res) => {
-            if (res !== false) {
-                window.products.price = res;
-            } else {
-                alert("Product buying failed.");
-            }
-        });
-    },
-
     calculate: async (products) => {
         delete window.products.price;
 

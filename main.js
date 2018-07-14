@@ -71,10 +71,18 @@ async function main() {
         zeroConfUSD: settings.zeroConfUSD
     });
 
+    //Initialize products.
+    products = await (require("./src/products.js"))({
+        fs: fs.products,
+        emitter: emitter
+    });
+
     //Define handlers for the new order/paid in cash/cancel order event.
-    emitter.on("new", async (amount, note, cb) => {
+    emitter.on("new", async (amount, note, productsArr, cb) => {
         //Create the order.
         var order = await orders.new(amount, note);
+        //Tell products.js about the products involved.
+        await products.new(order.address, order.order, productsArr);
         //Tell UI it was created, here's the address, order data, and carry the cb.
         emitter.emit("created", order.address, order.order, cb);
     });

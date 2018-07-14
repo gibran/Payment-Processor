@@ -53,10 +53,12 @@ async function subtract(i) {
 
 async function order() {
     var customAmount = parseFloat(document.getElementById("customAmountInput").value);
+    var buying;
+
     if (customAmount > 0) {
         window.products.price = parseFloat(await window.price.usdToIOP(customAmount));
     } else {
-        var buying = [];
+        buying = [];
         for (var i in window.products.products) {
             for (; window.products.products[i].cart > 0; window.products.products[i].cart--) {
                 buying.push(parseInt(i));
@@ -69,7 +71,7 @@ async function order() {
             return;
         }
 
-        window.products.buy(buying);
+        window.products.calculate(buying);
     }
 
     //Wait to get the price...
@@ -79,7 +81,7 @@ async function order() {
             return;
         }
 
-        window.orders.create(window.products.price, "Sale made by " + window.user + ".");
+        window.orders.create(window.products.price, "Sale made by " + window.user + ".", buying);
 
         async function handleOrder() {
             if (typeof(window.orders.address) === "undefined") {

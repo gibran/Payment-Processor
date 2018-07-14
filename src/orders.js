@@ -43,6 +43,14 @@ module.exports = async (config) => {
     //Make sure we have a zeroConf IOP amount and not just one for USD.
     await updateZeroConf();
 
+    //Add a handler for the order update event.
+    emitter.on("update", async (address, order) => {
+        //Update the RAM cache.
+        orders[address] = order;
+        //Save the new order.
+        fs.save(address, orders[address]);
+    });
+
     //Init the orders cache.
     orders = {};
 
@@ -56,13 +64,13 @@ module.exports = async (config) => {
 
         //Tell the UI in 5 seconds, once it add it's event listener.
         async function tellUI() {
-            if (emitter.listenerCount() === 0) {
+            if (emitter.listenerCount("created") === 0) {
                 setTimeout(tellUI, 500);
                 return;
             }
 
             for (var i in last) {
-                emitter.emit("created", i, last[i]);
+                emitter.emit("created", i, last[i], async () => {});
             }
         }
         tellUI();

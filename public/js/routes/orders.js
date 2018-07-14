@@ -29,13 +29,23 @@ window.orders = {
         });
     },
 
-    create: async (amount, note) => {
-        POST("/orders/new", {
-            amount: amount,
-            note: note
-        }, async (res) => {
-            window.orders.address = res;
-        });
+    create: async (amount, note, products) => {
+        if (typeof(products) !== "object") {
+            POST("/orders/new", {
+                amount: amount,
+                note: note
+            }, async (res) => {
+                window.orders.address = res;
+            });
+        } else {
+            POST("/orders/new", {
+                amount: amount,
+                note: note,
+                products: products
+            }, async (res) => {
+                window.orders.address = res;
+            });
+        }
     },
 
     cash: async (address) => {
